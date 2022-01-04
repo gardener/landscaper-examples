@@ -1,0 +1,22 @@
+imports:
+
+  cluster:
+    apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: Target
+    metadata:
+      name: test
+      namespace: test
+    spec:
+      type: landscaper.gardener.cloud/kubernetes-cluster
+      config:
+        kubeconfig: |
+        # ... <insert your kubeconfig here>
+
+  vpa:
+    enabled: true
+    resourcePolicy:
+      minAllowed:
+        cpu: 50m
+        memory: 256Mi
+    updatePolicy:
+      updateMode: Auto
