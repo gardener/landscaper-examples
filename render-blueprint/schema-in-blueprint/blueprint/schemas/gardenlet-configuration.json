@@ -1,0 +1,67 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "github.com/gardener/gardener/schemas/gardenlet-configuration",
+  "title": "Gardener Gardenlet Configuration",
+  "description": "configuration for the gardenlet deployment in the Seed cluster.",
+  "type": "object",
+  "properties": {
+    "seedName": {
+      "type": "string"
+    },
+    "seedBackupCredentials": {
+      "type": "object",
+      "description": "provider specific credentials with varying properties"
+    },
+    "deploymentConfiguration": {
+      "type": "object",
+      "description": "configuration for the gardenlet deployment in the Seed cluster",
+      "properties": {
+        "replicaCount": {
+          "type": "number",
+          "description": "replicaCount field to override the default value"
+        },
+        "revisionHistoryLimit": {
+          "type": "number",
+          "description": "RevisionHistoryLimit field to override the default value"
+        },
+        "serviceAccountName": {
+          "type": "string"
+        },
+        "resources": {
+          "$ref": "blueprint://schemas/resource-requirements.json"
+        },
+        "podLabels": {
+          "type": "object",
+          "description": "additional gardenlet pod labels. Defined as `map[string]string`"
+        },
+        "podAnnotations": {
+          "type": "object",
+          "description": "additional gardenlet pod annotations. Defined as `map[string]string`"
+        },
+        "additionalVolumes": {
+          "type": "array",
+          "description": "additional volumes for the gardenlet deployment. The type is defined in k8s.io/api/core/v1 `Volume`",
+          "items": {
+            "type": "object"
+          }
+        },
+        "additionalVolumeMounts": {
+          "type": "array",
+          "description": "additional volume mounts for the gardenlet deployment. The type is defined in k8s.io/api/core/v1 `VolumeMount`",
+          "items": {
+            "type": "object"
+          }
+        },
+        "vpa": {
+          "type": "boolean",
+          "description": "whether to deploy a `VerticalPodAutoscaler` resource for the gardenlet."
+        }
+      }
+    },
+    "componentConfiguration": {
+      "type": "object",
+      "description": "component configuration for the Gardenlet. Please check in the gardener/gardener repository in example/20-componentconfig-gardenlet.yaml for what can be configured here"
+    }
+  },
+  "required": ["seedName"]
+}

@@ -1,0 +1,34 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: seedClusters
+    type: targetList
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: gardenCluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: imageVectorOverwrite
+    required: false
+    schema:
+      type: object
+      description: "image vector for the gardenlet. The type (internal) is defined in `pkg/utils/imagevector/types.go`"
+
+  - name: componentImageVectorOverwrites
+    required: false
+    schema:
+      type: object
+      description: "image vector for other components deployed by the gardenlet. The type (internal) is defined in `pkg/utils/imagevector/types.go`"
+
+  - name: gardenletConfigurations
+    schema:
+      type: array
+      items:
+        $ref: "blueprint://schemas/gardenlet-configuration.json"
+
+deployExecutions:
+  - name: default-deploy-execution
+    file: /deploy-execution.yaml
+    type: GoTemplate

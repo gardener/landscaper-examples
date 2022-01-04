@@ -1,0 +1,86 @@
+imports:
+
+  seedClusters:
+    - apiVersion: landscaper.gardener.cloud/v1alpha1
+      kind: Target
+      metadata:
+        name: "cluster-test1"
+        namespace: "test"
+      spec:
+        type: landscaper.gardener.cloud/kubernetes-cluster
+        config:
+          kubeconfig: |
+          # ... <insert your kubeconfig here>
+
+    - apiVersion: landscaper.gardener.cloud/v1alpha1
+      kind: Target
+      metadata:
+        name: "cluster-test2"
+        namespace: "test"
+      spec:
+        type: landscaper.gardener.cloud/kubernetes-cluster
+        config:
+          kubeconfig: |
+          # ... <insert your kubeconfig here>
+
+  gardenCluster:
+    apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: Target
+    metadata:
+      name: "garden-virtual-test-cluster"
+      namespace: "test"
+    spec:
+      type: landscaper.gardener.cloud/kubernetes-cluster
+      config:
+        kubeconfig: |
+        # ... <insert your kubeconfig here>
+
+  imageVectorOverwrite:
+    dummyData: testImageVectorOverwrite
+
+  componentImageVectorOverwrites:
+    dummyData: testComponentImageVectorOverwrites
+
+  gardenletConfigurations:
+    - seedName: test1
+      seedBackupCredentials:
+        dummyData: testSeedBackupCredentials1
+      deploymentConfiguration:
+        replicaCount: 1
+        revisionHistoryLimit: 1
+        serviceAccountName: testServiceAccount1
+        resources:
+          requests:
+            cpu: "x"
+            memory: "y"
+          limits:
+            cpu: "x"
+            memory: "y"
+        podLabels: {}
+        podAnnotations: {}
+        additionalVolumes: []
+        additionalVolumeMounts: []
+        vpa: false
+      componentConfiguration:
+        dummyData: testComponentConfiguration1
+    - seedName: test2
+      seedBackupCredentials:
+        dummyData: testSeedBackupCredentials2
+      deploymentConfiguration:
+        replicaCount: 2
+        revisionHistoryLimit: 2
+        serviceAccountName: testServiceAccount2
+        resources:
+          requests:
+            cpu: "x"
+            memory: "y"
+          limits:
+            cpu: "x"
+            memory: "y"
+        podLabels: {}
+        podAnnotations: {}
+        additionalVolumes: []
+        additionalVolumeMounts: []
+        vpa: false
+      componentConfiguration:
+        dummyData: testComponentConfiguratio2

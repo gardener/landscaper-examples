@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "github.com/gardener/gardener/schemas/resource-requirements",
+  "title": "Resource Requirements",
+  "description": "resource requests and limits. The type is defined in k8s.io/api/core/v1 `ResourceRequirements`",
+  "type": "object",
+  "properties": {
+    "requests": {
+      "$ref": "#/$definitions/resource-list"
+    },
+    "limits": {
+      "$ref": "#/$definitions/resource-list"
+    }
+  },
+
+  "$definitions": {
+    "resource-list": {
+      "type": "object",
+      "properties": {
+        "cpu": {
+          "type": "string"
+        },
+        "memory": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

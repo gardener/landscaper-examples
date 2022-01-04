@@ -1,0 +1,44 @@
+{{- $resource := getResource .cd "name" "landscaper-gardenlet" }}
+deployItems:
+{{- range $index, $seedCluster := .imports.seedClusters }}
+{{- $gardenletConfiguration := index $.imports.gardenletConfigurations $index }}
+  - name: deploy-{{ $gardenletConfiguration.seedName }}
+    type: landscaper.gardener.cloud/container
+    {{- if gt $index 0 }}
+    {{- $previousGardenletConfiguration := index $.imports.gardenletConfigurations ( sub $index 1 ) }}
+    dependsOn:
+    - deploy-{{ $previousGardenletConfiguration.seedName }}
+    {{- end }}
+    target:
+      name: {{ $seedCluster.metadata.name }}
+      namespace: {{ $seedCluster.metadata.namespace }}
+    config:
+      apiVersion: container.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      blueprint:
+        {{- toYaml $.blueprint | nindent 8 }}
+
+      componentDescriptor:
+        {{- toYaml $.componentDescriptorDef | nindent 8 }}
+
+      importValues:
+        # the import configuration of the Gardenlet landscaper
+        apiVersion: gardenlet.gardener.landscaper.gardener.cloud/v1alpha1
+        kind: Imports
+        seedCluster:
+          {{- toYaml $seedCluster | nindent 10 }}
+        gardenCluster:
+          {{- toYaml $.imports.gardenCluster | nindent 10 }}
+        seedBackupCredentials:
+          {{- toYaml $gardenletConfiguration.seedBackupCredentials | nindent 10 }}
+        imageVectorOverwrite:
+          {{- toYaml $.imports.imageVectorOverwrite | nindent 10 }}
+        componentImageVectorOverwrites:
+          {{- toYaml $.imports.componentImageVectorOverwrites | nindent 10 }}
+        deploymentConfiguration:
+          {{- toYaml $gardenletConfiguration.deploymentConfiguration | nindent 10 }}
+        componentConfiguration:
+          {{- toYaml $gardenletConfiguration.componentConfiguration | nindent 10 }}
+
+      image: {{ $resource.access.imageReference }}
+{{- end }}
