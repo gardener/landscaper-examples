@@ -1,0 +1,43 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+localTypes:
+  vpa:
+    type: object
+    properties:
+      enabled:
+        type: boolean
+      resourcePolicy:
+        type: object
+        properties:
+          minAllowed:
+            type: object
+            properties:
+              cpu:
+                type: string
+              memory:
+                type: string
+      updatePolicy:
+        type: object
+        properties:
+          updateMode:
+            type: string
+    required:
+      - enabled
+      - resourcePolicy
+      - updatePolicy
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: vpa
+    required: false
+    schema:
+      $ref: "local://vpa"
+
+deployExecutions:
+  - name: default-deploy-execution
+    file: /deploy-execution.yaml
+    type: GoTemplate
