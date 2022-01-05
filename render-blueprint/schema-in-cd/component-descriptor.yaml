@@ -1,0 +1,17 @@
+meta:
+  schemaVersion: 'v2'
+component:
+  name: 'github.com/gardener/landscaper-examples/render-blueprint/schema-in-cd'
+  version: 'v0.1.0'
+
+  repositoryContexts:
+    - type: 'ociRegistry'
+      baseUrl: ''
+
+  provider: 'internal'
+
+  componentReferences: []
+
+  sources: []
+
+  resources: []
