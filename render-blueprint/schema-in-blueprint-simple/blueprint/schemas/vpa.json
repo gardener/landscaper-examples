@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "github.com/gardener/gardener/schemas/vpa",
+  "title": "VPA",
+  "description": "Vertical Pod Autoscaling",
+  "type": "object",
+  "properties": {
+    "enabled": {
+      "type": "boolean"
+    },
+    "resourcePolicy": {
+      "type": "object",
+      "properties": {
+        "minAllowed": {
+          "type": "object",
+          "properties": {
+            "cpu": {
+              "type": "string"
+            },
+            "memory": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "updatePolicy": {
+      "type": "object",
+      "properties": {
+        "updateMode": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
