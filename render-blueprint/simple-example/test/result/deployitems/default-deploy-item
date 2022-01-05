@@ -1,0 +1,43 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DeployItem
+metadata:
+  annotations:
+    execution.landscaper.gardener.cloud/dependsOn: ""
+    landscaper.gardener.cloud/operation: reconcile
+    landscaper.gardener.cloud/reconcile-time: "2022-01-05T08:22:32+01:00"
+  creationTimestamp: null
+  labels:
+    execution.landscaper.gardener.cloud/name: default-deploy-item
+  name: default-deploy-item
+spec:
+  config:
+    apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+    kind: ProviderConfiguration
+    manifests:
+    - manifest:
+        apiVersion: v1
+        data:
+          vpa:
+            enabled: true
+            resourcePolicy:
+              minAllowed:
+                cpu: 50m
+                memory: 256Mi
+            updatePolicy:
+              updateMode: Auto
+        kind: ConfigMap
+        metadata:
+          name: test
+          namespace: test
+      policy: manage
+    updateStrategy: update
+  target:
+    name: test
+    namespace: test
+  type: landscaper.gardener.cloud/kubernetes-manifest
+status:
+  deployer:
+    identity: ""
+    name: ""
+    version: ""
+  observedGeneration: 0

@@ -1,8 +1,14 @@
 # Simple Example
 
-This example contains a blueprint and example values to test the command `landscaper-cli blueprint render ...`.
+This example shows the rendering of a blueprint with the command `landscaper-cli blueprint render ...`.
+The command is contained in script [./test/render.sh](./test/render.sh). So you can just run this script to test 
+the rendering.
 
-Execute script `test/render.sh` to test the render command. 
+The command uses the blueprint in directory [./blueprint](./blueprint) and example values from 
+file [./test/values.yaml](./test/values.yaml). The command does the following:
 
-The render command validates the example values provided in `test/values.yaml` and executes the templating of the 
-deploy items. There are no subinstallations. The results are written to directory `test/result`.
+- It validates the example values using the types of the imports in the blueprint. 
+- It renders the deploy item from the template in [./blueprint/deploy-execution.yaml](./blueprint/deploy-execution.yaml) 
+and writes the result to directory [./test/result](./test/result)
+
+In this example the blueprint has no subinstallations, so that only the deploy items are templated.

@@ -19,6 +19,6 @@ EXAMPLE_DIR="$(dirname $0)/.."
 BLUEPRINT_DIR=${EXAMPLE_DIR}/blueprint
 TEST_DIR=${EXAMPLE_DIR}/test
 
-landscaper-cli blueprints render $BLUEPRINT_DIR all \
+landscaper-cli blueprints render $BLUEPRINT_DIR deployitems \
   -f ${TEST_DIR}/values.yaml \
   -w ${TEST_DIR}/result
