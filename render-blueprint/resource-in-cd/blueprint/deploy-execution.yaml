@@ -1,0 +1,21 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: test
+              namespace: test
+            data:
+              {{- $chart := getResource .cd "name" "networking-calico-chart" }}
+              chart: {{ resolve ( $chart.access ) | toString | b64enc }}
