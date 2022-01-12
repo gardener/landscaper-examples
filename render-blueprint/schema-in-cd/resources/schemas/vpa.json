@@ -32,5 +32,6 @@
         }
       }
     }
-  }
+  },
+  "required": ["enabled", "resourcePolicy", "updatePolicy"]
 }
