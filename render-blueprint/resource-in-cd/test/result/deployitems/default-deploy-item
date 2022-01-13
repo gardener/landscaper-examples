@@ -1,0 +1,36 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DeployItem
+metadata:
+  annotations:
+    execution.landscaper.gardener.cloud/dependsOn: ""
+    landscaper.gardener.cloud/operation: reconcile
+    landscaper.gardener.cloud/reconcile-time: "2022-01-13T12:45:56+01:00"
+  creationTimestamp: null
+  labels:
+    execution.landscaper.gardener.cloud/name: default-deploy-item
+  name: default-deploy-item
+spec:
+  config:
+    apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+    kind: ProviderConfiguration
+    manifests:
+    - manifest:
+        apiVersion: v1
+        data:
+          chart: H4sIAAAAAAAA/+yXX2+bPBTGufanOG9z8y5ajfmbKXdTuotdTJvUKbfTCZyAGzCebWi7qvvsU0LTLpW6blKaqSu/Cx9hjG14znMAusBaV3SclWic9zQIIcQkSfqY9lGEcR97vCAO0kkSizhMPBFEaZR6kDzRfnZorUPjCZGLKHyTxg+Osw6Xy1/Ms72RbXwm7Ojv85KqWhaqMbTHNdbPI43jB/VPwtQLYpHGIp1EUeCJIBVx6sFBHuIL138En9A5MsqCa6CXHs5LUrBoZZVLVYDGbIUFWc5G8LmUFmyrdWOcBVtSVUFRNQuo0WWlVMVrMFShkx2BRlf+1I8qZyNQVKCTjYL/taGlvKAczqUr4b9XHD6q6hIatblyvSXQZKCSijjjJ6dfTl1jiI1g1tR1o2A+O4VcGst4IZ2/afvtM774ZvxNu+0oC3/dbA9tp/y7iRaYrVoNS1mRZWNuzzUb8wWu2Ji7WrPxdzaCORrZtBben7yzjGvTnFHmGJc5od+PM80Z453Nmpx89rdV/X12/T9bt/wS62qfazzm/yAOb+t/EE08ESRpNBn8fwhQyzkZKxs1hS5gqPXt4VHAxRHLyWZGarfpeqvgJmFgkzBMYU1T2Eki1m0nEDzg4hl54SWy639Hta7Qkd3rGn/y/ZeIpPd/NHz/HYIH9PezRi1lUaPew9vgsfofhsGu/qFIonio/4fgXv1fSZVPYbYR/wNqVpPDHB1OGcC9Wr9NkJszVmN2d5ptL+o0HpPCRUX5FK6uwNDXVhrK4YjPsWrJ8k4jvxkB19fD6+KwDP4f/D/4/+Wy6/+ul2TPP4CP+V+Eyb3/v1RMksH/h6DTG5veWtSZlgYPDgwMDPz7/AgAAP//J0iL4wAcAAA=
+        kind: ConfigMap
+        metadata:
+          name: test
+          namespace: test
+      policy: manage
+    updateStrategy: update
+  target:
+    name: test
+    namespace: test
+  type: landscaper.gardener.cloud/kubernetes-manifest
+status:
+  deployer:
+    identity: ""
+    name: ""
+    version: ""
+  observedGeneration: 0

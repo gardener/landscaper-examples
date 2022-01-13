@@ -17,5 +17,5 @@ deployItems:
               name: test
               namespace: test
             data:
-              {{- $chart := getResource .cd "name" "networking-calico-chart" }}
+              {{- $chart := getResource .cd "name" "example-chart" }}
               chart: {{ resolve ( $chart.access ) | toString | b64enc }}
