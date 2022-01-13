@@ -1,0 +1,28 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: schema-in-cd
+  namespace: test
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/render-blueprint/schema-in-cd
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  imports:
+    data:
+      - name: vpa
+        configMapRef:
+          key: vpa
+          name: schema-in-cd-imports
+          namespace: test
+    targets:
+      - name: cluster
+        target: '#my-cluster'

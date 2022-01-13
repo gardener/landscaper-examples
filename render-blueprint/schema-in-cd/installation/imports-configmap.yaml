@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: schema-in-cd-imports
+  namespace: test
+data:
+  vpa: |
+    enabled: true
+    resourcePolicy:
+      minAllowed:
+        cpu: 60m
+        memory: 512Mi
+    updatePolicy:
+      updateMode: Auto

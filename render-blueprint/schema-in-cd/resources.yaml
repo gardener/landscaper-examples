@@ -18,5 +18,5 @@ input:
   type: file
   path: ./resources/schemas/vpa.json
   mediaType: application/vnd.gardener.landscaper.jsonschema.layer.v1.json
-  compress: true
+  compress: false
 ...

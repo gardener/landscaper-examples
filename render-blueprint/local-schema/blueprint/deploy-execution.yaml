@@ -17,5 +17,5 @@ deployItems:
               name: test
               namespace: test
             data:
-              vpa:
+              vpa: |
                 {{- .imports.vpa | toYaml | nindent 16 }}
