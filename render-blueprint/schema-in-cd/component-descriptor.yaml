@@ -6,7 +6,7 @@ component:
 
   repositoryContexts:
     - type: 'ociRegistry'
-      baseUrl: ''
+      baseUrl: 'eu.gcr.io/gardener-project/landscaper/examples'
 
   provider: 'internal'
 

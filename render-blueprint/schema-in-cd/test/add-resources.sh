@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Copyright (c) 2021 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the LICENSE file
+# Copyright (c) 2022 SAP SE or an SAP affiliate company. All rights reserved. This file is licensed under the Apache Software License, v. 2 except as noted otherwise in the LICENSE file
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,13 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-EXAMPLE_DIR="$(dirname $0)/.."
+COMPONENT_DIR="$(dirname $0)/.."
 
-BLUEPRINT_DIR=${EXAMPLE_DIR}/blueprint
-TEST_DIR=${EXAMPLE_DIR}/test
-
-landscaper-cli blueprints render $BLUEPRINT_DIR deployitems \
-  -f ${TEST_DIR}/values.yaml \
-  -c ${EXAMPLE_DIR}/component-descriptor.yaml \
-  -r ${EXAMPLE_DIR}/resources.yaml \
-  -w ${TEST_DIR}/result
+landscaper-cli component-cli component-archive resources add ${COMPONENT_DIR} ${COMPONENT_DIR}/resources.yaml
