@@ -16,4 +16,8 @@
 
 COMPONENT_DIR="$(dirname $0)/.."
 
-landscaper-cli component-cli component-archive resources add ${COMPONENT_DIR} ${COMPONENT_DIR}/resources.yaml
+CA_PATH=${COMPONENT_DIR}
+CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
+
+component-cli component-archive "${CA_PATH}" "${CTF_PATH}" \
+  -r ${COMPONENT_DIR}/resources.yaml \

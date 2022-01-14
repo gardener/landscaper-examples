@@ -14,13 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-EXAMPLE_DIR="$(dirname $0)/.."
+COMPONENT_DIR="$(dirname $0)/.."
 
-BLUEPRINT_DIR=${EXAMPLE_DIR}/blueprint
-TEST_DIR=${EXAMPLE_DIR}/test
+BLUEPRINT_DIR=${COMPONENT_DIR}/blueprint
+TEST_DIR=${COMPONENT_DIR}/test
 
 landscaper-cli blueprints render $BLUEPRINT_DIR deployitems \
   -f ${TEST_DIR}/values.yaml \
-  -c ${EXAMPLE_DIR}/component-descriptor.yaml \
-  -r ${EXAMPLE_DIR}/resources.yaml \
+  -c ${COMPONENT_DIR}/component-descriptor.yaml \
+  -r ${COMPONENT_DIR}/resources.yaml \
   -w ${TEST_DIR}/result

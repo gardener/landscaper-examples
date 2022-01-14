@@ -4,7 +4,7 @@ metadata:
   annotations:
     execution.landscaper.gardener.cloud/dependsOn: ""
     landscaper.gardener.cloud/operation: reconcile
-    landscaper.gardener.cloud/reconcile-time: "2022-01-13T12:45:10+01:00"
+    landscaper.gardener.cloud/reconcile-time: "2022-01-14T08:34:21+01:00"
   creationTimestamp: null
   labels:
     execution.landscaper.gardener.cloud/name: default-deploy-item
@@ -17,7 +17,7 @@ spec:
     - manifest:
         apiVersion: v1
         data:
-          vpa:
+          vpa: |
             enabled: true
             resourcePolicy:
               minAllowed:

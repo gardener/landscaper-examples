@@ -15,5 +15,6 @@
 # limitations under the License.
 
 COMPONENT_DIR="$(dirname $0)/.."
+CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
 
-landscaper-cli component-cli component-archive remote push ${COMPONENT_DIR}
+component-cli ctf push "${CTF_PATH}"
