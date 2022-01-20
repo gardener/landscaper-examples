@@ -1,0 +1,17 @@
+meta:
+  schemaVersion: 'v2'
+component:
+  name: 'github.com/gardener/landscaper-examples/render-blueprint/access-repo-context'
+  version: 'v0.1.0'
+
+  repositoryContexts:
+    - type: 'ociRegistry'
+      baseUrl: 'myoci.reg'
+
+  provider: 'internal'
+
+  componentReferences: []
+
+  sources: []
+
+  resources: []

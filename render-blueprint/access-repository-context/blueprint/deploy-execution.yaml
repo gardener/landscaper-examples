@@ -1,0 +1,24 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: repositoryContext
+              namespace: test
+            data:
+              {{ $repositoryContext := getRepositoryContext .cd }}
+              {{ $repositoryContextType := $repositoryContext.type }}
+              {{ $repositoryContextBaseUrl := $repositoryContext.baseUrl }}
+              type:  {{ $repositoryContextType }}
+              baseUrl: {{ $repositoryContextBaseUrl }}
