@@ -1,0 +1,25 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: componentInfo
+              namespace: test
+            data:
+              {{ $referencedComponent := getComponent .cd "name" "referenced" }}
+              {{ $componentName := $referencedComponent.component.name }}
+              {{ $componentVersion := $referencedComponent.component.version }}
+              name:  {{ $componentName }}
+              version: {{ $componentVersion }}
+              chartImageRef: {{ (index $referencedComponent.component.resources 0).access.imageReference }}
