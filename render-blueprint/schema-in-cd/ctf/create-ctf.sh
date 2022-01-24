@@ -20,4 +20,5 @@ CA_PATH=${COMPONENT_DIR}
 CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
 
 component-cli component-archive "${CA_PATH}" "${CTF_PATH}" \
-  -r ${COMPONENT_DIR}/resources.yaml \
+  -r ${COMPONENT_DIR}/resources.yaml
+
