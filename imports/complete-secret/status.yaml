@@ -1,0 +1,23 @@
+status:
+  conditions:
+    - lastTransitionTime: "2022-01-26T08:12:17Z"
+      lastUpdateTime: "2022-01-26T08:12:17Z"
+      message: 'Waiting until all data imports are satisfied: (Inst example-with-complete-secret).internalDomain:
+      unable to get data object for ''internalDomain'': unable to marshal secret data
+      as map: json: error calling MarshalJSON for type json.RawMessage: invalid character
+      ''a'' looking for beginning of value'
+      reason: ImportsSatisfied
+      status: "False"
+      type: ValidateImports
+  configGeneration: ""
+  lastError:
+    lastTransitionTime: "2022-01-26T08:12:17Z"
+    lastUpdateTime: "2022-01-26T08:18:34Z"
+    message: '(Inst example-with-complete-secret).internalDomain: unable to get data
+      object for ''internalDomain'': unable to marshal secret data as map: json: error
+      calling MarshalJSON for type json.RawMessage: invalid character ''a'' looking
+      for beginning of value'
+    operation: Validate
+    reason: ImportsSatisfied
+  observedGeneration: 0
+  phase: Failed
