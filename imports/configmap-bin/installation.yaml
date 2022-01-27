@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: example-with-configmap-bin
+  name: example-configmap-bin
   namespace: example
 spec:
   blueprint:
@@ -35,26 +35,26 @@ spec:
     data:
       - name: exampleString
         configMapRef:
-          name: example-configmap
+          name: example-configmap-bin
           namespace: example
           key: example-string
       - name: exampleBoolean
         configMapRef:
-          name: example-configmap
+          name: example-configmap-bin
           namespace: example
           key: example-boolean
       - name: exampleNumber
         configMapRef:
-          name: example-configmap
+          name: example-configmap-bin
           namespace: example
           key: example-number
       - name: exampleList
         configMapRef:
-          name: example-configmap
+          name: example-configmap-bin
           namespace: example
           key: example-list
       - name: exampleObject
         configMapRef:
-          name: example-configmap
+          name: example-configmap-bin
           namespace: example
           key: example-object
