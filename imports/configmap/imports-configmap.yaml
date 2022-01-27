@@ -1,10 +1,9 @@
 apiVersion: v1
-kind: Secret
+kind: ConfigMap
 metadata:
-  name: example-secret
+  name: example-configmap
   namespace: example
-type: Opaque
-stringData:
+data:
   example-string: "blue"
   example-boolean: "true"
   example-number: "100"

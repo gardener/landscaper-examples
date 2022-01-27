@@ -3,5 +3,5 @@
 In this example, an installation imports values from a secret.
 Every entry of the data section of the secret is bound to a separate input parameter.
 
-The example illustrates only the import. There is nothing done with the imported values, because the installation has 
-only a dummy inline blueprint without deploy execution.
+The example illustrates only the import. There is nothing done with the imported values.
+The installation has only a dummy inline blueprint without deploy execution.

@@ -4,5 +4,10 @@ metadata:
   name: example-configmap
   namespace: example
 data:
-  ACCESS_KEY_ID: "abc"
-  SECRET_ACCESS_KEY: "uvw"
+  exampleString: "blue"
+  exampleBoolean: "true"
+  exampleNumber: "100"
+  exampleObj: |
+    a: 1
+    b: 2
+  exampleList: "[4, 5, 6]"

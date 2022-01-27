@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: example-with-secret
+  name: example-with-configmap
   namespace: example
 spec:
   blueprint:
@@ -34,27 +34,27 @@ spec:
   imports:
     data:
       - name: exampleString
-        secretRef:
-          name: example-secret
+        configMapRef:
+          name: example-configmap
           namespace: example
           key: example-string
       - name: exampleBoolean
-        secretRef:
-          name: example-secret
+        configMapRef:
+          name: example-configmap
           namespace: example
           key: example-boolean
       - name: exampleNumber
-        secretRef:
-          name: example-secret
+        configMapRef:
+          name: example-configmap
           namespace: example
           key: example-number
       - name: exampleList
-        secretRef:
-          name: example-secret
+        configMapRef:
+          name: example-configmap
           namespace: example
           key: example-list
       - name: exampleObject
-        secretRef:
-          name: example-secret
+        configMapRef:
+          name: example-configmap
           namespace: example
           key: example-object
