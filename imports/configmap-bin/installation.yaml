@@ -1,0 +1,60 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: example-with-configmap-bin
+  namespace: example
+spec:
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          jsonSchema: "https://json-schema.org/draft/2019-09/schema"
+          imports:
+            - name: exampleString
+              schema:
+                type: string
+            - name: exampleString
+              schema:
+                type: string
+            - name: exampleBoolean
+              schema:
+                type: boolean
+            - name: exampleNumber
+              schema:
+                type: number
+            - name: exampleList
+              schema:
+                type: array
+            - name: exampleObject
+              schema:
+                type: object
+
+  imports:
+    data:
+      - name: exampleString
+        configMapRef:
+          name: example-configmap
+          namespace: example
+          key: example-string
+      - name: exampleBoolean
+        configMapRef:
+          name: example-configmap
+          namespace: example
+          key: example-boolean
+      - name: exampleNumber
+        configMapRef:
+          name: example-configmap
+          namespace: example
+          key: example-number
+      - name: exampleList
+        configMapRef:
+          name: example-configmap
+          namespace: example
+          key: example-list
+      - name: exampleObject
+        configMapRef:
+          name: example-configmap
+          namespace: example
+          key: example-object

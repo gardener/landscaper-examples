@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-configmap
+  namespace: example
+binaryData:
+  example-string: Ymx1ZQo=
+  example-boolean: dHJ1ZQo=
+  example-number: MTAwCg==
+  example-object: eyJhIjogMSwgImIiOiAyfQo=
+  example-list: WzQsIDUsIDZdCg==
