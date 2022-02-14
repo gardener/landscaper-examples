@@ -1,0 +1,13 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/helm
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+
+      chart:
+        fromResource: # will fetch the helm chart from component descriptor resource of type helm chart
+          resourceName: etcd

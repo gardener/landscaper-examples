@@ -1,0 +1,27 @@
+meta:
+  schemaVersion: 'v2'
+component:
+  name: 'github.com/gardener/landscaper-examples/helm-deployer/real-helm-simple'
+  version: 'v0.1.0'
+
+  repositoryContexts:
+    - type: 'ociRegistry'
+      baseUrl: 'eu.gcr.io/gardener-project/landscaper/examples'
+
+  provider: 'internal'
+
+  componentReferences: []
+
+  sources: []
+
+  resources:
+    - type: helm.io/chart
+      name: etcd
+      version: 3.5.2
+      relation: external
+      access:
+        type: helmChartRepository
+        mediaType: application/octet-stream
+        helmChartRepoUrl: https://charts.bitnami.com/bitnami
+        helmChartName: etcd
+        helmChartVersion: 6.13.3
