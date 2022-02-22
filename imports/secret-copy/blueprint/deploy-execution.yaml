@@ -17,4 +17,4 @@ deployItems:
               name: secret-copy-result
               namespace: example
             stringData:
-              {{- .imports.exampleData | toYaml | nindent 2 }}
+              {{- .imports.exampleData | toYaml | nindent 14 }}
