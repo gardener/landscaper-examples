@@ -1,0 +1,21 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/helm
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      name: real-helm-deployment-nginx
+      namespace: example
+      realHelmDeployment: true
+      chart:
+        fromResource:
+          ref:
+            repositoryContext:
+              type: ociRegistry
+              baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+            componentName: github.com/gardener/landscaper-examples/helm-deployer/real-helm-deployment
+            version: v0.1.0
+          resourceName: nginx-chart
