@@ -6,6 +6,11 @@ imports:
   - name: cluster
     targetType: landscaper.gardener.cloud/kubernetes-cluster
 
+  - name: realHelmDeployment
+    required: false
+    schema:
+      type: boolean
+
 deployExecutions:
   - name: default-deploy-execution
     file: /deploy-execution.yaml

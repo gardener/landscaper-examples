@@ -21,3 +21,6 @@ spec:
     targets:
       - name: cluster
         target: '#my-cluster'
+
+  importDataMapping:
+    realHelmDeployment: true

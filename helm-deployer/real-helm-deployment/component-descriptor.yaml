@@ -17,11 +17,11 @@ component:
   resources:
     - type: helm.io/chart
       name: nginx-chart
-      version: 9.7.8
+      version: 9.7.0
       relation: external
       access:
         type: helmChartRepository
         mediaType: application/octet-stream
         helmChartRepoUrl: https://charts.bitnami.com/bitnami
         helmChartName: nginx
-        helmChartVersion: 9.7.8
+        helmChartVersion: 9.7.0

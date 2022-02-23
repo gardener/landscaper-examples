@@ -9,7 +9,7 @@ deployItems:
       kind: ProviderConfiguration
       name: real-helm-deployment-nginx
       namespace: example
-      realHelmDeployment: true
+      realHelmDeployment: {{ .imports.realHelmDeployment }}
       chart:
         fromResource:
           ref:
