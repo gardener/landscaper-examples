@@ -30,3 +30,14 @@ deployItems:
           timeout: 10
         uninstall:
           timeout: 15
+
+      exports:
+        defaultTimeout: 10m
+        exports:
+          - key: loadBalancer
+            jsonPath: .status.loadBalancer
+            fromResource:
+              apiVersion: v1
+              kind: Service
+              name: real-helm-deployment-nginx
+              namespace: example

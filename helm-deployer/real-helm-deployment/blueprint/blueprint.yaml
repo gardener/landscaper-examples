@@ -15,3 +15,14 @@ deployExecutions:
   - name: default-deploy-execution
     file: /deploy-execution.yaml
     type: GoTemplate
+
+exportExecutions:
+  - name: default-export-execution
+    file: /export-execution.yaml
+    type: GoTemplate
+
+exports:
+  - name: loadBalancer
+    type: data
+    schema:
+      type: object

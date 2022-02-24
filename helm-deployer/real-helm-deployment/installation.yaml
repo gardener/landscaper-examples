@@ -24,3 +24,8 @@ spec:
 
   importDataMappings:
     helmDeployment: true
+
+  exports:
+    data:
+      - name: loadBalancer
+        dataRef: loadBalancer
