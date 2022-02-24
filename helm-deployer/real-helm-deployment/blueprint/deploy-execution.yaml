@@ -9,7 +9,7 @@ deployItems:
       kind: ProviderConfiguration
       name: real-helm-deployment-nginx
       namespace: example
-      realHelmDeployment: {{ .imports.realHelmDeployment }}
+
       chart:
         fromResource:
           ref:
@@ -19,3 +19,14 @@ deployItems:
             componentName: github.com/gardener/landscaper-examples/helm-deployer/real-helm-deployment
             version: v0.1.0
           resourceName: nginx-chart
+
+      helmDeployment: {{ .imports.helmDeployment }}
+      helmDeploymentConfig:
+        install:
+          atomic: true
+          timeout: 10
+        upgrade:
+          atomic: true
+          timeout: 10
+        uninstall:
+          timeout: 15

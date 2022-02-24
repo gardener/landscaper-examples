@@ -6,7 +6,7 @@ imports:
   - name: cluster
     targetType: landscaper.gardener.cloud/kubernetes-cluster
 
-  - name: realHelmDeployment
+  - name: helmDeployment
     required: false
     schema:
       type: boolean
