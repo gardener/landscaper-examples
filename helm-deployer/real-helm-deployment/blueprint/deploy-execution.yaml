@@ -24,12 +24,12 @@ deployItems:
       helmDeploymentConfig:
         install:
           atomic: true
-          timeout: 10
+          timeout: 10m
         upgrade:
           atomic: true
-          timeout: 10
+          timeout: 10m
         uninstall:
-          timeout: 15
+          timeout: 15m
 
       exports:
         defaultTimeout: 10m
