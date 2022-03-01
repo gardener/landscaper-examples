@@ -1,0 +1,32 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/helm
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      name: echo
+      namespace: example
+
+      chart:
+        fromResource:
+          ref:
+            repositoryContext:
+              type: ociRegistry
+              baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+            componentName: github.com/gardener/landscaper-examples/helm-deployer/protected-helm-repo
+            version: v0.1.0
+          resourceName: echo-server-chart
+
+      helmDeployment: {{ .imports.helmDeployment }}
+      helmDeploymentConfig:
+        install:
+          atomic: true
+          timeout: 10m
+        upgrade:
+          atomic: true
+          timeout: 10m
+        uninstall:
+          timeout: 15m
