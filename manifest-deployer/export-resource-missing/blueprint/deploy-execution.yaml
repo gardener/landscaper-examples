@@ -1,0 +1,31 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: test
+              namespace: example
+            data:
+              foo: bar
+
+      exports:
+        defaultTimeout: 2m
+        exports:
+          - key: test
+            jsonPath: .data
+            fromResource:
+              apiVersion: v1
+              kind: ConfigMap
+              name: wrong-name
+              namespace: example
