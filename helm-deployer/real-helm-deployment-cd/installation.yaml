@@ -1,0 +1,31 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: real-helm-deployment-cd
+  namespace: example
+
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/helm-deployer/real-helm-deployment-cd
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  imports:
+    targets:
+      - name: cluster
+        target: '#my-cluster'
+
+  importDataMappings:
+    helmDeployment: true
+
+  exports:
+    data:
+      - name: loadBalancer
+        dataRef: loadBalancerCD
