@@ -12,5 +12,8 @@ registryPullSecrets: []
 
 configurations:
   helmChartRepoCredentials:
-    - url: https://sap-hub-stable.storage.googleapis.com
-      authHeader: TO_BE_REPLACED
+    apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+    kind: HelmChartRepoCredentials
+    auths:
+      - url: "https://sap-hub-stable.storage.googleapis.com"
+        authHeader: "Basic dX3d...cmQ="  # <-------------------------- replace with your auth header
