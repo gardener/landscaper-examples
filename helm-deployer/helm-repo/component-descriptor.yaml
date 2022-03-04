@@ -1,8 +1,8 @@
 meta:
   schemaVersion: 'v2'
 component:
-  name: 'github.com/gardener/landscaper-examples/helm-deployer/protected-helm-repo'
-  version: 'v0.1.0'
+  name: 'github.com/gardener/landscaper-examples/helm-deployer/helm-repo'
+  version: 'v0.1.2'
 
   repositoryContexts:
     - type: 'ociRegistry'
@@ -16,12 +16,12 @@ component:
 
   resources:
     - type: helm.io/chart
-      name: echo-server-chart
-      version: 1.0.0
+      name: etcd
+      version: 3.5.2
       relation: external
       access:
         type: helmChartRepository
         mediaType: application/octet-stream
-        helmChartRepoUrl: https://sap-hub-stable.storage.googleapis.com
-        helmChartName: echo-server
-        helmChartVersion: 1.0.0
+        helmChartRepoUrl: https://charts.bitnami.com/bitnami
+        helmChartName: etcd
+        helmChartVersion: 6.13.3

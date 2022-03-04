@@ -7,26 +7,14 @@ deployItems:
     config:
       apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
       kind: ProviderConfiguration
-      name: echo
+      name: helm-repo-etcd
       namespace: example
-
       chart:
-        fromResource:
+        fromResource: # will fetch the helm chart from component descriptor resource of type helm chart
           ref:
             repositoryContext:
               type: ociRegistry
               baseUrl: eu.gcr.io/gardener-project/landscaper/examples
-            componentName: github.com/gardener/landscaper-examples/helm-deployer/protected-helm-repo
-            version: v0.1.0
-          resourceName: echo-server-chart
-
-      helmDeployment: {{ .imports.helmDeployment }}
-      helmDeploymentConfig:
-        install:
-          atomic: true
-          timeout: 10m
-        upgrade:
-          atomic: true
-          timeout: 10m
-        uninstall:
-          timeout: 15m
+            componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-repo
+            version: v0.1.2
+          resourceName: etcd
