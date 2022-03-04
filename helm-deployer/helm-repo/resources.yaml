@@ -1,7 +1,7 @@
 ---
 type: blueprint
 name: blueprint
-version: v0.1.2
+version: v0.1.0
 relation: local
 input:
   type: dir

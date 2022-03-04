@@ -2,7 +2,7 @@ meta:
   schemaVersion: 'v2'
 component:
   name: 'github.com/gardener/landscaper-examples/helm-deployer/helm-repo'
-  version: 'v0.1.2'
+  version: 'v0.1.0'
 
   repositoryContexts:
     - type: 'ociRegistry'
@@ -16,12 +16,12 @@ component:
 
   resources:
     - type: helm.io/chart
-      name: etcd
-      version: 3.5.2
+      name: mongodb-chart
+      version: 11.0.6
       relation: external
       access:
         type: helmChartRepository
         mediaType: application/octet-stream
         helmChartRepoUrl: https://charts.bitnami.com/bitnami
-        helmChartName: etcd
-        helmChartVersion: 6.13.3
+        helmChartName: mongodb
+        helmChartVersion: 11.0.6

@@ -7,7 +7,7 @@ deployItems:
     config:
       apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
       kind: ProviderConfiguration
-      name: helm-repo-etcd
+      name: helm-repo-mongodb
       namespace: example
       chart:
         fromResource: # will fetch the helm chart from component descriptor resource of type helm chart
@@ -16,5 +16,5 @@ deployItems:
               type: ociRegistry
               baseUrl: eu.gcr.io/gardener-project/landscaper/examples
             componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-repo
-            version: v0.1.2
-          resourceName: etcd
+            version: v0.1.0
+          resourceName: mongodb-chart
