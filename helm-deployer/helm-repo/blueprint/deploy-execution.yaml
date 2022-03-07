@@ -9,12 +9,10 @@ deployItems:
       kind: ProviderConfiguration
       name: helm-repo-mongodb
       namespace: example
+
       chart:
-        fromResource: # will fetch the helm chart from component descriptor resource of type helm chart
-          ref:
-            repositoryContext:
-              type: ociRegistry
-              baseUrl: eu.gcr.io/gardener-project/landscaper/examples
-            componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-repo
-            version: v0.1.0
-          resourceName: mongodb-chart
+        helmChartRepo:
+          {{- $resource := getResource .cd "name" "mongodb-chart" }}
+          helmChartRepoUrl: {{ $resource.access.helmChartRepoUrl }}
+          helmChartName:    {{ $resource.access.helmChartName }}
+          helmChartVersion: {{ $resource.access.helmChartVersion }}
