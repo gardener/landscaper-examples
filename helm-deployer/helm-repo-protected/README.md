@@ -1,11 +1,16 @@
 # Loading a chart from a protected helm chart repo
 
-Prerequisites: 
-- Namespace `example` contains a target with name `my-cluster`. As an alternative you can adjust the target name in the 
-  installation.
-- Namespace `example` contains a context with name `helm-repo-protected` which contains the authentication data for
-  the protected helm chart repository. See [context.yaml](context.yaml).
+This example demonstrates the deployment of a helm chart that is pulled from a protected helm chart repository
+and then deployed with helm on a target cluster.
 
-The installation deploys an echo server.
-The deployment is **not** done with helm.
-The helm chart is read from a **protected helm chart repository**.
+The scenario uses the following resources on the Landscaper cluster, all in the same namespace `example`:
+
+- A target `my-cluster` containing the kubeconfig of the target cluster where the echo-server is being deployed.
+
+- A [context `helm-repo-protected`](context.yaml) which contains the authentication data for
+  the protected helm chart repository.
+
+- An [installation `helm-repo-protected`](installation.yaml), which references the target, the context, and the 
+  blueprint of component `github.com/gardener/landscaper-examples/helm-deployer/helm-repo-protected`.
+  The [deploy item](blueprint/deploy-execution.yaml) of the blueprint in turn references resource `echo-server-chart`
+  of the [component descriptor](component-descriptor.yaml), which contains the access data of the helm chart.
