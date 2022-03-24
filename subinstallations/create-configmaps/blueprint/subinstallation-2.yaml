@@ -1,0 +1,13 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+name: subinst2
+blueprint:
+  ref: cd://componentReferences/my-sub-component/resources/blueprint
+
+imports:
+  targets:
+    - name: "cluster"
+      target: "cluster"
+
+importDataMappings:
+  configmapName: test2

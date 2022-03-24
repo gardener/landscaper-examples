@@ -14,7 +14,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: test
+              name: {{ .imports.configmapName }}
               namespace: example
             data:
               foo: bar
@@ -27,5 +27,5 @@ deployItems:
             fromResource:
               apiVersion: v1
               kind: ConfigMap
-              name: test
+              name: {{ .imports.configmapName }}
               namespace: example

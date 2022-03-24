@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: create-configmap
+  name: create-configmaps
   namespace: example
 spec:
   blueprint:
@@ -10,7 +10,7 @@ spec:
 
   componentDescriptor:
     ref:
-      componentName: github.com/gardener/landscaper-examples/manifest-deployer/create-configmap
+      componentName: github.com/gardener/landscaper-examples/subinstallations/create-configmaps
       repositoryContext:
         baseUrl: eu.gcr.io/gardener-project/landscaper/examples
         type: ociRegistry
@@ -20,6 +20,3 @@ spec:
     targets:
       - name: cluster
         target: '#my-cluster'
-
-  importDataMappings:
-    configmapName: test
