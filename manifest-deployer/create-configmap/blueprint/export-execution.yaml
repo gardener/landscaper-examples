@@ -1,0 +1,3 @@
+exports:
+  test:
+    {{- index .values "deployitems" "default-deploy-item" "test" | toYaml | nindent 4 }}
