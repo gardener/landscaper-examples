@@ -1,0 +1,36 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+deployExecutions:
+  - name: deploy-execution-namespace
+    file: /deploy-execution-namespace.yaml
+    type: GoTemplate
+  - name: deploy-execution-carts
+    file: /deploy-execution-carts.yaml
+    type: GoTemplate
+  - name: deploy-execution-catalogue
+    file: /deploy-execution-catalogue.yaml
+    type: GoTemplate
+  - name: deploy-execution-front-end
+    file: /deploy-execution-front-end.yaml
+    type: GoTemplate
+  - name: deploy-execution-orders
+    file: /deploy-execution-orders.yaml
+    type: GoTemplate
+  - name: deploy-execution-payment
+    file: /deploy-execution-payment.yaml
+    type: GoTemplate
+  - name: deploy-execution-queue
+    file: /deploy-execution-queue.yaml
+    type: GoTemplate
+  - name: deploy-execution-shipping
+    file: /deploy-execution-shipping.yaml
+    type: GoTemplate
+  - name: deploy-execution-user
+    file: /deploy-execution-user.yaml
+    type: GoTemplate

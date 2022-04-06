@@ -1,0 +1,10 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+name: carts
+blueprint:
+  ref: cd://componentReferences/carts/resources/blueprint
+
+imports:
+  targets:
+    - name: "cluster"
+      target: "cluster"

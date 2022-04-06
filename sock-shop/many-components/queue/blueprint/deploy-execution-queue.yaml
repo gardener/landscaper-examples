@@ -1,0 +1,194 @@
+deployItems:
+  - name: deploy-items-queue
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: queue-master
+              labels:
+                name: queue-master
+              namespace: sock-shop
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  name: queue-master
+              template:
+                metadata:
+                  labels:
+                    name: queue-master
+                spec:
+                  containers:
+                    - name: queue-master
+                      image: weaveworksdemos/queue-master:0.3.1
+                      env:
+                        - name: JAVA_OPTS
+                          value: -Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
+                      resources:
+                        limits:
+                          cpu: 300m
+                          memory: 500Mi
+                        requests:
+                          cpu: 100m
+                          memory: 300Mi
+                      ports:
+                        - containerPort: 80
+                  nodeSelector:
+                    beta.kubernetes.io/os: linux
+
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: queue-master
+              annotations:
+                prometheus.io/scrape: 'true'
+              labels:
+                name: queue-master
+              namespace: sock-shop
+            spec:
+              ports:
+                # the port that this service should serve on
+                - port: 80
+                  targetPort: 80
+              selector:
+                name: queue-master
+
+        - policy: manage
+          manifest:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: rabbitmq
+              labels:
+                name: rabbitmq
+              namespace: sock-shop
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  name: rabbitmq
+              template:
+                metadata:
+                  labels:
+                    name: rabbitmq
+                  annotations:
+                    prometheus.io/scrape: "false"
+                spec:
+                  containers:
+                    - name: rabbitmq
+                      image: rabbitmq:3.6.8-management
+                      ports:
+                        - containerPort: 15672
+                          name: management
+                        - containerPort: 5672
+                          name: rabbitmq
+                      securityContext:
+                        capabilities:
+                          drop:
+                            - all
+                          add:
+                            - CHOWN
+                            - SETGID
+                            - SETUID
+                            - DAC_OVERRIDE
+                        readOnlyRootFilesystem: true
+                    - name: rabbitmq-exporter
+                      image: kbudde/rabbitmq-exporter
+                      ports:
+                        - containerPort: 9090
+                          name: exporter
+                  nodeSelector:
+                    beta.kubernetes.io/os: linux
+
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: rabbitmq
+              annotations:
+                prometheus.io/scrape: 'true'
+                prometheus.io/port: '9090'
+              labels:
+                name: rabbitmq
+              namespace: sock-shop
+            spec:
+              ports:
+                # the port that this service should serve on
+                - port: 5672
+                  name: rabbitmq
+                  targetPort: 5672
+                - port: 9090
+                  name: exporter
+                  targetPort: exporter
+                  protocol: TCP
+              selector:
+                name: rabbitmq
+
+        - policy: manage
+          manifest:
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: session-db
+              labels:
+                name: session-db
+              namespace: sock-shop
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  name: session-db
+              template:
+                metadata:
+                  labels:
+                    name: session-db
+                  annotations:
+                    prometheus.io.scrape: "false"
+                spec:
+                  containers:
+                    - name: session-db
+                      image: redis:alpine
+                      ports:
+                        - name: redis
+                          containerPort: 6379
+                      securityContext:
+                        capabilities:
+                          drop:
+                            - all
+                          add:
+                            - CHOWN
+                            - SETGID
+                            - SETUID
+                        readOnlyRootFilesystem: true
+                  nodeSelector:
+                    beta.kubernetes.io/os: linux
+
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: session-db
+              labels:
+                name: session-db
+              namespace: sock-shop
+            spec:
+              ports:
+                # the port that this service should serve on
+                - port: 6379
+                  targetPort: 6379
+              selector:
+                name: session-db
