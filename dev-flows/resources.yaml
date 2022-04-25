@@ -1,0 +1,117 @@
+---
+name: 'carts'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/carts:0.4.8'
+...
+---
+name: 'mongo'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'mongo'
+...
+---
+name: 'catalogue'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/catalogue:0.3.5'
+...
+---
+name: 'catalogue-db'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/catalogue-db:0.3.0'
+...
+---
+name: 'front-end'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/front-end:0.3.12'
+...
+---
+name: 'orders'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/orders:0.4.7'
+...
+---
+name: 'payment'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/payment:0.4.3'
+...
+---
+name: 'queue-master'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/queue-master:0.3.1'
+...
+---
+name: 'rabbitmq'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'rabbitmq:3.6.8-management'
+...
+---
+name: 'rabbitmq-exporter'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'kbudde/rabbitmq-exporter'
+...
+---
+name: 'redis'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'redis:alpine'
+...
+---
+name: 'shipping'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/shipping:0.4.8'
+...
+---
+name: 'user-db'
+version: '0.0.1'
+type: 'ociImage'
+relation: 'external'
+access:
+  type: 'ociRegistry'
+  imageReference: 'weaveworksdemos/user-db:0.3.0'
+...
