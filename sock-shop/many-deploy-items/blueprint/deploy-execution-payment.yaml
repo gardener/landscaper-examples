@@ -1,6 +1,8 @@
 deployItems:
-  - name: deploy-items-payment
+  - name: deploy-item-payment
     type: landscaper.gardener.cloud/kubernetes-manifest
+    dependsOn:
+      - deploy-item-namespace
     target:
       name: {{ .imports.cluster.metadata.name }}
       namespace: {{ .imports.cluster.metadata.namespace }}

@@ -1,6 +1,8 @@
 deployItems:
-  - name: default-deploy-item
+  - name: deploy-item-catalogue
     type: landscaper.gardener.cloud/kubernetes-manifest
+    dependsOn:
+      - deploy-item-namespace
     target:
       name: {{ .imports.cluster.metadata.name }}
       namespace: {{ .imports.cluster.metadata.namespace }}

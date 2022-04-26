@@ -1,5 +1,5 @@
 deployItems:
-  - name: deploy-items-namespace
+  - name: deploy-item-namespace
     type: landscaper.gardener.cloud/kubernetes-manifest
     target:
       name: {{ .imports.cluster.metadata.name }}
