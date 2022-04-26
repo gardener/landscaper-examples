@@ -10,6 +10,8 @@ deployItems:
       apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
       kind: ProviderConfiguration
       updateStrategy: update
+      readinessChecks:
+        timeout: 10m
       manifests:
         - policy: manage
           manifest:
