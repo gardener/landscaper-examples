@@ -3,6 +3,7 @@ deployItems:
     type: landscaper.gardener.cloud/kubernetes-manifest
     dependsOn:
       - deploy-item-namespace
+    timeout: 10m
     target:
       name: {{ .imports.cluster.metadata.name }}
       namespace: {{ .imports.cluster.metadata.namespace }}
