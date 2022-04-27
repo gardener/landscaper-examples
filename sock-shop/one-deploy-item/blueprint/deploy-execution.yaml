@@ -1,6 +1,7 @@
 deployItems:
   - name: default-deploy-item
     type: landscaper.gardener.cloud/kubernetes-manifest
+    timeout: 10m
     target:
       name: {{ .imports.cluster.metadata.name }}
       namespace: {{ .imports.cluster.metadata.namespace }}
@@ -8,6 +9,8 @@ deployItems:
       apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
       kind: ProviderConfiguration
       updateStrategy: update
+      readinessChecks:
+        timeout: 10m
       manifests:
         - policy: manage
           manifest:
