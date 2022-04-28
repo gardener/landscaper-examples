@@ -1,0 +1,10 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+name: shipping
+blueprint:
+  ref: cd://componentReferences/shipping/resources/blueprint
+
+imports:
+  targets:
+    - name: "cluster"
+      target: "cluster"

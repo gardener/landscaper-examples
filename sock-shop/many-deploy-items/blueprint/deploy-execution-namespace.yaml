@@ -1,0 +1,18 @@
+deployItems:
+  - name: deploy-item-namespace
+    type: landscaper.gardener.cloud/kubernetes-manifest
+    timeout: 10m
+    target:
+      name: {{ .imports.cluster.metadata.name }}
+      namespace: {{ .imports.cluster.metadata.namespace }}
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: sock-shop

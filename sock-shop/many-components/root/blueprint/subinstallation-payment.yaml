@@ -1,0 +1,10 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+name: payment
+blueprint:
+  ref: cd://componentReferences/payment/resources/blueprint
+
+imports:
+  targets:
+    - name: "cluster"
+      target: "cluster"

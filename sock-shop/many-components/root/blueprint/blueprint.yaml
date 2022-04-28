@@ -1,0 +1,18 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+subinstallations:
+  - file: /subinstallation-carts.yaml
+  - file: /subinstallation-catalogue.yaml
+  - file: /subinstallation-front-end.yaml
+  - file: /subinstallation-namespace.yaml
+  - file: /subinstallation-orders.yaml
+  - file: /subinstallation-payment.yaml
+  - file: /subinstallation-queue.yaml
+  - file: /subinstallation-shipping.yaml
+  - file: /subinstallation-user.yaml
