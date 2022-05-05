@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: imports-configmap
+  namespace: example
+data:
+  configmapName: example-configmap
+  contentKey: key-2a
+  contentValue: value-2a
