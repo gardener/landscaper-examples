@@ -1,8 +1,8 @@
 meta:
   schemaVersion: 'v2'
 component:
-  name: 'github.com/gardener/landscaper-examples/manifest-deployer/create-configmap-from-import'
-  version: 'v0.1.0'
+  name: 'github.com/gardener/landscaper-examples/manifest-deployer/create-configmap'
+  version: 'v0.1.2'
 
   repositoryContexts:
     - type: 'ociRegistry'
