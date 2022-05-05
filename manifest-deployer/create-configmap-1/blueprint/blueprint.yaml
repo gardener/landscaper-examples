@@ -1,0 +1,36 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: configmapName
+    required: true
+    type: data
+    schema:
+      description: name of the configmap which the blueprint creates.
+      type: string
+
+  - name: contentValue
+    required: true
+    type: data
+    schema:
+      type: string
+
+deployExecutions:
+  - name: default-deploy-execution
+    file: /deploy-execution.yaml
+    type: GoTemplate
+
+exportExecutions:
+  - name: default-export-execution
+    file: /export-execution.yaml
+    type: GoTemplate
+
+exports:
+  - name: test
+    type: data
+    schema:
+      type: object
