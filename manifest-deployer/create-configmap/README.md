@@ -27,5 +27,7 @@ For example:
 
 - the installation in [v0.1.2/installation-b](./v0.1.2/installation-b) reads all 3 imports from 3 separate configmaps.
 
+- the installation in [v0.1.2/installation-b](./v0.1.2/installation-d) reads all 3 imports from 3 separate data objects.
+
 Remark: Do not confuse the involved configmaps. On the one hand, there are configmaps containing the import values. 
 On the other hand, when you execute one of the examples, the result will be a configmap. 
