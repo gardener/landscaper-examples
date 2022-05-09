@@ -1,0 +1,40 @@
+component:
+  componentReferences: []
+  name: github.com/gardener/landscaper-examples/sock-shop/many-components/orders
+  provider: internal
+  repositoryContexts:
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+    type: ociRegistry
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+    componentNameMapping: urlPath
+    type: ociRegistry
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples/signed
+    componentNameMapping: urlPath
+    type: ociRegistry
+  resources:
+  - access:
+      digest: sha256:f3966c01a31d59e95e79fdb11ca4d0a6ccb5d17fbfd12c9ed4741e1a79b7f314
+      type: localOciBlob
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: genericBlobDigest/v1
+      value: f3966c01a31d59e95e79fdb11ca4d0a6ccb5d17fbfd12c9ed4741e1a79b7f314
+    name: blueprint
+    relation: local
+    type: blueprint
+    version: v0.1.0
+  sources: []
+  version: v0.1.0
+meta:
+  schemaVersion: v2
+signatures:
+- digest:
+    hashAlgorithm: sha256
+    normalisationAlgorithm: jsonNormalisation/v1
+    value: f3a2fb22a0a9996d07d099be94c0585dcdc7edb21fae1f287400b78c3907030a
+  name: example-signature
+  signature:
+    algorithm: RSASSA-PKCS1-V1_5
+    mediaType: application/vnd.ocm.signature.rsa
+    value: 60bb4c6df33cf9973ea169a100e1cebfb939f9507ef8b3daa1a7cc688f05a0f920aa43698e8d57aa11f40e26466163341157f88b7d2d721df489400247d52078fcf034dd1ef1b7388fb7611fab2d41c88fbcc59fc1ae18443c11d4ec46aabac3bcd9522d276e31adc19ee702c2221f12668d0866484e2eb83c0a14409c0f91a21e2725853f64dd759b46bae9366a7b1e5cc4fb07f8916be652f509ca64e891d291f08420f35d9e7a03e70063addf92a94e548e9e5a93e35de498b1b0cf140f879bfd7724541cadbab30c3ba3ee1d3236cb144331ffa2b80ac6b0cb206017bb4e254a517b7e3cc772dd50ab00357c6ad449861ff97ac0afdf28feceba81ec54a2
+

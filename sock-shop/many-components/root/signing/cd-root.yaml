@@ -1,0 +1,103 @@
+component:
+  componentReferences:
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/carts
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: c58e76efad4ff67cbaa77405d23e4b70a1b993c53d5be5425aa2097a338bc315
+    name: carts
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/catalogue
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 39d988abd32b07974d9baf250b2a4648792668b52825f1347754446a06336e91
+    name: catalogue
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/front-end
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: edc6dead997e60bcf32f549943c724c4a39654aeb99827f1e0b917945a7f55e3
+    name: front-end
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/namespace
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 2853fd87127b191a91dd1a699c91d68f5da27e8b058e3a7138b050fbee07e37a
+    name: namespace
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/orders
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: f3a2fb22a0a9996d07d099be94c0585dcdc7edb21fae1f287400b78c3907030a
+    name: orders
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/payment
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: d32c6d9211b9cfbaebe3e6d9f68cac8d7703e07cc472af3313c5ee0281689d10
+    name: payment
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/queue
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 9b80948ee18ea51f91a4d52f4865862eea1d1002ade7a03f2fe59be23cb1c46e
+    name: queue
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/shipping
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 1fa2df80a01c628012428b3ebd36244c79b2fe6b279a516243faf3a8d2d727c3
+    name: shipping
+    version: v0.1.0
+  - componentName: github.com/gardener/landscaper-examples/sock-shop/many-components/user
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: jsonNormalisation/v1
+      value: 086943103a2aba609e6e970c1a8da4d01c1a26ece0a3df419b84c73918c5a7ab
+    name: user
+    version: v0.1.0
+  name: github.com/gardener/landscaper-examples/sock-shop/many-components/root
+  provider: internal
+  repositoryContexts:
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+    type: ociRegistry
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+    componentNameMapping: urlPath
+    type: ociRegistry
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples/signed
+    componentNameMapping: urlPath
+    type: ociRegistry
+  resources:
+  - access:
+      digest: sha256:eb95debe780e730431e3c2e4a6a9dfbb91f533f3f5b73607e8cd0000eec62174
+      type: localOciBlob
+    digest:
+      hashAlgorithm: sha256
+      normalisationAlgorithm: genericBlobDigest/v1
+      value: eb95debe780e730431e3c2e4a6a9dfbb91f533f3f5b73607e8cd0000eec62174
+    name: blueprint
+    relation: local
+    type: blueprint
+    version: v0.1.0
+  sources: []
+  version: v0.1.0
+meta:
+  schemaVersion: v2
+signatures:
+- digest:
+    hashAlgorithm: sha256
+    normalisationAlgorithm: jsonNormalisation/v1
+    value: e75d142da2cc5df09b460934e154c25284789bf88508771bdb8ea0f269155687
+  name: example-signature
+  signature:
+    algorithm: RSASSA-PKCS1-V1_5
+    mediaType: application/vnd.ocm.signature.rsa
+    value: 2d1c318ba8a2c255f324edeb8a79e0a85c07640581040bdbecba31555e87d1cdaedcb73f516946b5a2f5a2ffefd2a2911d27e5c80d58f2b4988118f1f35a8b154dc7178dd8fea60e3673d8db42a5413c1749f66e9069261f318d02ee326c564ac86039b7ae866f276b3bded3ba175d0db30198f9cb0df3d43f6b40e163979f33689c4e5d443b8c9c824867373ed4816e91c4fccfe32b023a9f5f60b7f6c178b61e92b5c1f604249a99758d3ae4533913b7515e683e7e56934fd02d737578ce07000f05a94d711a1caff58019d9e7a78b908f1b8948c9650841472778fb84bd70b593e823975be88fbbc98c2ffb3c716afa53d4664d41e2b4bdc4904fbd0a6d0e
+
