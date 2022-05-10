@@ -22,11 +22,9 @@ COMPONENT_NAME="github.com/gardener/landscaper-examples/sock-shop/many-component
 VERSION="v0.1.0"
 SIGNATURE_NAME="example-signature"
 
-# Set path to your private key pem file for signing
-PRIVATE_KEY=<path to your private key pem file>
+# Set path to your public key pem file for signing
+PUBLIC_KEY=<path to your public key pem file>
 
-component-cli ca signature sign rsa ${BASE_URL} ${COMPONENT_NAME} ${VERSION} \
-  --upload-base-url ${BASE_URL_SIGNED} \
-  --recursive \
+component-cli ca signature verify rsa ${BASE_URL_SIGNED} ${COMPONENT_NAME} ${VERSION} \
   --signature-name ${SIGNATURE_NAME} \
-  --private-key ${PRIVATE_KEY}
+  --public-key ${PUBLIC_KEY}
