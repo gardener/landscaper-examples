@@ -1,0 +1,23 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/helm
+    target:
+      import: cluster  # "cluster" is the name of an import in the blueprint
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      name: helm-2-echo-server
+      namespace: example
+
+      chart:
+        helmChartRepo:
+          {{- $chartResource := getResource .cd "name" "echo-server-chart" }}
+          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
+          helmChartName:    {{ $chartResource.access.helmChartName }}
+          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+
+      values:
+        image:
+          {{- $imageResource := getResource .cd "name" "echo-server-image" }}
+          repository: {{ ociRefRepo $imageResource.access.imageReference }}
+          tag: {{ ociRefVersion $imageResource.access.imageReference }}
