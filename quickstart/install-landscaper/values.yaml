@@ -1,0 +1,8 @@
+landscaper:
+  landscaper:
+    verbosity: 7
+    deployers:
+      - container
+      - helm
+      - mock
+      - manifest

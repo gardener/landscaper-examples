@@ -26,8 +26,11 @@ export LS_VERSION=<landscaper version>
 
 export LS_HELM_VALUES_PATH=${COMPONENT_DIR}/values.yaml
 
-landscaper-cli quickstart install \
-  --namespace=${LS_NAMESPACE} \
-  --kubeconfig=${LS_KUBECONFIG} \
-  --landscaper-chart-version=${LS_VERSION} \
-  --landscaper-values=${LS_HELM_VALUES_PATH}
+# Set path to helm chart directory
+export LS_HELM_CHART_DIR=<path to landscaper helm chart directory>
+
+helm upgrade --install \
+  landscaper "${LS_HELM_CHART_DIR}" \
+  --namespace "${LS_NAMESPACE}" \
+  --kubeconfig "${LS_KUBECONFIG}" \
+  -f "${LS_HELM_VALUES_PATH}"
