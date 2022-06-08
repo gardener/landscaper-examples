@@ -1,11 +1,13 @@
 apiVersion: landscaper-service.gardener.cloud/v1alpha1
 kind: LandscaperDeployment
 metadata:
-  name: test
-  namespace: laas-user
+  name: ${name}
+  namespace: ${namespace}
 spec:
-  tenantId: "laas-tenant"
+  tenantId: ${tenant}
   purpose: "test"
   landscaperConfiguration:
     deployers:
       - manifest
+      - container
+      - helm

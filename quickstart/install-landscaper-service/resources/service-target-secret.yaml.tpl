@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: default-target
-  namespace: laas-system
+  name: ${name}-service-target
+  namespace: ${namespace}
 type: Opaque
 stringData:
   # set your kubeconfig

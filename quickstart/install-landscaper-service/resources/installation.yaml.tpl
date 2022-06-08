@@ -2,7 +2,7 @@ apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
   name: landscaper-service
-  namespace: laas-system
+  namespace: ${namespace}
 spec:
   componentDescriptor:
     ref:
@@ -22,7 +22,7 @@ spec:
         target: "#laas-target-cluster"
 
   importDataMappings:
-    namespace: laas-system
+    namespace: ${namespace}
     verbosity: 2
 
     # optional: registry pull secrets, list of secrets in "kubernetes.io/dockerconfigjson" format

@@ -2,8 +2,8 @@ apiVersion: landscaper-service.gardener.cloud/v1alpha1
 kind: ServiceTargetConfig
 
 metadata:
-  name: default
-  namespace: laas-system
+  name: ${name}
+  namespace: ${namespace}
   labels:
     config.landscaper-service.gardener.cloud/visible: "true"
     config.landscaper-service.gardener.cloud/region: "eu"
@@ -13,6 +13,6 @@ spec:
   priority: 10
 
   secretRef:
-    name: default-target
-    namespace: laas-system
+    name: ${name}-service-target
+    namespace: ${namespace}
     key: kubeconfig

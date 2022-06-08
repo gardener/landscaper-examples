@@ -1,2 +1,9 @@
-LAAS_KUBECONFIG_PATH=...
-SERVICE_TARGET_KUBECONFIG_PATH=...
+LAAS_NAMESPACE=laas-system
+LAAS_KUBECONFIG_PATH=<set path to kubeconfig of the laas cluster>
+
+SERVICE_TARGET_NAME=default
+SERVICE_TARGET_KUBECONFIG_PATH=<set path to kubeconfig of the service target cluster>
+
+LANDSCAPER_DEPLOYMENT_NAMESPACE=laas-user
+LANDSCAPER_DEPLOYMENT_NAME=test
+LANDSCAPER_DEPLOYMENT_TENANT=laas-tenant
