@@ -1,3 +1,9 @@
+<%
+  with open(kubeconfig_path) as f:
+    lines = f.readlines()
+
+  lines = map(str.rstrip, lines)
+%>
 apiVersion: v1
 kind: Secret
 metadata:
@@ -5,9 +11,7 @@ metadata:
   namespace: ${namespace}
 type: Opaque
 stringData:
-  # set your kubeconfig
   kubeconfig: |
-    apiVersion: v1
-    kind: Config
-    current-context: ...
-    ...
+% for line in lines:
+    ${line}
+% endfor

@@ -28,6 +28,7 @@ SECRET_PATH="${COMPONENT_DIR}/service-target-secret.yaml"
 mako-render ${COMPONENT_DIR}/resources/service-target-secret.yaml.tpl \
   --var namespace="${LAAS_NAMESPACE}" \
   --var name="${SERVICE_TARGET_NAME}" \
+  --var kubeconfig_path="${SERVICE_TARGET_KUBECONFIG_PATH}" \
   --output-file="${SECRET_PATH}"
 kubectl apply -f "${SECRET_PATH}"
 
