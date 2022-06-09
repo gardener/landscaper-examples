@@ -21,7 +21,7 @@ echo -e "\n--- settings"
 echo "LAAS_NAMESPACE:                 ${LAAS_NAMESPACE}"
 echo "LAAS_KUBECONFIG_PATH:           ${LAAS_KUBECONFIG_PATH}"
 echo "LAAS_VERSION:                   ${LAAS_VERSION}"
-
+echo "GCP_JSON_KEY_PATH:"             ${GCP_JSON_KEY_PATH}
 
 echo -e "\n--- creating laas namespace ${LAAS_NAMESPACE}"
 LAAS_NAMESPACE_PATH="${COMPONENT_DIR}/laas-namespace.yaml"
@@ -41,9 +41,26 @@ landscaper-cli targets create kubernetes-cluster \
 kubectl apply -f "${LAAS_TARGET_PATH}"
 
 
+echo -e "\n--- creating laas pull secret"
+kubectl create secret docker-registry landscaper-service-pullsecret \
+  -n ${LAAS_NAMESPACE} \
+  --docker-server=eu.gcr.io \
+  --docker-username=_json_key \
+  --docker-password="$(cat ${GCP_JSON_KEY_PATH})" \
+  --docker-email=any@valid.email
+
+
+echo -e "\n--- creating laas context"
+LAAS_CONTEXT_PATH="${COMPONENT_DIR}/laas-context.yaml"
+mako-render ${COMPONENT_DIR}/resources/laas-context.yaml.tpl \
+  --var namespace="${LAAS_NAMESPACE}" \
+  --output-file="${LAAS_CONTEXT_PATH}"
+kubectl apply -f "${LAAS_CONTEXT_PATH}"
+
+
 echo -e "\n--- creating laas installation"
 LAAS_INSTALLATION_PATH="${COMPONENT_DIR}/laas-installation.yaml"
-mako-render ${COMPONENT_DIR}/resources/installation.yaml.tpl \
+mako-render ${COMPONENT_DIR}/resources/laas-installation.yaml.tpl \
   --var namespace="${LAAS_NAMESPACE}" \
   --var version="${LAAS_VERSION}" \
   --output-file="${LAAS_INSTALLATION_PATH}"

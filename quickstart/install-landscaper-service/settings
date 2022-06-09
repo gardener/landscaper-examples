@@ -1,9 +1,10 @@
 LAAS_NAMESPACE=laas-system
-LAAS_KUBECONFIG_PATH=<set path to kubeconfig of the laas cluster>
-LAAS_VERSION=v0.3.0
+LAAS_KUBECONFIG_PATH=<path to kubeconfig of the laas cluster>
+LAAS_VERSION=v0.5.0
+GCP_JSON_KEY_PATH=<path to json key file to access the private oci registry containing the laas component descriptor>
 
 SERVICE_TARGET_NAME=default
-SERVICE_TARGET_KUBECONFIG_PATH=<set path to kubeconfig of the service target cluster>
+SERVICE_TARGET_KUBECONFIG_PATH=<path to kubeconfig of the service target cluster>
 
 LANDSCAPER_DEPLOYMENT_NAMESPACE=laas-user
 LANDSCAPER_DEPLOYMENT_NAME=test

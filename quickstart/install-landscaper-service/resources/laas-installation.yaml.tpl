@@ -4,11 +4,11 @@ metadata:
   name: landscaper-service
   namespace: ${namespace}
 spec:
+
+  context: landscaper-service
+
   componentDescriptor:
     ref:
-      repositoryContext:
-        type: ociRegistry
-        baseUrl: eu.gcr.io/gardener-project/development
       componentName: github.com/gardener/landscaper-service
       version: ${version}
 
@@ -26,8 +26,6 @@ spec:
     verbosity: 2
 
     # optional: registry pull secrets, list of secrets in "kubernetes.io/dockerconfigjson" format
-    # registryPullSecrets:
-    #  - name: secret1
-    #    namespace: laas-system
-    #  - name: secret2
-    #    namespace: laas-system
+    registryPullSecrets:
+      - name: landscaper-service-pullsecret
+        namespace: ${namespace}
