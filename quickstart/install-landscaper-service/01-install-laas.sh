@@ -20,6 +20,7 @@ source ${COMPONENT_DIR}/settings
 echo -e "\n--- settings"
 echo "LAAS_NAMESPACE:                 ${LAAS_NAMESPACE}"
 echo "LAAS_KUBECONFIG_PATH:           ${LAAS_KUBECONFIG_PATH}"
+echo "LAAS_VERSION:                   ${LAAS_VERSION}"
 
 
 echo -e "\n--- creating laas namespace ${LAAS_NAMESPACE}"
@@ -44,5 +45,6 @@ echo -e "\n--- creating laas installation"
 LAAS_INSTALLATION_PATH="${COMPONENT_DIR}/laas-installation.yaml"
 mako-render ${COMPONENT_DIR}/resources/installation.yaml.tpl \
   --var namespace="${LAAS_NAMESPACE}" \
+  --var version="${LAAS_VERSION}" \
   --output-file="${LAAS_INSTALLATION_PATH}"
 kubectl apply -f "${LAAS_INSTALLATION_PATH}"

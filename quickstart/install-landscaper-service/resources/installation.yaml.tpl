@@ -10,7 +10,7 @@ spec:
         type: ociRegistry
         baseUrl: eu.gcr.io/gardener-project/development
       componentName: github.com/gardener/landscaper-service
-      version: v0.3.0
+      version: ${version}
 
   blueprint:
     ref:

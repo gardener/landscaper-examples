@@ -1,5 +1,6 @@
 LAAS_NAMESPACE=laas-system
 LAAS_KUBECONFIG_PATH=<set path to kubeconfig of the laas cluster>
+LAAS_VERSION=v0.3.0
 
 SERVICE_TARGET_NAME=default
 SERVICE_TARGET_KUBECONFIG_PATH=<set path to kubeconfig of the service target cluster>
