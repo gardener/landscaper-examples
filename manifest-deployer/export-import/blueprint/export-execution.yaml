@@ -1,0 +1,2 @@
+exports:
+  configmapNameOut: {{ .imports.configmapNameIn }}-x

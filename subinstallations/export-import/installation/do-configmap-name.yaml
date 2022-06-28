@@ -1,0 +1,6 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+data: example-configmap
+kind: DataObject
+metadata:
+  name: do-configmap-name
+  namespace: example
