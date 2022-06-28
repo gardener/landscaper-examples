@@ -1,6 +1,6 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: InstallationTemplate
-name: subinst1
+name: subinst3
 blueprint:
   ref: cd://componentReferences/my-sub-component/resources/blueprint
 
@@ -11,9 +11,9 @@ imports:
 
   data:
     - name: configmapNameIn
-      dataRef: configmap-name-base
+      dataRef: configmap-name-3
 
 exports:
   data:
     - name: configmapNameOut
-      dataRef: configmap-name-2
+      dataRef: configmap-name-4

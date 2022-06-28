@@ -22,5 +22,10 @@ spec:
         target: '#my-cluster'
 
     data:
-      - name: configmapNameIn
-        dataRef: do-configmap-name
+      - name: configmap-name-base
+        dataRef: do-configmap-name-base
+
+  exports:
+    data:
+      - name: configmap-names
+        dataRef: do-configmap-names

@@ -6,8 +6,8 @@ blueprint:
 
 imports:
   targets:
-    - name: "cluster"
-      target: "cluster"
+    - name: cluster
+      target: cluster
 
   data:
     - name: configmapNameIn
