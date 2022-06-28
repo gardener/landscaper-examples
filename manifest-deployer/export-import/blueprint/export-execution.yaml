@@ -1,2 +1,2 @@
 exports:
-  configmapNameOut: {{ .imports.configmapNameIn }}-x
+  configmap-name-out: {{ index .imports "configmap-name-in" }}-x

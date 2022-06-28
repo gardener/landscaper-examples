@@ -6,7 +6,7 @@ imports:
   - name: cluster
     targetType: landscaper.gardener.cloud/kubernetes-cluster
 
-  - name: configmapNameIn
+  - name: configmap-name-in
     required: true
     type: data
     schema:
@@ -14,7 +14,7 @@ imports:
       type: string
 
 exports:
-  - name: configmapNameOut
+  - name: configmap-name-out
     type: data
     schema:
       type: string

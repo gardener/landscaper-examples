@@ -19,13 +19,13 @@ spec:
   imports:
     targets:
       - name: cluster
-        target: '#my-cluster'
+        target: my-cluster
 
     data:
-      - name: configmapNameIn
-        dataRef: configmap-name-3
+      - name: configmap-name-in
+        dataRef: do-configmap-name-3
 
   exports:
     data:
-      - name: configmapNameOut
-        dataRef: configmap-name-4
+      - name: configmap-name-out
+        dataRef: do-configmap-name-4

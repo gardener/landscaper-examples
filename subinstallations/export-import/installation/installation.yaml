@@ -19,7 +19,7 @@ spec:
   imports:
     targets:
       - name: cluster
-        target: '#my-cluster'
+        target: my-cluster
 
     data:
       - name: configmap-name-base

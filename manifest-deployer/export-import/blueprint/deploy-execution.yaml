@@ -13,7 +13,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: {{ .imports.configmapNameIn }}
+              name: {{ index .imports "configmap-name-in" }}
               namespace: example
             data:
               foo: bar
