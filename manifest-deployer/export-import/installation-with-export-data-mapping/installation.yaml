@@ -1,0 +1,41 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: export-with-data-mapping
+  namespace: example
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/manifest-deployer/export-import
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: configmap-name-in
+        dataRef: do-configmap-name-1
+
+  exportDataMappings:
+    exp1:
+      name: (( configmap-name-out ))
+      counter: 1
+    exp2:
+      name: (( configmap-name-out ))
+      counter: 2
+
+  exports:
+    data:
+      - name: exp1
+        dataRef: do-exp1
+      - name: exp2
+        dataRef: do-exp2
