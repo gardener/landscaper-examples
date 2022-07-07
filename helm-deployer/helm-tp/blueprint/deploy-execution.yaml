@@ -1,0 +1,29 @@
+deployItems:
+  - name: default-deploy-item
+    type: landscaper.gardener.cloud/helm  # the type of the deploy item
+                                          # here we use the helm deployer (other deployers: manifest deployer, container deployer)
+    target:
+      import: cluster                     # "cluster" is the name of an import parameter in the blueprint
+
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      name: tp
+      namespace: example
+
+      chart:
+        helmChartRepo:
+          {{- $chartResource := getResource .cd "name" "tp-chart" }}  # "tp-chart" is the name of a resource in the component descriptor
+          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
+          helmChartName:    {{ $chartResource.access.helmChartName }}
+          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+
+      values:
+        image:
+          {{- $imageResource := getResource .cd "name" "tp-image" }}  # "tp-image" is the name of a resource in the component descriptor
+          repository: {{ ociRefRepo $imageResource.access.imageReference }}
+          tag: {{ ociRefVersion $imageResource.access.imageReference }}
+        deployment:
+          {{ .imports.helmvalues.deployment | toYaml | nindent 10 }}
+        config:
+          {{ .imports.helmvalues.config | toYaml | nindent 10 }}

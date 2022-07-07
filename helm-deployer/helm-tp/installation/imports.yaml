@@ -1,0 +1,28 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: my-imports
+  namespace: example
+data:
+  deployment:
+    image:
+      registry: xxxxxxxxxxxx
+      repository: xxxxxxxxxxxx
+      pullPolicy: IfNotPresent
+    replicas:
+      http: 2
+      tcp: 2
+    resources:
+      requests:
+        cpu: 0.1
+        memory: 256M
+      limits:
+        cpu: 1
+        memory: 1024M
+  config:
+    platform:
+      region: xxxxxxxxxxxx
+    integration:
+      connectivityProxy:
+        httpPort: xxxxxxxxxxxx
+        tcpPort: xxxxxxxxxxxx
