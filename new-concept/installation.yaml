@@ -1,0 +1,73 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation # introduce root installation, not sure if this helps
+metadata:
+  name: create-configmaps-imports
+  namespace: example
+spec:
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/subinstallations/create-configmaps-imports
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  # how could we reuse types of blueprint
+  # types defined here could be used in imports, exports and blueprint preprocessing
+  importExportTypes: |
+    type Struct1 struct {
+      name: string
+      location: string
+    }
+    ...
+    type Struct3 struct {
+          position: int
+    }
+    ...
+
+  # improve syntax of imports:
+  # - no different target and data sections
+  # - more clear what is the parameter name and what is the referenced object
+  imports:
+    - parameterName: cluster
+      kind: target
+      k8sObjectName: 'my-cluster'
+      type: k8sTarget # predefined type
+    - name: someDataObject
+      kind: dataObject
+      k8sObjectName: 'someDataObjectName'
+      type: Struct1
+    - name: someDataObject
+      kind: configMap
+      k8sObjectName: 'someConfigMapName'
+      type: Struct2
+
+  exports:
+    - parameterName: result1
+      kind: target
+      k8sObjectName: 'result-target'
+      type: k8sTarget # predefined type
+    - parameterName: result2
+      kind: configMap
+      k8sObjectName: 'result-cm'
+      type: Struct6
+
+  blueprint:
+    // types and paramters in the preprocess section could be used only in the callBlueprint
+    preprocess: |
+      // plain go coding
+      imports ... // some go imports (only imports of core libs allowed)
+      ...
+      newPosition := Struct3{position: 4}
+      ...
+      otherParam := Struct4{...}
+
+    ref: cd://resources/blueprint1
+    call: |
+      (result1, result2) = callBlueprint(newPosition, otherParam, cluster) # positional parameter
+
+    // do we need some postprocessing of the results. I think no, because importing installations could already preprocess the data
+    // only introduce another alternative if really needed.
+
+
+

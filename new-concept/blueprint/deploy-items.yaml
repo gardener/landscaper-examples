@@ -1,0 +1,42 @@
+deployItems:
+
+  imports: name, value, target # type is defined in blueprint (positional params)
+
+  items:
+  # here starts the templating
+  - name: default-deploy-item1
+    type: landscaper.gardener.cloud/helm
+    target: params.target
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+      name: helm-1-nginx
+      namespace: example
+
+      chart:
+        helmChartRepo:
+          {{- $chartResource := getResource .cd "name" "nginx-chart" }}
+          helmChartRepoUrl: {{ .imports.name + .imports.value }}
+          helmChartName:    {{ $chartResource.access.helmChartName }}
+          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+
+      values:
+        image:
+          {{- $imageResource := getResource .cd "name" "nginx-image" }}
+          registry: "docker.io"
+          repository: {{ ociRefRepo $imageResource.access.imageReference }}
+          tag: {{ ociRefVersion $imageResource.access.imageReference }}
+
+      exportsFromManifests: # type specific export params
+        - key: exportParam1
+          jsonPath: .Values.controller.ingressClass
+
+
+  - name: default-deploy-item2
+    ...
+
+  exports: # positional params
+    - exportVal1: {{ .deployItem.default-deploy-item1.exportParam1 }}
+    - exportVal1: {{ .deployItem.default-deploy-item2.exportParam1 }}
+
+

@@ -1,0 +1,79 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+
+# data types in go syntax
+# there are some predefined global type like Target
+importExportTypes: |
+  type Struct3 struct {
+    position: int
+  }
+  ...
+  type Struct4 ...
+
+  type Struct6 ...
+
+imports: # positional parameters, types must be defined in the importExportTypes section
+  - name: param1
+    type: Struct3
+  - name param2
+    type: Struct4
+  - name: target
+    type: k8sTarget
+
+subinstallations:
+  - name: sub1
+    imports: [param1, param2] # access to blueprint import params and exports params of other sub installations
+    preprocess: |
+      // plain go code with access to local input params
+      // internalParam1 := ...
+      // internalParam2 := ...
+    ref: cd://componentReferences/my-sub-component/resources/otherblueprint
+    call: |
+      (internReturnVal1, internReturnVal2) = callBlueprint(internalParam1, internalParam2)
+    exports:
+      - name: internReturnVal1
+        type: ...
+      - name: internReturnVal2
+          type: ...
+
+  - name: sub2
+    imports: [param1, internReturnVal2]
+    preprocess: |
+      // plain go code
+      // internalParam3 := ...
+      // internalParam4 := ...
+    ref: cd://componentReferences/my-sub-component/resources/otherblueprint2
+    call: |
+      (internReturnVal3) = callBlueprint(internalParam3, internalParam4)
+    exports:
+      - name: internReturnVal3
+        type: ...
+
+deployItems:
+    imports: [param1, target] # access to import params
+    preprocess: |
+      // plain go code
+      // deployItemInputParam1 := param1 + 10
+      // deployItemInputParam2 := ...
+    file: /deploy-items.yaml
+    call: |
+      (internReturnVal5, internReturnVal6) = call(deployItemInputParam1, deployItemInputParam2, target)
+    exports:
+      - name: internReturnVal5
+        type: ...
+      - name: internReturnVal6
+        type: ...
+
+
+# exports could be computed based on imports params, the exports of the sub installations and execution
+computeExports: |
+  imports ...
+  r1 = internReturnVal1 + internReturnVal3 + internReturnVal6
+  ...
+  r2 = ...
+
+exports: # positional parameters, types must be defined in the importExportTypes section
+  - name r1
+    type: k8sTarget
+  - name r2
+    type: Struct6
