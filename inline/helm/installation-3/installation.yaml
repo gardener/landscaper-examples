@@ -70,11 +70,6 @@ spec:
               type: data
               schema:
                 type: object
-                properties:
-                  deployment:
-                    type: object
-                  config:
-                    type: object
 
           deployExecutions:
             - name: default
