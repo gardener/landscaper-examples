@@ -1,0 +1,17 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Context
+metadata:
+  name: helm-repo-protected
+  namespace: example
+
+repositoryContext:
+  baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+  type: ociRegistry
+
+registryPullSecrets: []
+
+configurations:
+  helmChartRepoCredentials:
+    auths:
+      - url: "https://sap-hub-stable.storage.googleapis.com"
+        authHeader: "Basic dX3d...cmQ="  # <-------------------------- replace with your auth header

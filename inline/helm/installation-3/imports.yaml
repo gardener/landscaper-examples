@@ -1,18 +1,20 @@
-apiVersion: landscaper.gardener.cloud/v1alpha1
-kind: DataObject
+apiVersion: v1
+kind: Secret
 metadata:
   name: my-imports
   namespace: example
-data:
-  replicaCount: 1
-  resources:
-    limits:
-      cpu: 100m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 128Mi
-  service:
-    type: ClusterIP
-    port: 80
-    targetPort: 8080
+type: Opaque
+stringData:
+  helmvaluesKey: |
+    replicaCount: 1
+    resources:
+      limits:
+        cpu: 100m
+        memory: 128Mi
+      requests:
+        cpu: 100m
+        memory: 128Mi
+    service:
+      type: ClusterIP
+      port: 80
+      targetPort: 8080

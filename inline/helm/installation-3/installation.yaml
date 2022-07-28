@@ -11,47 +11,17 @@ spec:
   # Set values for the import parameters of the blueprint
   imports:
     targets:
-      - name: cluster        # name of an import parameter of the blueprint
-        target: my-cluster   # name of the Target custom resource containing the kubeconfig of the target cluster
+      - name: cluster          # name of an import parameter of the blueprint
+        target: my-cluster     # name of the Target custom resource containing the kubeconfig of the target cluster
     data:
-      - name: helmvalues     # name of an import parameter of the blueprint
-        dataRef: my-imports  # name of the DataObject custom resource containing the value for the import parameter
+      - name: helmvalues       # name of an import parameter of the blueprint
+        secretRef:
+          name: my-imports     # name of the secret containing the value for the import parameter
+          namespace: example   # namespace of the secret (optional, default is the installation namespace)
+          key: helmvaluesKey   # key in the data section of the secret
 
   # Name of a Context custom resource in the same namespace; contains the access data for the helm chart repo
   context: helm-repo-protected
-
-  componentDescriptor:
-    inline:
-      meta:
-        schemaVersion: v2
-      component:
-        name: 'github.com/gardener/landscaper-examples/inline/helm-3'
-        version: 'v0.1.0'
-        provider: internal
-        repositoryContexts:
-          - type: 'ociRegistry'
-            baseUrl: 'eu.gcr.io/gardener-project/landscaper/examples'
-        sources: []
-        componentReferences: []
-        resources:
-          - name: echo-server-chart
-            type: helm.io/chart
-            version: 1.0.0
-            relation: external
-            access:
-              type: helmChartRepository
-              mediaType: application/octet-stream
-              helmChartRepoUrl: https://sap-hub-stable.storage.googleapis.com
-              helmChartName: echo-server
-              helmChartVersion: 1.0.0
-
-          - name: echo-server-image
-            type: ociImage
-            version: "1.4"
-            relation: external
-            access:
-              type: ociRegistry
-              imageReference: gcr.io/google_containers/echoserver:1.4
 
   blueprint:
     inline:
@@ -88,14 +58,12 @@ spec:
 
                       chart:
                         helmChartRepo:
-                          {{- $chartResource := getResource .cd "name" "echo-server-chart" }}  # "echo-server-chart" is the name of a resource in the component descriptor
-                          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
-                          helmChartName:    {{ $chartResource.access.helmChartName }}
-                          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+                          helmChartRepoUrl: https://sap-hub-stable.storage.googleapis.com
+                          helmChartName:    echo-server
+                          helmChartVersion: 1.0.0
 
                       values:
                         image:
-                          {{- $imageResource := getResource .cd "name" "echo-server-image" }}  # "echo-server-image" is the name of a resource in the component descriptor
-                          repository: {{ ociRefRepo $imageResource.access.imageReference }}
-                          tag: {{ ociRefVersion $imageResource.access.imageReference }}
+                          repository: gcr.io/google_containers/echoserver
+                          tag: 1.4
                         {{ .imports.helmvalues | toYaml | nindent 8 }}
