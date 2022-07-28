@@ -9,6 +9,8 @@ The blueprint of the installation is defined inline.
 - The [target](installation-1/target.yaml) contains the kubeconfig of the target cluster.
 - The [context](installation-1/context.yaml) contains the access data for the helm chart repo.
 
+![inline-helm-1](images/inline-helm-1.png)
+
 ### Example [installation-2](installation-2)
 
 Similar to the previous example. The helm values are now imported from a data object.
@@ -18,6 +20,8 @@ Similar to the previous example. The helm values are now imported from a data ob
 - The [target](installation-2/target.yaml) contains the kubeconfig of the target cluster.
 - The [context](installation-2/context.yaml) contains the access data for the helm chart repo.
 - The [**data object**](installation-2/imports.yaml) contains the helm values.
+
+![inline-helm-2](images/inline-helm-2s.png)
 
 ### Example [installation-3](installation-3)
 
