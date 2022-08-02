@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ .Values.name }}"
+  namespace: {{ .Release.Namespace }}
+data:
+  testData: "{{ .Values.testData }}"-x
