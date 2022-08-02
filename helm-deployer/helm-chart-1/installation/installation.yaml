@@ -1,8 +1,10 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: helm-1
+  name: helm-chart-1
   namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
 
 spec:
   blueprint:
@@ -11,7 +13,7 @@ spec:
 
   componentDescriptor:
     ref:
-      componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-1
+      componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-chart-1
       repositoryContext:
         baseUrl: eu.gcr.io/gardener-project/landscaper/examples
         type: ociRegistry
@@ -21,3 +23,14 @@ spec:
     targets:
       - name: cluster
         target: 'my-cluster'
+
+  importDataMappings:
+    release:
+      name: hallo
+      namespace: example
+    testDataIn: test
+
+  exports:
+    data:
+      - name: testDataOut
+        dataRef: do-testdata-out

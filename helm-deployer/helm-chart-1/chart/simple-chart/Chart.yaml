@@ -1,7 +1,6 @@
 apiVersion: v2
 appVersion: 0.1.0
-description: Simple helm chasrt
-kubeVersion: '>=1.19.0-0'
-name: simple-helmchart
+description: Simple helm chart
+name: simple-chart
 type: application
 version: 0.1.0

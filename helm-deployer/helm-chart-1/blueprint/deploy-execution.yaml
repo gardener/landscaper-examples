@@ -1,24 +1,31 @@
 deployItems:
-  - name: default-deploy-item
+  - name: defaultitem
     type: landscaper.gardener.cloud/helm
     target:
-      import: cluster  # "cluster" is the name of an import in the blueprint
+      import: cluster
     config:
       apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
       kind: ProviderConfiguration
-      name: helm-1-nginx
-      namespace: example
+      name:  {{ .imports.release.name }}
+      namespace: {{ .imports.release.namespace }}
 
       chart:
         helmChartRepo:
-          {{- $chartResource := getResource .cd "name" "nginx-chart" }}
+          {{- $chartResource := getResource .cd "name" "simple-chart" }}
           helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
           helmChartName:    {{ $chartResource.access.helmChartName }}
           helmChartVersion: {{ $chartResource.access.helmChartVersion }}
 
       values:
-        image:
-          {{- $imageResource := getResource .cd "name" "nginx-image" }}
-          registry: "docker.io"
-          repository: {{ ociRefRepo $imageResource.access.imageReference }}
-          tag: {{ ociRefVersion $imageResource.access.imageReference }}
+        testData: {{ .imports.testDataIn }}
+
+      exports:
+        exports:
+          - key: testDataOut
+            timeout: 5m
+            jsonPath: .data.testData
+            fromResource:
+              apiVersion: v1
+              kind: ConfigMap
+              name: {{ .imports.release.name }}
+              namespace: {{ .imports.release.namespace }}

@@ -14,7 +14,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COMPONENT_DIR="$(dirname $0)/.."
-CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
 
-component-cli ctf push "${CTF_PATH}"
+# Get an access token:
+# gcloud auth login
+# gcloud auth print-access-token
+ACCESS_TOKEN=<your access token>
+
+COMPONENT_DIR="$(dirname $0)/.."
+
+helm package "${COMPONENT_DIR}/chart/simple-chart" -d "${COMPONENT_DIR}/commands"
+
+helm registry login eu.gcr.io -u oauth2accesstoken -p "${ACCESS_TOKEN}"
+
+helm push "${COMPONENT_DIR}/commands/simple-chart-0.1.0.tgz" oci://eu.gcr.io/gardener-project/landscaper/integration-tests/charts

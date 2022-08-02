@@ -1,0 +1,2 @@
+exports:
+  testDataOut: {{ .deployitems.defaultitem.testDataOut  }}
