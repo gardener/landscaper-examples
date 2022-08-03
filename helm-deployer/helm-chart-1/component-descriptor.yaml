@@ -20,8 +20,5 @@ component:
       version: 0.1.0
       relation: external
       access:
-        type: helmChartRepository
-        mediaType: application/octet-stream
-        helmChartRepoUrl: eu.gcr.io/gardener-project/landscaper/integration-tests/charts
-        helmChartName: simple-chart
-        helmChartVersion: 0.1.0
+        type: ociRegistry
+        imageReference: eu.gcr.io/gardener-project/landscaper/integration-tests/charts/simple-chart:0.1.0

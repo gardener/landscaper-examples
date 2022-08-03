@@ -4,4 +4,4 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Release.Namespace }}
 data:
-  testData: "{{ .Values.testData }}"-x
+  testData: {{ .Values.testData }}-x

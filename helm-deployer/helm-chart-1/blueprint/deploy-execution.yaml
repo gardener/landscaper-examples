@@ -10,11 +10,8 @@ deployItems:
       namespace: {{ .imports.release.namespace }}
 
       chart:
-        helmChartRepo:
-          {{- $chartResource := getResource .cd "name" "simple-chart" }}
-          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
-          helmChartName:    {{ $chartResource.access.helmChartName }}
-          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+        {{ $chartResource := getResource .cd "name" "simple-chart" }}
+        ref: {{ $chartResource.access.imageReference }}
 
       values:
         testData: {{ .imports.testDataIn }}
