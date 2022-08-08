@@ -17,8 +17,9 @@
 COMPONENT_DIR="$(dirname $0)/.."
 
 CA_PATH=${COMPONENT_DIR}
-CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
+CTF_PATH=${COMPONENT_DIR}/commands/transport.tar
 
 landscaper-cli component-cli component-archive "${CA_PATH}" "${CTF_PATH}" \
   -r ${COMPONENT_DIR}/resources.yaml
 
+component-cli ctf push "${CTF_PATH}"
