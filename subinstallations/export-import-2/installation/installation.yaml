@@ -1,0 +1,34 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: export-import-root
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/subinstallations/export-import
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.2
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: configmap-name-base
+        dataRef: do-configmap-name-base
+
+  exports:
+    data:
+      - name: configmap-names
+        dataRef: do-configmap-names
