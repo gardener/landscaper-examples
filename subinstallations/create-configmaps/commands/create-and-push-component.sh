@@ -15,10 +15,6 @@
 # limitations under the License.
 
 COMPONENT_DIR="$(dirname $0)/.."
+TRANSPORT_FILE=${COMPONENT_DIR}/commands/transport.tar
 
-CA_PATH=${COMPONENT_DIR}
-CTF_PATH=${COMPONENT_DIR}/ctf/transport.tar
-
-landscaper-cli component-cli component-archive "${CA_PATH}" "${CTF_PATH}" \
-  -r ${COMPONENT_DIR}/resources.yaml
-
+../../../hack/create-and-push-component.sh "${COMPONENT_DIR}" "${TRANSPORT_FILE}"
