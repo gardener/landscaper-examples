@@ -1,6 +1,6 @@
 landscaper:
   landscaper:
-    verbosity: 7
+    verbosity: DEBUG
     deployers:
       - container
       - helm
