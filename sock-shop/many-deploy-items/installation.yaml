@@ -3,6 +3,9 @@ kind: Installation
 metadata:
   name: sock-shop
   namespace: sock-shop-inst
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
 spec:
   blueprint:
     ref:
