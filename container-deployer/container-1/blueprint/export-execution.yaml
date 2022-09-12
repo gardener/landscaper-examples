@@ -5,3 +5,5 @@ exports:
     {{- index .values "deployitems" "container-deployer" "component" | toYaml | nindent 4 }}
   content:
     {{- index .values "deployitems" "container-deployer" "content" | toYaml | nindent 4 }}
+  state:
+    {{- index .values "deployitems" "container-deployer" "state" | toYaml | nindent 4 }}

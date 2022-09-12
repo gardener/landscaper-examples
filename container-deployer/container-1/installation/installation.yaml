@@ -26,9 +26,9 @@ spec:
     configmap:
       name: example-configmap
       namespace: default
-      content:
-        key: mykey
-        value: myvalue
+      data:
+        key1: value1
+        key2: value2
 
   exports:
     data:
@@ -40,3 +40,6 @@ spec:
 
     - name: content
       dataRef: content
+
+    - name: state
+      dataRef: state
