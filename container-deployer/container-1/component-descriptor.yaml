@@ -1,0 +1,24 @@
+meta:
+  schemaVersion: v2
+component:
+  name: github.com/gardener/landscaper-examples/container-deployer/container-1
+  version: v0.1.0
+
+  repositoryContexts:
+    - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+      type: ociRegistry
+
+  provider: internal
+  
+  componentReferences: []
+
+  sources: []
+
+  resources:
+    - access:
+        imageReference: eu.gcr.io/gardener-project/landscaper/examples/images/landscaper-python:v1.0.0
+        type: ociRegistry
+      name: landscaper-python
+      relation: external
+      type: ociImage
+      version: v1.0.0
