@@ -9,4 +9,4 @@ The example exports the following data objects:
 * `configmapdata`: Contains the data section of the deployed configmap.
 * `component`: Contains the component name and version used by the installation.
 * `content`: Contains the list and file properties of blueprint files provided to the container deployer.
-* `stat`: Contains the state of the container.
+* `state`: Contains the state of the container.
