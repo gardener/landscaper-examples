@@ -16,13 +16,8 @@ imports:
         type: string
       namespace:
         type: string
-      content:
+      data:
         type: object
-        properties:
-          key:
-            type: string
-          value:
-            type: string
 
 exports:
 - name: configMapData
@@ -36,6 +31,10 @@ exports:
 - name: content
   schema:
     type: array
+
+- name: state
+  schema:
+    type: object
 
 deployExecutions:
   - name: deploy-execution

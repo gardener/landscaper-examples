@@ -1,3 +1,7 @@
+# SPDX-FileCopyrightText: 2022 SAP SE or an SAP affiliate company and Gardener contributors.
+#
+# SPDX-License-Identifier: Apache-2.0
+
 import sys
 import os
 import yaml
@@ -18,9 +22,7 @@ def reconcile(imports: dict):
         "metadata": {
             "name": name 
         },
-        "data": {
-            configmap_import["content"]["key"]: configmap_import["content"]["value"]
-        }
+        "data": configmap_import["data"]
     }
 
     v1 = client.CoreV1Api()
@@ -48,7 +50,7 @@ def delete(imports: dict):
         print(f"deleting configmap {namespace}/{name}")
         v1.delete_namespaced_config_map(namespace=namespace, name=name)
 
-def write_exports(configmap_data: dict, components: dict, content_path: str, exports_path: str):
+def write_exports(configmap_data: dict, components: dict, state: dict, content_path: str, exports_path: str):
     print(f"writing exports to {exports_path}")
 
     component = components["components"][0]
@@ -76,21 +78,43 @@ def write_exports(configmap_data: dict, components: dict, content_path: str, exp
             "version": component["component"]["version"]
         },
         "content": content,
+        "state": state
     }
     with open(exports_path, 'w') as f:
         f.write(yaml.safe_dump(exports))
+
+def update_state(state_path):
+    state_file = os.path.join(state_path, "state.yaml")
+    print(f"update state in path {state_file}")
+
+    try:
+        with open(state_file, 'r') as f:
+            state = yaml.safe_load(f.read())
+    except:
+        state = {
+            "count": 0
+        }
+
+    state["count"] += 1
+
+    with open(state_file, 'w+') as f:
+        f.write(yaml.safe_dump(state))
+
+    return state
 
 def main(argv=None):
     imports_path = os.environ["IMPORTS_PATH"]
     exports_path = os.environ["EXPORTS_PATH"]
     component_descriptor_path = os.environ["COMPONENT_DESCRIPTOR_PATH"]
     content_path = os.environ["CONTENT_PATH"]
+    state_path = os.environ["STATE_PATH"]
     operation = os.environ["OPERATION"]
 
     print(f"imports_path={imports_path}")
     print(f"exports_path={exports_path}")
     print(f"component_descriptor_path={component_descriptor_path}")
     print(f"content_path={content_path}")
+    print(f"state_path={state_path}")
     print(f"operation={operation}")
 
     with open(imports_path, 'r') as f:
@@ -103,7 +127,8 @@ def main(argv=None):
 
     if operation.lower() == "reconcile":
         configmap_data = reconcile(imports)
-        write_exports(configmap_data, components, content_path, exports_path)
+        state = update_state(state_path)
+        write_exports(configmap_data, components, state, content_path, exports_path)
     else:
         delete(imports)
 
