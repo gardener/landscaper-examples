@@ -1,0 +1,25 @@
+landscaper:
+  verbosity: DEBUG
+  deployers:
+    - container
+    - helm
+    - mock
+    - manifest
+
+  deployItemTimeouts:
+    # how long deployers may take to react on changes to deploy items
+    pickup: 5m
+    # how long deployers may take to abort processing a deploy item after the annotation has been set
+    abort: 5m
+    # default for how long deployers may take to process a deploy item before being aborted, can be overwritten via the deploy item's 'spec.timeout' field
+    progressingDefault: 5m
+
+controller:
+  # Allows to target a different cluster than the hosting cluster of the controller instance.
+  # Provide the kubeconfig to access the remote Landscaper cluster here (inline or via secretRef).
+  # When providing a secretRef, see ./templates/cluster-kubeconfig-secret.yaml for the correct secret format.
+  # If no value is provided at all, the controller will default to the in-cluster kubeconfig.
+  landscaperKubeconfig: {}
+    #   secretRef: my-kubeconfig-secret
+    #   kubeconfig: |
+    #     <cluster-kubeconfig>
