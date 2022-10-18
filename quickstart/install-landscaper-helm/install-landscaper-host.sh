@@ -21,8 +21,8 @@ export LS_NAMESPACE=ls-system
 # Set path to kubeconfig of the landscaper host cluster (where the landscaper pods shall run)
 export LS_KUBECONFIG=<kubeconfig path>
 
-# Set landscaper version, for example: v0.38.0 or v0.39.0-dev-dd245ea9633dd717563536ad586061a97cfc725e
-export LS_VERSION=<landscaper version>
+# Set landscaper version, for example: v0.20.0 or v0.21.0-dev-13142baeae12aabbb79f34afc3174a982b1832bb
+export LS_IMAGE_VERSION=<landscaper version>
 
 export LS_HELM_VALUES_PATH=${COMPONENT_DIR}/values-host.yaml
 
@@ -34,4 +34,5 @@ helm upgrade --install \
   --namespace "${LS_NAMESPACE}" \
   --create-namespace \
   --kubeconfig "${LS_KUBECONFIG}" \
-  -f "${LS_HELM_VALUES_PATH}"
+  -f "${LS_HELM_VALUES_PATH}" \
+  --set "image.tag=${LS_IMAGE_VERSION}"
