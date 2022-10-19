@@ -1,0 +1,19 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Context
+metadata:
+  name: helm-repo-protected
+  namespace: example
+
+repositoryContext:
+  baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+  type: ociRegistry
+
+registryPullSecrets: []
+
+configurations:
+  helmChartRepoCredentials:
+    auths:
+      - url: "https://sap-hub-stable.storage.googleapis.com"
+        secretRef:
+          name: helm-repo-auth  # name of the Secret
+          key: authHeader       # key of the item in the Secret (optional, the default is "authHeader")
