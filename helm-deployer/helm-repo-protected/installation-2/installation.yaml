@@ -1,0 +1,25 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: helm-repo-protected
+  namespace: example
+
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  context: helm-repo-protected
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-repo-protected
+      version: v0.1.0
+
+  imports:
+    targets:
+      - name: cluster
+        target: '#my-cluster'
+
+  importDataMappings:
+    helmDeployment: true
