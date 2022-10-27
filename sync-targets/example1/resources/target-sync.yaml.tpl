@@ -1,4 +1,4 @@
-apiVersion: landscaper-service.gardener.cloud/v1alpha1
+apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: TargetSync
 metadata:
   name: ${name}
