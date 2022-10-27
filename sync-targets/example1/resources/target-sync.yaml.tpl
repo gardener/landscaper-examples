@@ -4,7 +4,7 @@ metadata:
   name: ${name}
   namespace: ${namespace}
 spec:
-  secretNameExpression: ".kubeconfig"
+  secretNameExpression: "\\.kubeconfig$"
   secretRef:
     name: ${name}
     namespace: ${namespace}
