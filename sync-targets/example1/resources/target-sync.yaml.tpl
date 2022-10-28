@@ -7,7 +7,6 @@ spec:
   secretNameExpression: "\\.kubeconfig$"
   secretRef:
     name: ${name}
-    namespace: ${namespace}
     key: kubeconfig
   sourceNamespace: ${sourceNamespace}
 
