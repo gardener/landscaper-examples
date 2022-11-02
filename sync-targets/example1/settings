@@ -6,13 +6,18 @@ TARGET_SYNC_NAMESPACE=example
 TARGET_SYNC_NAME=example-target-sync
 
 # TARGET_SYNC_SECRET_KUBECONFIG_PATH is the path to the kubeconfig file which will be stored in the secrets referenced by the
-# targetSync object. Usually this is a kubeconfig providing access to a gardener project.
+# targetSync object. Usually this is a kubeconfig providing access to a gardener project on the so called source cluster.
 TARGET_SYNC_SECRET_KUBECONFIG_PATH=...
+
+# TARGET_SYNC_SERVICE_ACCOUNT_NAME is the name of the service account in the source cluster, which provides the authorization
+# to access the secrets. This name is required for rotating the access token to that cluster.
+TARGET_SYNC_SERVICE_ACCOUNT_NAME=...
 
 # SOURCE_NAMESPACE is the namespace in the cluster (accessed via TARGET_SYNC_SECRET_KUBECONFIG_PATH) from where
 # the secrets are synced. Usually this is the namespace of a gardener project.
 SOURCE_NAMESPACE=garden-hubforplay
 
-#TARGET_SYNC_HOST_KUBECONFIG_PATH is the path to the kubeconfig file for the cluster on which the target sync object and its
+# TARGET_SYNC_HOST_KUBECONFIG_PATH is the path to the kubeconfig file for the cluster on which the target sync object and its
 # secret should be deployed
 TARGET_SYNC_HOST_KUBECONFIG_PATH=...
+
