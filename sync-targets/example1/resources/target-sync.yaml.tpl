@@ -9,4 +9,6 @@ spec:
     name: ${name}
     key: kubeconfig
   sourceNamespace: ${sourceNamespace}
+  tokenRotation:
+    serviceAccountName: ${serviceAccountName}
 
