@@ -21,7 +21,6 @@ echo -e "\n--- settings"
 echo "TARGET_SYNC_NAMESPACE:              ${TARGET_SYNC_NAMESPACE}"
 echo "TARGET_SYNC_NAME:                   ${TARGET_SYNC_NAME}"
 echo "TARGET_SYNC_SECRET_KUBECONFIG_PATH: ${TARGET_SYNC_SECRET_KUBECONFIG_PATH}"
-echo "TARGET_SYNC_SERVICE_ACCOUNT_NAME:   ${TARGET_SYNC_SERVICE_ACCOUNT_NAME}"
 echo "TARGET_SYNC_HOST_KUBECONFIG_PATH:   ${TARGET_SYNC_HOST_KUBECONFIG_PATH}"
 echo "SOURCE_NAMESPACE:                   ${SOURCE_NAMESPACE}"
 
@@ -45,6 +44,5 @@ mako-render ${COMPONENT_DIR}/resources/target-sync.yaml.tpl \
   --var namespace="${TARGET_SYNC_NAMESPACE}" \
   --var name="${TARGET_SYNC_NAME}" \
   --var sourceNamespace="${SOURCE_NAMESPACE}" \
-  --var serviceAccountName="${TARGET_SYNC_SERVICE_ACCOUNT_NAME}" \
   --output-file="${TARGET_SYNC_PATH}"
 kubectl apply -f "${TARGET_SYNC_PATH}" --kubeconfig="${TARGET_SYNC_HOST_KUBECONFIG_PATH}"
