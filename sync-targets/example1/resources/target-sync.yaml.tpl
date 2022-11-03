@@ -3,6 +3,8 @@ kind: TargetSync
 metadata:
   name: ${name}
   namespace: ${namespace}
+  #annotations:
+    #landscaper.gardener.cloud/rotate-token: ok
 spec:
   secretNameExpression: "\\.kubeconfig$"
   secretRef:
@@ -10,5 +12,5 @@ spec:
     key: kubeconfig
   sourceNamespace: ${sourceNamespace}
   tokenRotation:
-    serviceAccountName: ${serviceAccountName}
+    enabled: true
 
