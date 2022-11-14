@@ -14,12 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# Set path to the kubeconfig of the Landscaper data cluster
-export KUBECONFIG=<path to the kubeconfig of the Landscaper data cluster>
-
 COMPONENT_DIR="$(dirname $0)/.."
 
-kubectl create ns example
-kubectl apply -f "${COMPONENT_DIR}/installation/target.yaml
-kubectl apply -f "${COMPONENT_DIR}/installation/installation.yaml
+source ${COMPONENT_DIR}/commands/settings
+
+# create namespace "example" on the landscaper data cluster
+kubectl create ns example --kubeconfig="${LS_DATA_KUBECONFIG}"
+
+# create target
+landscaper-cli targets create kubernetes-cluster \
+  --name my-cluster \
+  --namespace example \
+  --target-kubeconfig "${TARGET_KUBECONFIG}" \
+  | kubectl apply -f - --kubeconfig="${LS_DATA_KUBECONFIG}"
+
+# create installation
+kubectl apply -f "${COMPONENT_DIR}/installation/installation.yaml" --kubeconfig="${LS_DATA_KUBECONFIG}"
