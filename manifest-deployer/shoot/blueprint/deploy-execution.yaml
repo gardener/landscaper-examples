@@ -96,7 +96,7 @@ deployItems:
               kubernetes:
                 version: {{ .imports.shootConfig.kubernetes.version }}
                 enableStaticTokenKubeconfig: true
-              purpose: production
+              purpose: evaluation
               maintenance:
                 timeWindow:
                   begin: {{ dig "shootConfig" "maintenance" "timeWindow" "begin" "050000+0200" .imports }}
