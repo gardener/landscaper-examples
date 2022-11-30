@@ -1,0 +1,46 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+
+metadata:
+  name: shoot-cluster
+  namespace: example
+
+spec:
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/manifest-deployer/shoot
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: gardenerServiceAccount
+        target: gardener-service-account
+
+    data:
+      - name: name
+        dataRef: shoot-name
+      - name: namespace
+        dataRef: shoot-namespace
+      - name: secretBindingName
+        dataRef: shoot-secret-binding-name
+      - name: shootConfig
+        dataRef: shoot-config
+
+  exports:
+    targets:
+      - name: shootCluster
+        target: shoot-cluster
+
+    data:
+      - name: shootClusterKubeconfig
+        dataRef: shoot-cluster-kubeconfig
+      - name: shootClusterEndpoint
+        dataRef: shoot-cluster-endpoint

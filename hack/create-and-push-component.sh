@@ -17,8 +17,11 @@
 # COMPONENT_DIR is the is the path to the directory that contains the component-descriptor.yaml and resources.yaml
 COMPONENT_DIR=$1
 
+TRANSPORT_DIR=`mktemp -d`
+echo "TRANSPORT_DIR: ${TMP_DIR}"
+
 # TRANSPORT_FILE is the path to the transport tar file that will be created and pushed to the oci registry
-TRANSPORT_FILE=$2
+TRANSPORT_FILE="${TRANSPORT_DIR}/transport.tar"
 
 echo "Component directory: ${COMPONENT_DIR}"
 echo "Transport file:      ${TRANSPORT_FILE}"
