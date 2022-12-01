@@ -1,0 +1,36 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: shoot-config
+  namespace: example
+data:
+  provider:
+    type: gcp
+    zone: europe-west1-b
+
+  workers:
+    machine:
+      type: n1-standard-2
+      image:
+        name: gardenlinux
+        version: 576.12.0
+    maximum: 2
+    minimum: 1
+    maxSurge: 1
+    maxUnavailable: 0
+    volume:
+      type: pd-balanced
+      size: 50Gi
+
+  region: europe-west1
+
+  kubernetes:
+    version: 1.24.7
+
+  maintenance:
+    autoUpdate:
+      kubernetesVersion: true
+      machineImageVersion: true
+    timeWindow:
+      begin: 020000+0200
+      end: 030000+0200
