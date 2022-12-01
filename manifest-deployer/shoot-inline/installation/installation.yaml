@@ -4,6 +4,8 @@ kind: Installation
 metadata:
   name: shoot-cluster
   namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
 
 spec:
 
@@ -202,7 +204,7 @@ spec:
                         namespace: {{ .imports.namespace }}
 
 
-        export-execution: |
+        export-execution.yaml: |
           exports:
             shootClusterEndpoint: {{  index .values "deployitems" "shoot-cluster" "shootClusterEndpoint"  }}
             shootClusterKubeconfig: |

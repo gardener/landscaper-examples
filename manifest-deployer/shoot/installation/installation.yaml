@@ -4,6 +4,8 @@ kind: Installation
 metadata:
   name: shoot-cluster
   namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
 
 spec:
 
