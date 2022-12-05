@@ -1,0 +1,86 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: inst-per-target-gotemplate
+  annotations:
+    "landscaper.gardener.cloud/operation": reconcile
+spec:
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+
+          imports:
+          - name: mytargets
+            type: targetList
+            targetType: landscaper.gardener.cloud/kubernetes-cluster
+          
+          subinstallationExecutions:
+          - name: subinst-executions
+            type: GoTemplate
+            template: |
+              subinstallations:
+              {{ range $idx, $target := .imports.mytargets }}
+              - apiVersion: landscaper.gardener.cloud/v1alpha1
+                kind: InstallationTemplate
+                name: my-subinst-{{ $idx }}-{{ $target.metadata.name }}
+                imports:
+                  targets:
+                  - target: "mytargets[{{ $idx }}]"
+                    name: mytarget
+                blueprint:
+                  filesystem:
+                    blueprint.yaml: |
+                      apiVersion: landscaper.gardener.cloud/v1alpha1
+                      kind: Blueprint
+                      imports:
+                      - name: mytarget
+                        type: target
+                        targetType: landscaper.gardener.cloud/kubernetes-cluster
+                      deployExecutions:
+                      - name: deployitems
+                        type: GoTemplate
+                        template: |
+                          deployitems:
+                          - name: mydeployitem
+                            type: landscaper.gardener.cloud/kubernetes-manifest
+                            target:
+                              import: mytarget
+                            config:
+                              apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+                              kind: ProviderConfiguration
+                              manifests:
+                              - policy: manage
+                                manifest:
+                                  apiVersion: v1
+                                  kind: Secret
+                                  metadata:
+                                    name: foo-{{ $idx }}
+                                    namespace: default
+                                  data:
+                                    foo: YmFy
+              {{ end }}
+  componentDescriptor:
+    inline:
+      component:
+        componentReferences: []
+        name: targetlist-installation
+        provider: internal
+        repositoryContexts:
+        - baseUrl: example.com/test
+          type: ociRegistry
+        resources: []
+        sources: []
+        version: 1.0.0
+      meta:
+        schemaVersion: v2
+  context: default
+  imports:
+    targets:
+    - name: mytargets
+      targets:
+      - target-cluster
+      - target-cluster
+      - target-cluster
