@@ -1,0 +1,81 @@
+
+### COPY THIS FILE TO A FILE NAMED "settings" IN THE SAME FOLDER
+### AND MAINTAIN THE PARAMETERS BELOW IN THAT COPY
+
+
+### Settings for the laas project
+
+# Namespace of the laas project: garden-<project name>
+laas_project=...
+
+# Path to kubeconfig of the laas project with sam role
+laas_project_kubeconfig-sam=...
+
+# Field .clusters[].cluster.server of the kubeconfig above
+laas_project_cluster_server=...
+
+# Name of an existing serviceaccount for the laas project with admin role
+laas_project_serviceaccount_admin=...
+
+
+### Settings for the resourcecluster project
+
+# Namespace of the resourcecluster project: garden-<project name>
+resourcecluster_project=...
+
+# Path to kubeconfig of the resourcecluster project with sam role
+resourcecluster_project_kubeconfig_sam=...
+
+# Field .clusters[].cluster.server of the kubeconfig above
+resourcecluster_project_cluster_server=...
+
+# Name of an existing serviceaccount for the resourcecluster project with admin role
+resourcecluster_project_serviceaccount_admin=...
+
+# Name of the cloud provider secret, required for creation of shoot clusters in the resourcecluster project
+resourcecluster_project_cp_secret=...
+
+
+### ### Settings for the core cluster
+
+# Name of the core cluster
+core_shoot=...
+
+
+### Settings for the landscaper on the core cluster
+
+# Namespace for the landscaper
+landscaper_namespace=ls-system
+
+# Path to the helm chart directory
+landscaper_helm_chart_dir=...
+
+# Version of the landscaper image, for example v0.44.0-dev-5391101828f74e116db5915bbd0cb8df7b16938c
+landscaper_image_version=...
+
+
+### Settings for the laas on the core cluster
+
+# Namespace for the laas
+laas_namespace=laas-system
+
+# Version of the laas component "github.com/gardener/landscaper-service", for example v0.24.0
+laas_version=...
+
+# Name of the serviceaccount for the laas installation
+laas_installer_serviceaccount=laas-installer
+
+
+### Registry settings
+
+# Path to json key file to access the private oci registry containing the laas component descriptor
+registry_json_key_path=...
+
+# Registry base url
+registry_base_url=...
+
+
+### Settings for the target cluster
+
+# Name of the target cluster
+target_shoot=...
