@@ -9,7 +9,6 @@ export KUBECONFIG="${repo_root_dir}/secret-store/core-kubeconfig-admin.yaml"
 
 
 echo "Create secret containing admin kubeconfig of resourcecluster project"
-secret_path="${repo_root_dir}/secret-store/resourcecluster-project-secret.yaml"
 mako-render "${repo_root_dir}/resources/secret.yaml.tpl" \
   --var "namespace=${laas_namespace}" \
   --var "name=resourcecluster-project-kubeconfig" \

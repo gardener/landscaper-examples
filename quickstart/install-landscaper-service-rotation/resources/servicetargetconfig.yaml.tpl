@@ -9,10 +9,9 @@ metadata:
     config.landscaper-service.gardener.cloud/region: "eu"
 
 spec:
-  providerType: gcp
+  ingressDomain: ${ingress_domain}
   priority: 10
-
   secretRef:
-    name: ${secret_name}
+    key: ${key}
+    name: ${name}
     namespace: ${namespace}
-    key: kubeconfig

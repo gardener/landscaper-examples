@@ -79,3 +79,9 @@ registry_base_url=...
 
 # Name of the target cluster
 target_shoot=...
+
+# Name of the serviceaccount for the customer landscaper installations on the target cluster
+ls_installer_serviceaccount=ls-installer
+
+# Ingress domain
+target_ingress_domain=...
