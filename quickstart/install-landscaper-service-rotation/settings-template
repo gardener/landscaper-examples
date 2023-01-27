@@ -85,3 +85,12 @@ ls_installer_serviceaccount=ls-installer
 
 # Ingress domain
 target_ingress_domain=...
+
+
+### Settings for the ingress controller on the target cluster
+
+# Namespace for the ingress controller
+ingress_controller_namespace=ingress-controller
+
+# Name of the serviceaccount for the ingress controller installations on the target cluster
+ingress_controller_installer_serviceaccount=ingress-controller-installer

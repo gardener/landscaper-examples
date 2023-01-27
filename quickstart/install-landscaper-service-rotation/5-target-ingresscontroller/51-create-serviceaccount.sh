@@ -8,21 +8,21 @@ echo "Pipeline, acting as 1d admin for the target cluster"
 export KUBECONFIG="${repo_root_dir}/secret-store/target-kubeconfig-admin.yaml"
 
 
-echo "Creating namespace ${laas_namespace}"
+echo "Creating namespace ${ingress_controller_namespace}"
 mako-render "${repo_root_dir}/resources/namespace.yaml.tpl" \
-  --var "namespace=${laas_namespace}" \
+  --var "namespace=${ingress_controller_namespace}" \
   | kubectl apply -f -
 
 
-echo "Create serviceaccount ls-installer"
+echo "Create serviceaccount ${ingress_controller_installer_serviceaccount}"
 mako-render "${repo_root_dir}/resources/serviceaccount.yaml.tpl" \
-  --var "namespace=${laas_namespace}" \
-  --var "name=${ls_installer_serviceaccount}" \
+  --var "namespace=${ingress_controller_namespace}" \
+  --var "name=${ingress_controller_installer_serviceaccount}" \
   | kubectl apply -f -
 
 
-echo "Create token for target cluster, service account: ls-installer"
-token=$(kubectl create token -n ${laas_namespace} ${ls_installer_serviceaccount} --duration=7776000s)
+echo "Create token for target cluster, service account: ${ingress_controller_installer_serviceaccount}"
+token=$(kubectl create token -n ${ingress_controller_namespace} ${ingress_controller_installer_serviceaccount} --duration=7776000s)
 
 
 echo "Reading server and ca data from admin kubeconfig"
@@ -33,12 +33,12 @@ server=$(echo "${cluster}" | yq .server)
 ca_data=$(echo "${cluster}" | yq .certificate-authority-data)
 
 
-echo "Write kubeconfig for target cluster, service account: ls-installer"
-ls_installer_kubeconfig_path="${repo_root_dir}/secret-store/target-kubeconfig-ls-installer.yaml"
+echo "Write kubeconfig for target cluster, service account: ${ingress_controller_installer_serviceaccount}"
+ingress_controller_installer_kubeconfig_path="${repo_root_dir}/secret-store/target-kubeconfig-ingress-controller-installer.yaml"
 mako-render "${repo_root_dir}/resources/kubeconfig.yaml.tpl" \
   --var "cluster=${laas_project}--${target_shoot}" \
   --var "server=${server}" \
   --var "ca_data=${ca_data}" \
-  --var "username=${ls_installer_serviceaccount}" \
+  --var "username=${ingress_controller_installer_serviceaccount}" \
   --var "token=${token}" \
-  > "${ls_installer_kubeconfig_path}"
+  > "${ingress_controller_installer_kubeconfig_path}"

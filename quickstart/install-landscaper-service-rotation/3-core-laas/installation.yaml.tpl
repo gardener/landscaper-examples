@@ -5,6 +5,7 @@ metadata:
   namespace: ${namespace}
   annotations:
     landscaper.gardener.cloud/operation: reconcile
+
 spec:
 
   context: ${context_name}
