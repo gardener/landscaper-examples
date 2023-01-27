@@ -9,7 +9,7 @@ export KUBECONFIG="${repo_root_dir}/secret-store/core-kubeconfig-admin.yaml"
 
 
 echo "Create serviceaccount laas-installer"
-mako-render "${repo_root_dir}/3-core-laas/serviceaccount.yaml.tpl" \
+mako-render "${repo_root_dir}/resources/serviceaccount.yaml.tpl" \
   --var "namespace=${laas_namespace}" \
   --var "name=${laas_installer_serviceaccount}" \
   | kubectl apply -f -
