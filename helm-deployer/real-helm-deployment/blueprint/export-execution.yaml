@@ -1,3 +1,0 @@
-exports:
-  loadBalancer:
-    {{- index .values "deployitems" "default-deploy-item" "loadBalancer" | toYaml | nindent 4 }}
