@@ -1,0 +1,81 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+
+metadata:
+  name: shoot-admin-kubeconfig
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          
+          imports:
+            - name: gardenerServiceAccount
+              required: true
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+          
+            - name: shootName
+              required: true
+              type: data
+              schema:
+                type: string
+          
+            - name: shootNamespace
+              required: true
+              type: data
+              schema:
+                type: string
+          
+          exports:
+            - name: shootAdminKubeconfig
+              type: data
+              schema:
+                type: string
+          
+            - name: shootAdminTarget
+              type: target
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+                    
+          deployExecutions: []
+          
+          exportExecutions:
+            - name: export-execution
+              file: /export-execution.yaml
+              type: GoTemplate
+      
+
+        export-execution.yaml: |
+          exports:
+            {{- $kubeconfig := getShootAdminKubeconfig .imports.shootName .imports.shootNamespace 86400 .imports.gardenerServiceAccount | b64dec }}
+            shootAdminKubeconfig: |
+              {{- nindent 4 $kubeconfig }}
+            shootAdminTarget:
+              type: landscaper.gardener.cloud/kubernetes-cluster
+              config:
+                kubeconfig: |
+                  {{- nindent 8 $kubeconfig }}
+
+  imports:
+    targets:
+      - name: gardenerServiceAccount
+        target: gardener-service-account  # name of the target containing a kubeconfig for the gardener project
+
+  importDataMappings:
+    shootName: my-shoot                        # name of your shoot cluster
+    shootNamespace: garden-my-project          # namespace of the gardener project: garden-<NAME OF GARDENER PROJECT>
+
+  exports:
+    targets:
+      - name: shootAdminTarget
+        target: shoot-admin-target
+
+    data:
+      - name: shootAdminKubeconfig
+        dataRef: shoot-admin-kubeconfig
