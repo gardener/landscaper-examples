@@ -10,3 +10,8 @@ spec:
       - manifest
   purpose: test
   tenantId: ${tenant_id}
+  oidcConfig:
+    clientID: test-client-id
+    groupsClaim: groups
+    issuerURL: https://my-issuer.test.url.com
+    usernameClaim: email
