@@ -1,0 +1,131 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+
+metadata:
+  name: service-account-kubeconfig
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          
+          imports:
+            - name: cluster
+              required: true
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+          
+            - name: serviceAccountName
+              required: true
+              type: data
+              schema:
+                type: string
+          
+            - name: serviceAccountNamespace
+              required: true
+              type: data
+              schema:
+                type: string
+          
+          exports:
+            - name: serviceAccountKubeconfig
+              type: data
+              schema:
+                type: string
+          
+            - name: serviceAccountTarget
+              type: target
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+                    
+          deployExecutions:
+            - name: deploy-execution
+              file: /deploy-execution.yaml
+              type: GoTemplate
+          
+          exportExecutions:
+            - name: export-execution
+              file: /export-execution.yaml
+              type: GoTemplate
+
+        deploy-execution.yaml: |
+          deployItems:
+            - name: default-deploy-item
+              type: landscaper.gardener.cloud/kubernetes-manifest
+              target:
+                import: cluster
+              config:
+                apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+                kind: ProviderConfiguration
+                updateStrategy: update
+                manifests:
+                  - policy: manage
+                    manifest:
+                      apiVersion: v1
+                      kind: ServiceAccount
+                      metadata:
+                        name: {{ .imports.serviceAccountName }}
+                        namespace: {{ .imports.serviceAccountNamespace }}
+                  - policy: manage
+                    manifest:
+                      apiVersion: rbac.authorization.k8s.io/v1
+                      kind: Role
+                      metadata:
+                        name: {{ .imports.serviceAccountName }}
+                        namespace: {{ .imports.serviceAccountNamespace }}
+                      rules:
+                        - apiGroups:
+                            - ""
+                          resources:
+                            - namespaces
+                          verbs:
+                            - get
+                  - policy: manage
+                    manifest:
+                      apiVersion: rbac.authorization.k8s.io/v1
+                      kind: RoleBinding
+                      metadata:
+                        name: {{ .imports.serviceAccountName }}
+                        namespace: {{ .imports.serviceAccountNamespace }}
+                      roleRef:
+                        apiGroup: rbac.authorization.k8s.io
+                        kind: Role
+                        name: {{ .imports.serviceAccountName }}
+                      subjects:
+                        - kind: ServiceAccount
+                          name: {{ .imports.serviceAccountName }}
+                          namespace: {{ .imports.serviceAccountNamespace }}
+
+        export-execution.yaml: |
+          exports:
+            {{- $kubeconfig := getServiceAccountKubeconfig .imports.serviceAccountName .imports.serviceAccountNamespace 7776000 .imports.cluster | b64dec }}
+            serviceAccountKubeconfig: |
+              {{- nindent 4 $kubeconfig }}
+            serviceAccountTarget:
+              type: landscaper.gardener.cloud/kubernetes-cluster
+              config:
+                kubeconfig: |
+                  {{- nindent 8 $kubeconfig }}
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+  importDataMappings:
+    serviceAccountName: my-service-account
+    serviceAccountNamespace: example
+
+  exports:
+    targets:
+      - name: serviceAccountTarget
+        target: service-account-target
+
+    data:
+      - name: serviceAccountKubeconfig
+        dataRef: service-account-kubeconfig
