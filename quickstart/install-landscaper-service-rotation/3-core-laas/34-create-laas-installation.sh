@@ -27,13 +27,16 @@ mako-render ${repo_root_dir}/resources/context.yaml.tpl \
   | kubectl apply -f -
 
 
+# remove prefix "garden-"
+project=${resourcecluster_project:7}
+
 echo "Creating laas installation"
 mako-render ${repo_root_dir}/3-core-laas/installation.yaml.tpl \
   --var "namespace=${laas_namespace}" \
   --var "name=landscaper-service" \
   --var "context_name=landscaper-service" \
   --var "pullsecret=${pullsecret}" \
-  --var "project=${resourcecluster_project}" \
+  --var "project=${project}" \
   --var "version=${laas_version}" \
   --var "cp_secret=${resourcecluster_project_cp_secret}" \
   | kubectl apply -f -
