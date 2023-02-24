@@ -1,0 +1,79 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+
+metadata:
+  name: oidc-kubeconfig
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          
+          imports:
+            - name: cluster
+              required: true
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+          
+            - name: issuerUrl
+              required: true
+              type: data
+              schema:
+                type: string
+          
+            - name: clientId
+              required: true
+              type: data
+              schema:
+                type: string
+          
+          exports:
+            - name: oidcKubeconfig
+              type: data
+              schema:
+                type: string
+          
+            - name: oidcTarget
+              type: target
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+          
+          exportExecutions:
+            - name: export-execution
+              file: /export-execution.yaml
+              type: GoTemplate
+
+        export-execution.yaml: |
+          exports:
+            {{- $kubeconfig := getOidcKubeconfig .imports.issuerUrl .imports.clientId .imports.cluster | b64dec }}
+            oidcKubeconfig: |
+              {{- nindent 4 $kubeconfig }}
+            oidcTarget:
+              type: landscaper.gardener.cloud/kubernetes-cluster
+              config:
+                kubeconfig: |
+                  {{- nindent 8 $kubeconfig }}
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+  importDataMappings:
+    issuerUrl: my-issuer-url
+    clientId: my-client-id
+
+  exports:
+    targets:
+      - name: oidcTarget
+        target: oidc-target
+
+    data:
+      - name: oidcKubeconfig
+        dataRef: oidc-kubeconfig
