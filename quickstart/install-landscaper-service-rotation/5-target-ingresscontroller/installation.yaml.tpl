@@ -13,7 +13,7 @@ spec:
   componentDescriptor:
     ref:
       componentName: github.com/gardener/landscaper-service/ingress-controller
-      version: v0.39.0-dev-29feb6279221ae088be86bcfbd74ed4b817b027a
+      version: ${version}
 
   blueprint:
     ref:

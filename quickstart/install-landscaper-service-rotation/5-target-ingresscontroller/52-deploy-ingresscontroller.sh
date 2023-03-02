@@ -47,6 +47,7 @@ echo "Creating ingress controller installation"
 mako-render ${repo_root_dir}/5-target-ingresscontroller/installation.yaml.tpl \
   --var "namespace=${ingress_controller_namespace}" \
   --var "name=ingress-controller-target-01" \
+  --var "version=${laas_version}" \
   --var "context_name=${context_name}" \
   --var "target_name=${target_name}" \
   | kubectl apply -f -
