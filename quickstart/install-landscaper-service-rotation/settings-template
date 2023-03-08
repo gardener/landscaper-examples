@@ -94,3 +94,15 @@ ingress_controller_namespace=ingress-controller
 
 # Name of the serviceaccount for the ingress controller installations on the target cluster
 ingress_controller_installer_serviceaccount=ingress-controller-installer
+
+
+### Settings for the resource cluster
+
+# Name of the resource cluster
+resourcecluster_shoot=...
+
+# Name of the customer serviceaccount
+customer_serviceaccount=cu-account
+
+# Customer namespace (must start with prefix "cu-")
+customer_namespace=cu-example
