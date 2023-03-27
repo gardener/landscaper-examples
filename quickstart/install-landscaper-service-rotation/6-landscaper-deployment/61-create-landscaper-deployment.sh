@@ -7,8 +7,8 @@ source ${repo_root_dir}/settings
 echo "Pipeline, acting as 1d admin for the target cluster"
 export KUBECONFIG="${repo_root_dir}/secret-store/core-kubeconfig-admin.yaml"
 
-tenant_id="tenant01"
-tenant_namespace="tenant-0001"
+tenant_id="tenant02"
+tenant_namespace="tenant-0002"
 instance_name="test"
 
 
