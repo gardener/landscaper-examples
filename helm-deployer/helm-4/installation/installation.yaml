@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: helm-chart-1
+  name: helm-4
   namespace: example
   annotations:
     landscaper.gardener.cloud/operation: reconcile
@@ -26,9 +26,9 @@ spec:
 
   importDataMappings:
     release:
-      name: hallo
+      name: hallo-4
       namespace: example
-    testDataIn: test
+    testDataIn: test-4
 
   exports:
     data:

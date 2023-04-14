@@ -24,7 +24,7 @@ component:
         mediaType: application/octet-stream
         helmChartRepoUrl: https://charts.bitnami.com/bitnami
         helmChartName: nginx
-        helmChartVersion: 11.0.2
+        helmChartVersion: 13.2.33
 
     - name: nginx-image
       type: ociImage
