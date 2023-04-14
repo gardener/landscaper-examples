@@ -1,0 +1,18 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster1
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+subinstallations:
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+    name: subinst
+    blueprint:
+      ref: cd://resources/blueprint-di1
+    imports:
+      targets:
+        - name: cluster1
+          target: cluster1
