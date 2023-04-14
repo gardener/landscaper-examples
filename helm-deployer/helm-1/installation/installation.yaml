@@ -3,6 +3,8 @@ kind: Installation
 metadata:
   name: helm-1
   namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
 
 spec:
   blueprint:

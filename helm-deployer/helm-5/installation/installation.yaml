@@ -1,0 +1,88 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: helm-5
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          jsonSchema: "https://json-schema.org/draft/2019-09/schema"
+          
+          imports:
+            - name: cluster
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+            - name: release
+              required: true
+              type: data
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  namespace:
+                    type: string
+            - name: testDataIn
+              required: true
+              type: data
+              schema:
+                type: string
+          
+          deployExecutions:
+            - name: default-deploy-execution
+              file: /deploy-execution.yaml
+              type: GoTemplate
+
+        deploy-execution.yaml: |
+          deployItems:
+            - name: defaultitem
+              type: landscaper.gardener.cloud/helm
+              target:
+                import: cluster
+              config:
+                apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+                kind: ProviderConfiguration
+                name:  {{ .imports.release.name }}
+                namespace: {{ .imports.release.namespace }}
+          
+                chart:
+                  #{{ $chartResource := getResource .cd "name" "simple-chart" }}
+                  #ref: {{ $chartResource.access.imageReference }}
+                  
+                  fromResource:
+                    ref:
+                      repositoryContext:
+                        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+                        type: ociRegistry
+                      componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-chart-1
+                      version: v0.1.0
+                    resourceName: simple-chart
+          
+                values:
+                  testData: {{ .imports.testDataIn }}
+    
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-chart-1
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  imports:
+    targets:
+      - name: cluster
+        target: 'my-cluster'
+
+  importDataMappings:
+    release:
+      name: hallo
+      namespace: example
+    testDataIn: test
