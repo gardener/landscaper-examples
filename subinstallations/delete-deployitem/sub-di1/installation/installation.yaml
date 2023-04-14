@@ -1,0 +1,24 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: delete-deployitem
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+spec:
+  blueprint:
+    ref:
+      resourceName: blueprint-sub-di1
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/subinstallations/delete-deployitem
+      repositoryContext:
+        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+        type: ociRegistry
+      version: v0.1.0
+
+  imports:
+    targets:
+      - name: cluster1
+        target: my-cluster-1
