@@ -17,6 +17,8 @@ deployExecutions:
           type: landscaper.gardener.cloud/kubernetes-manifest
           target:
             import: cluster1
+          onDelete:
+            skipUninstallIfClusterRemoved: true
           config:
             apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
             kind: ProviderConfiguration
@@ -35,6 +37,8 @@ deployExecutions:
           type: landscaper.gardener.cloud/kubernetes-manifest
           target:
             import: cluster2
+          onDelete:
+            skipUninstallIfClusterRemoved: true
           config:
             apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
             kind: ProviderConfiguration
