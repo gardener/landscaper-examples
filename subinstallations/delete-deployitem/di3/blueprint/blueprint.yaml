@@ -1,0 +1,37 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: clusters
+    type: targetList
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+deployExecutions:
+  - name: default
+    type: GoTemplate
+    template: |
+      deployItems:
+        {{- range $index, $target := .imports.clusters }}
+        - name: item-{{ $index }}
+          type: landscaper.gardener.cloud/kubernetes-manifest
+          target:
+            import: clusters
+            index: {{ $index }}
+          onDelete:
+            skipUninstallIfClusterRemoved: true
+          config:
+            apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+            kind: ProviderConfiguration
+            updateStrategy: update
+            manifests:
+              - policy: manage
+                manifest:
+                  apiVersion: v1
+                  kind: ConfigMap
+                  metadata:
+                    name: test-{{ $index }}
+                    namespace: example
+                  data:
+                    foo: bar
+        {{- end }}
