@@ -21,6 +21,17 @@ input:
   compress: true
 ...
 ---
+name: blueprint-di3
+type: blueprint
+version: v0.1.0
+relation: local
+input:
+  type: dir
+  path: ./di3/blueprint
+  mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+  compress: true
+...
+---
 name: blueprint-sub-di1
 type: blueprint
 version: v0.1.0
