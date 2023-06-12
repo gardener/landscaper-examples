@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pause-statefulset
+spec:
+  replicas: 21
+  selector:
+    matchLabels:
+      pause: pause
+  template:
+    metadata:
+      labels:
+        test: xyz
+        pause: pause
+    spec:
+      containers:
+        - name: pause-deployment
+          image: "gcr.io/google_containers/pause:3.1"
