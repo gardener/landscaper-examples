@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.0.1
+description: A Helm chart with a subchart
+name: nested-root
+type: application
+version: 1.0.1

@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-pause
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      pause: pause
+  template:
+    metadata:
+      labels:
+        pause: pause
+    spec:
+      containers:
+        - name: pause
+          image: "gcr.io/google_containers/pause:3.1"

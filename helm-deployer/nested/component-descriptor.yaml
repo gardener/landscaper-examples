@@ -1,0 +1,34 @@
+meta:
+  schemaVersion: 'v2'
+component:
+  name: 'github.com/gardener/landscaper-examples/guided-tour/nested'
+  version: '1.0.1'
+
+  repositoryContexts:
+    - type: 'ociRegistry'
+      baseUrl: 'eu.gcr.io/gardener-project/landscaper/examples'
+
+  provider: 'internal'
+
+  componentReferences: []
+
+  sources: []
+
+  resources:
+    - name: blueprint
+      type: blueprint
+      version: 1.0.1
+      relation: external
+      access:
+        type: ociRegistry
+        imageReference: eu.gcr.io/gardener-project/landscaper/examples/blueprints/guided-tour/nested:1.0.1
+    - name: nested-chart
+      type: helm.io/chart
+      version: 1.0.1
+      relation: external
+      access:
+        type: helmChartRepository
+        mediaType: application/octet-stream
+        helmChartRepoUrl: https://common.repositories.cloud.sap/artifactory/landscaper-examples
+        helmChartName: nested-root
+        helmChartVersion: 1.0.1

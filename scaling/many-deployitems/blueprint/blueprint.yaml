@@ -1,0 +1,40 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: releases
+    type: data
+    schema:
+      type: array
+
+  - name: values
+    type: data
+    schema:
+      type: object
+
+subinstallationExecutions:
+  - name: default
+    type: GoTemplate
+    template: |
+      subinstallations:
+        {{- range $index, $release := .imports.releases }}
+        - apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: InstallationTemplate
+          name: subinst-{{ $release.namespace }}-{{ $release.name }}
+          blueprint:
+            ref: cd://resources/blueprint-sub
+          imports:
+            targets:
+              - target: cluster
+                name: cluster
+            data:
+              - name: values
+                dataRef: values
+          importDataMappings:
+            release:
+              {{- $release | toYaml | nindent 8 }}
+        {{- end }}

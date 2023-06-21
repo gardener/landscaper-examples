@@ -1,0 +1,5 @@
+dependencies:
+  - name: nested-sub
+    repository: https://common.repositories.cloud.sap/artifactory/landscaper-examples
+    version: 1.0.1
+    condition: subchart-enabled

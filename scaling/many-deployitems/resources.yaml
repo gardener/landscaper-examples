@@ -1,0 +1,28 @@
+---
+type: blueprint
+name: blueprint
+version: 1.0.0
+relation: local
+input:
+  type: dir
+  path: ./blueprint
+  mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+  compress: true
+---
+type: blueprint
+name: blueprint-sub
+version: 1.0.0
+relation: local
+input:
+  type: dir
+  path: ./blueprint-sub
+  mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+  compress: true
+---
+type: helm.io/chart
+name: many-deployitems-chart
+version: 1.0.0
+relation: external
+access:
+  type: ociRegistry
+  imageReference: eu.gcr.io/gardener-project/landscaper/examples/charts/scaling/many-deployitems:1.0.0

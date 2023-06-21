@@ -1,0 +1,15 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: TestResource
+metadata:
+  name: {{ .Release.Name }}-root
+  namespace: test
+spec:
+  data: test
+---
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: TestResource
+metadata:
+  name: {{ .Release.Name }}-root
+  namespace: {{ .Release.Namespace }}
+spec:
+  data: test
