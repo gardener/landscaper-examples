@@ -1,0 +1,30 @@
+subinstallations:
+{{ $root := . }}
+{{- range $key, $value := .cd.component.resources }}
+{{- if eq $value.type "helm" }}
+
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+    name: {{ $value.name }}
+
+    blueprint:
+      ref: cd://resources/charts-blueprint
+
+    imports:
+      targets:
+        - name: targetCluster
+          target: targetCluster
+
+      data:
+        - name: namespace
+          dataRef: namespace
+
+        - name: chartValues
+          dataRef: chartValues
+
+    importDataMappings:
+      chartName: {{ $value.name }}
+      chartRef: {{ $value.access.imageReference }}
+
+{{- end}}
+{{- end }}
