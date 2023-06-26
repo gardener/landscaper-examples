@@ -1,0 +1,36 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+
+imports:
+  - name: targetCluster
+    required: true
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: namespace
+    required: true
+    type: data
+    schema:
+      type: string
+
+  - name: chartName
+    required: true
+    type: data
+    schema:
+      type: string
+
+  - name: chartRef
+    required: true
+    type: data
+    schema:
+      type: string
+
+  - name: chartValues
+    required: true
+    type: data
+    schema:
+      type: object
+
+deployExecutions:
+  - name: deploy-execution
+    file: /deploy-execution.yaml
+    type: GoTemplate

@@ -1,0 +1,29 @@
+---
+type: blueprint
+name: root-blueprint
+relation: local
+input:
+  type: dir
+  path: ./blueprints/root
+  mediaType: application/vnd.gardener.landscaper.blueprint.layer.v1.tar+gzip
+  compress: true
+...
+---
+type: blueprint
+name: charts-blueprint
+relation: local
+input:
+  type: dir
+  path: ./blueprints/charts
+  mediaType: application/vnd.gardener.landscaper.blueprint.layer.v1.tar+gzip
+  compress: true
+...
+---
+type: helm
+name: simple-chart
+version: 0.1.0
+relation: external
+access:
+  type: ociRegistry
+  imageReference: eu.gcr.io/gardener-project/landscaper/integration-tests/charts/simple-chart:0.1.0
+...

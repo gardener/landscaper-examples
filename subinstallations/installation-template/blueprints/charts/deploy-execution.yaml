@@ -1,0 +1,20 @@
+deployItems:
+  - name: {{ .imports.chartName }}
+    type: landscaper.gardener.cloud/helm
+    target:
+      #import: targetCluster
+      name: {{ .imports.targetCluster.metadata.name }}
+      namespace: {{ .imports.targetCluster.metadata.namespace }}
+    config:
+      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+      kind: ProviderConfiguration
+
+      name: {{ .imports.chartName }}
+      namespace: {{ .imports.namespace }}
+
+      updateStrategy: patch
+
+      chart:
+        ref: {{ .imports.chartRef }}
+
+      values: {{ .imports.chartValues | toYaml | nindent 8 }}
