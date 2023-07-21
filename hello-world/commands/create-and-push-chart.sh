@@ -14,11 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+# Prerequisite: environment variable ACCESS_TOKEN must be set
 # Get an access token:
 # gcloud auth login
 # gcloud auth print-access-token
-ACCESS_TOKEN=<your access token>
 
 COMPONENT_DIR="$(dirname $0)/.."
 
