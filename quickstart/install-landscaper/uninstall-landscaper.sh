@@ -14,12 +14,19 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-COMPONENT_DIR="$(dirname $0)"
+if [[ -z "${LS_KUBECONFIG}" ]]; then
+  echo "Variable LS_KUBECONFIG must contain the path to the kubeconfig of the landscaper cluster"
+  exit 1
+fi
 
-export LS_NAMESPACE=ls-system
+if [[ -z "${LS_NAMESPACE}" ]]; then
+  LS_NAMESPACE="ls-system"
+fi
 
-# Set path to kubeconfig of the cluster where landscaper shall be installed
-export LS_KUBECONFIG=<kubeconfig path>
+echo "LS_KUBECONFIG:      " "${LS_KUBECONFIG}"
+echo "LS_NAMESPACE:       " "${LS_NAMESPACE}"
+
+echo "Uninstalling landscaper"
 
 landscaper-cli quickstart uninstall \
   --namespace=${LS_NAMESPACE} \
