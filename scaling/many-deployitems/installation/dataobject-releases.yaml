@@ -10,17 +10,3 @@ data:
     namespace: scaling
   - name: item002
     namespace: scaling
-  - name: item003
-    namespace: scaling
-  - name: item004
-    namespace: scaling
-  - name: item005
-    namespace: scaling
-  - name: item006
-    namespace: scaling
-  - name: item007
-    namespace: scaling
-  - name: item008
-    namespace: scaling
-  - name: item009
-    namespace: scaling
