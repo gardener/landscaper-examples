@@ -1,0 +1,12 @@
+{{- $releaseName := .Release.Name }}
+{{- $releaseNamespace := .Release.Namespace }}
+{{- range $index := .Values.numberOfConfigMaps | int | until }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $releaseName }}-{{ $index }}
+  namespace: {{ $releaseNamespace }}
+data:
+  foo: bar
+{{- end }}

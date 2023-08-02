@@ -1,0 +1,32 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: load-scenario
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/load-scenario
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+  importDataMappings:
+    config:
+      baseName: "load"
+      baseNamespace: "example"
+      numberOfDeployItems: 3
+      numberOfConfigMapsPerDeployItem: 4
+      includeDeployment: false
