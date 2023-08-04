@@ -1,0 +1,50 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: nested
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples-artifactory
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          imports:
+            - name: cluster
+              type: target
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+          deployExecutions:
+            - name: default
+              type: GoTemplate
+              template: |
+                deployItems:
+                  - name: default-deploy-item
+                    type: landscaper.gardener.cloud/helm
+                    target:
+                      import: cluster
+                    config:
+                      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+                      kind: ProviderConfiguration
+                      name: nested
+                      namespace: test
+                      createNamespace: true
+                      helmDeployment: false
+                      chart:
+                        helmChartRepo:
+                          helmChartRepoUrl: "https://common.repositories.cloud.sap/artifactory/landscaper-examples"
+                          helmChartName: "nested-root"
+                          helmChartVersion: "1.0.1"
+                      values:
+                        testdata: hello
+                        subchart-enabled: false
