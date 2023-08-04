@@ -1,0 +1,14 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: testdata1
+  namespace: example
+data: foo
+---
+{{ $val := "bar" -}}
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: testdata2
+  namespace: example
+data: {{ $val }}

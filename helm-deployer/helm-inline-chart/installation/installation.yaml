@@ -1,0 +1,46 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: inline-chart
+  namespace: example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+spec:
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          jsonSchema: "https://json-schema.org/draft/2019-09/schema"
+
+          imports:
+            - name: cluster   # name of the import parameter
+              type: target
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+          deployExecutions:
+            - name: default
+              type: GoTemplate
+              template: |
+                deployItems:
+                  - name: default-deploy-item
+                    type: landscaper.gardener.cloud/helm
+                    target:
+                      import: cluster
+                    config:
+                      apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+                      kind: ProviderConfiguration
+                      name: hello-world
+                      namespace: example
+                      createNamespace: true
+                      chart:
+                        archive:
+                          raw: |
+                            H4s...AAA==
+                      values:
+                        foo: bar
