@@ -1,0 +1,195 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-1
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-1
+
+---
+
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-2
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-2
+
+---
+
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-3
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-3
+
+---
+
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-4
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-4
+
+---
+
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-5
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-5
+
+---
+
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-6
+  namespace: cu-test
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-examples/scaling/many-deployitems
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-6

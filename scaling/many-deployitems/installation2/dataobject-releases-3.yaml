@@ -1,0 +1,28 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: my-releases-3
+  namespace: cu-test
+data:
+
+  - name: item020
+    namespace: scaling
+  - name: item021
+    namespace: scaling
+  - name: item022
+    namespace: scaling
+  - name: item023
+    namespace: scaling
+  - name: item024
+    namespace: scaling
+  - name: item025
+    namespace: scaling
+  - name: item026
+    namespace: scaling
+  - name: item027
+    namespace: scaling
+  - name: item028
+    namespace: scaling
+  - name: item029
+    namespace: scaling
+

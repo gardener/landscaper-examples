@@ -1,0 +1,110 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: my-releases-1
+  namespace: cu-test
+data:
+  - name: item1-1-000
+    namespace: scaling
+  - name: item1-1-001
+    namespace: scaling
+  - name: item1-1-002
+    namespace: scaling
+  - name: item1-1-003
+    namespace: scaling
+  - name: item1-1-004
+    namespace: scaling
+  - name: item1-1-005
+    namespace: scaling
+  - name: item1-1-006
+    namespace: scaling
+  - name: item1-1-007
+    namespace: scaling
+  - name: item1-1-008
+    namespace: scaling
+  - name: item1-1-009
+    namespace: scaling
+
+  - name: item1-2-000
+    namespace: scaling
+  - name: item1-2-001
+    namespace: scaling
+  - name: item1-2-002
+    namespace: scaling
+  - name: item1-2-003
+    namespace: scaling
+  - name: item1-2-004
+    namespace: scaling
+  - name: item1-2-005
+    namespace: scaling
+  - name: item1-2-006
+    namespace: scaling
+  - name: item1-2-007
+    namespace: scaling
+  - name: item1-2-008
+    namespace: scaling
+  - name: item1-2-009
+    namespace: scaling
+
+  - name: item1-3-000
+    namespace: scaling
+  - name: item1-3-001
+    namespace: scaling
+  - name: item1-3-002
+    namespace: scaling
+  - name: item1-3-003
+    namespace: scaling
+  - name: item1-3-004
+    namespace: scaling
+  - name: item1-3-005
+    namespace: scaling
+  - name: item1-3-006
+    namespace: scaling
+  - name: item1-3-007
+    namespace: scaling
+  - name: item1-3-008
+    namespace: scaling
+  - name: item1-3-009
+    namespace: scaling
+
+  - name: item1-4-000
+    namespace: scaling
+  - name: item1-4-001
+    namespace: scaling
+  - name: item1-4-002
+    namespace: scaling
+  - name: item1-4-003
+    namespace: scaling
+  - name: item1-4-004
+    namespace: scaling
+  - name: item1-4-005
+    namespace: scaling
+  - name: item1-4-006
+    namespace: scaling
+  - name: item1-4-007
+    namespace: scaling
+  - name: item1-4-008
+    namespace: scaling
+  - name: item1-4-009
+    namespace: scaling
+
+  - name: item1-5-000
+    namespace: scaling
+  - name: item1-5-001
+    namespace: scaling
+  - name: item1-5-002
+    namespace: scaling
+  - name: item1-5-003
+    namespace: scaling
+  - name: item1-5-004
+    namespace: scaling
+  - name: item1-5-005
+    namespace: scaling
+  - name: item1-5-006
+    namespace: scaling
+  - name: item1-5-007
+    namespace: scaling
+  - name: item1-5-008
+    namespace: scaling
+  - name: item1-5-009
+    namespace: scaling
