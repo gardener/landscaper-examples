@@ -1,0 +1,65 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Blueprint
+jsonSchema: "https://json-schema.org/draft/2019-09/schema" # required
+
+imports:
+  - name: cluster
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+  - name: release
+    type: data
+    schema:
+      type: object
+
+  - name: values
+    type: data
+    schema:
+      type: object
+
+deployExecutions:
+  - name: default
+    type: GoTemplate
+    template: |
+      {{ $releaseName := .imports.release.name }}
+      {{ $epoch := now | unixEpoch }}
+      deployItems:
+        - name: default-deploy-item
+          type: landscaper.gardener.cloud/helm
+
+          target:
+            import: cluster
+
+          config:
+            apiVersion: helm.deployer.landscaper.gardener.cloud/v1alpha1
+            kind: ProviderConfiguration
+            name: {{ $releaseName }}
+            namespace: {{ $releaseName }}
+            createNamespace: true
+
+            chart:
+              {{ $chartResource := getResource .cd "name" "many-deployitems-extended-chart" }}
+              ref: {{ $chartResource.access.imageReference }}
+
+            values:
+              text: {{ .imports.values.text }}
+              sleep: {{ .imports.values.sleep }}
+              {{ $jobname := print $releaseName "-" $epoch }}
+              jobname: {{ $jobname }}
+      
+            {{- if .imports.values.sleep | int | lt 0 }}
+            readinessChecks:
+              disableDefault: false
+      
+              custom:
+                - name: CheckJob
+                  resourceSelector:
+                    - apiVersion: batch/v1
+                      kind: Job
+                      name: {{ $jobname }}
+                      namespace: {{ $releaseName }}
+                  requirements:
+                    - jsonPath: .status.succeeded
+                      operator: ==
+                      values:
+                        - value: 1
+            {{- end }}

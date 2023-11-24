@@ -35,4 +35,4 @@ echo "Creating transport file"
 landscaper-cli component-cli component-archive "${COMPONENT_DIR}" "${TRANSPORT_FILE}" -r ${COMPONENT_DIR}/resources.yaml
 
 echo "Pushing transport file to oci registry"
-component-cli ctf push "${TRANSPORT_FILE}"
+landscaper-cli component-cli ctf push "${TRANSPORT_FILE}"

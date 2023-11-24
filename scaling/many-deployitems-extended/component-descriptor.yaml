@@ -1,0 +1,17 @@
+meta:
+  schemaVersion: 'v2'
+component:
+  name: 'github.com/gardener/landscaper-examples/scaling/many-deployitems-extended'
+  version: '1.0.0'
+
+  repositoryContexts:
+    - type: 'ociRegistry'
+      baseUrl: 'eu.gcr.io/gardener-project/landscaper/examples'
+
+  provider: 'internal'
+
+  componentReferences: []
+
+  sources: []
+
+  resources: []

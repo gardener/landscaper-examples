@@ -1,5 +1,3 @@
 .idea
 
 **/transport.tar
-scaling/many-deployitems/commands/create-and-push-chart.sh
-scaling/many-deployitems-extended/commands/push-chart.sh

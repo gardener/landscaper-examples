@@ -1,0 +1,18 @@
+{{- if .Values.sleep }}
+{{- if .Values.sleep | int | lt 0 }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Values.jobname }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  ttlSecondsAfterFinished: 60
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: sleep-job
+          image: "alpine:3.3"
+          command: ["/bin/sleep","{{ .Values.sleep }}"]
+{{- end }}
+{{- end }}
