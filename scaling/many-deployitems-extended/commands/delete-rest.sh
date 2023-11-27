@@ -45,14 +45,15 @@ mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
 
 for (( i=1; i<=${NUM_TOP_LEVEL_INSTS}; i++ ))
 do
-   echo "This is loop number $i"
+  echo "This is loop number $i"
 
-   echo "render releases"
+  echo "render releases"
 
-   mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
-     --var namespace="${NAMESPACE}" \
-     --var num="${i}" \
-     --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
+  mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
+    --var namespace="${NAMESPACE}" \
+    --var num="${i}" \
+    --var numsubinsts="${NUM_SUB_INSTS}" \
+    --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
 done
 
 kubectl delete -f "${TMP_DIR}"

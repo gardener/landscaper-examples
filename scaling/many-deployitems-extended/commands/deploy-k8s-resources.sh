@@ -53,6 +53,7 @@ do
    mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
      --var namespace="${NAMESPACE}" \
      --var num="${i}" \
+     --var numsubinsts="${NUM_SUB_INSTS}" \
      --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
 
    echo "render installation"

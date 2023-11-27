@@ -4,8 +4,11 @@ TARGET_CLUSTER_KUBECONFIG_PATH="/Users/${USER}/tmp/kubes/kubeconfig-scaling-many
 # namespace for the resources in the resource cluster, e.g. the installations, target etc.
 NAMESPACE="cu-achim"
 
-# number of top level instances
+# number of root installations
 NUM_TOP_LEVEL_INSTS=3
+
+# number of sub level installation per root installations
+NUM_SUB_INSTS=3
 
 # duration in secods for the job to sleep
 SLEEP=2

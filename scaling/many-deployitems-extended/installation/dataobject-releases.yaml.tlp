@@ -1,9 +1,15 @@
+<%
+  n = int(numsubinsts)
+%>
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: DataObject
 metadata:
   name: my-releases-${num}
   namespace: ${namespace}
 data:
-  - name: item000-${num}
-    namespace: scaling-${num}
+% for i in range(n):
+  - name: item-${num}-${i}
+    namespace: scaling-${num}-${i}
+% endfor
+
 
