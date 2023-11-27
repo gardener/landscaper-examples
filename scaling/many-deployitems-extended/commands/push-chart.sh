@@ -26,6 +26,4 @@ helm package "${COMPONENT_DIR}/chart/many-deployitems" -d "${TMP_DIR}"
 
 gcloud auth print-access-token | helm registry login -u oauth2accesstoken --password-stdin https://eu.gcr.io
 
-#helm registry login eu.gcr.io -u oauth2accesstoken -p ${TTT_MANY_DI_EXTENDED}
-
 helm push "${TMP_DIR}/many-deployitems-extended-1.0.0.tgz" oci://eu.gcr.io/gardener-project/landscaper/examples/charts/scaling

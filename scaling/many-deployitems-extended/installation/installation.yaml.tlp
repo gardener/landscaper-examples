@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: scaling-many-deployitems-extended
+  name: scaling-many-deployitems-extended-${num}
   namespace: ${namespace}
   annotations:
     landscaper.gardener.cloud/operation: reconcile
@@ -27,4 +27,4 @@ spec:
       - name: values
         dataRef: my-values
       - name: releases
-        dataRef: my-releases
+        dataRef: my-releases-${num}

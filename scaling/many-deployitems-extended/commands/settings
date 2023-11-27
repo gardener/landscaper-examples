@@ -2,4 +2,10 @@
 TARGET_CLUSTER_KUBECONFIG_PATH="/Users/${USER}/tmp/kubes/kubeconfig-scaling-many-deployitems-extended.yaml"
 
 # namespace for the resources in the resource cluster, e.g. the installations, target etc.
-NAMESPACE="cu-test"
+NAMESPACE="cu-achim"
+
+# number of top level instances
+NUM_TOP_LEVEL_INSTS=3
+
+# duration in secods for the job to sleep
+SLEEP=2

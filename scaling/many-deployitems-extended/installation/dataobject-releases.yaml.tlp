@@ -1,9 +1,9 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: DataObject
 metadata:
-  name: my-releases
+  name: my-releases-${num}
   namespace: ${namespace}
 data:
-  - name: item000
-    namespace: scaling000
+  - name: item000-${num}
+    namespace: scaling-${num}
 

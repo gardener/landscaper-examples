@@ -14,14 +14,31 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
-# Prerequisite: you must login with the following command
-# gcloud auth login
+set -o errexit
 
 COMPONENT_DIR="$(dirname $0)/.."
+cd "${COMPONENT_DIR}"
+COMPONENT_DIR="$(pwd)"
+echo compdir ${COMPONENT_DIR}
 
-helm package "${COMPONENT_DIR}/chart/pause" -d "${COMPONENT_DIR}/commands"
+source ${COMPONENT_DIR}/commands/settings
+echo -e "\n--- settings"
+echo "TARGET_CLUSTER_KUBECONFIG_PATH:   ${TARGET_CLUSTER_KUBECONFIG_PATH}"
+echo "NAMESPACE:                        ${NAMESPACE}"
 
-gcloud auth print-access-token | helm registry login -u oauth2accesstoken --password-stdin https://eu.gcr.io
+TMP_DIR=`mktemp -d`
+echo tempdir ${TMP_DIR}
 
-helm push "${COMPONENT_DIR}/commands/pause-1.0.5.tgz" oci://eu.gcr.io/gardener-project/landscaper/examples/charts/helm-deployer
+for (( i=1; i<=${NUM_TOP_LEVEL_INSTS}; i++ ))
+do
+   echo "This is loop number $i"
+
+   echo "render installation"
+
+   mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
+     --var namespace="${NAMESPACE}" \
+     --var num="${i}" \
+     --output-file="${TMP_DIR}/installation-${i}.yaml"
+done
+
+kubectl delete -f "${TMP_DIR}" --wait=false

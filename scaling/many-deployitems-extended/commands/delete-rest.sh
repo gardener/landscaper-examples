@@ -16,7 +16,6 @@
 
 set -o errexit
 
-
 COMPONENT_DIR="$(dirname $0)/.."
 cd "${COMPONENT_DIR}"
 COMPONENT_DIR="$(pwd)"
@@ -54,13 +53,6 @@ do
      --var namespace="${NAMESPACE}" \
      --var num="${i}" \
      --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
-
-   echo "render installation"
-
-   mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-     --var namespace="${NAMESPACE}" \
-     --var num="${i}" \
-     --output-file="${TMP_DIR}/installation-${i}.yaml"
 done
 
-kubectl apply -f "${TMP_DIR}"
+kubectl delete -f "${TMP_DIR}"

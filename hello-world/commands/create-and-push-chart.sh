@@ -14,15 +14,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Prerequisite: environment variable ACCESS_TOKEN must be set
-# Get an access token:
+# Prerequisite: you must login with the following command
 # gcloud auth login
-# gcloud auth print-access-token
 
 COMPONENT_DIR="$(dirname $0)/.."
 
 helm package "${COMPONENT_DIR}/chart/hello-world" -d "${COMPONENT_DIR}/commands"
 
-helm registry login eu.gcr.io -u oauth2accesstoken -p "${ACCESS_TOKEN}"
+gcloud auth print-access-token | helm registry login -u oauth2accesstoken --password-stdin https://eu.gcr.io
 
 helm push "${COMPONENT_DIR}/commands/hello-world-1.0.0.tgz" oci://eu.gcr.io/gardener-project/landscaper/examples/charts
