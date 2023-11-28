@@ -23,7 +23,7 @@ deployExecutions:
       {{ $releaseName := .imports.release.name }}
       {{ $epoch := now | unixEpoch }}
       deployItems:
-        - name: default-deploy-item
+        - name: default-deploy-item-helm
           type: landscaper.gardener.cloud/helm
 
           target:
@@ -64,3 +64,23 @@ deployExecutions:
                       values:
                         - value: 1
             {{- end }}
+        
+        - name: default-deploy-item-manifest
+          type: landscaper.gardener.cloud/kubernetes-manifest
+          target:
+            import: cluster
+          config:
+            apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+            kind: ProviderConfiguration
+            updateStrategy: update
+            manifests:
+              - policy: manage
+                manifest:
+                  apiVersion: v1
+                  kind: ConfigMap
+                  metadata:
+                    name: cm-{{ $releaseName }}
+                    namespace: {{ $releaseName }}
+                  data:
+                    testData: {{ .imports.values.text }}
+      
