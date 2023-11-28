@@ -38,6 +38,7 @@ mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
   --var namespace="${NAMESPACE}" \
   --var sleep="${SLEEP}" \
   --var helmDeployment="${HELM_DEPLOYMENT}" \
+  --var text="${TEXT}" \
   --output-file="${TMP_DIR}/dataobject-values.yaml"
 
 mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
