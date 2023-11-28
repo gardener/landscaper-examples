@@ -7,3 +7,4 @@ data:
   text: ${text}
   sleep: ${sleep}
   helmDeployment: ${helmDeployment}
+  numOfCm: ${numOfCm}

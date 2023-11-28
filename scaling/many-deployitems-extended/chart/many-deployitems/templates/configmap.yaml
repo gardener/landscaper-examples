@@ -1,8 +1,14 @@
+{{- $releaseName := .Release.Name }}
+{{- $releaseNamespace := .Release.Namespace }}
+{{- $text := .Values.text }}
+{{- range $index := 3 | int | until }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}
-  namespace: {{ .Release.Namespace }}
+  name: {{ $releaseName }}-{{ $index }}
+  namespace: {{ $releaseNamespace }}
 data:
   testData: |
-    {{- .Values.text | toYaml | nindent 4 }}
+    {{- $text | toYaml | nindent 4 }}
+{{- end }}
