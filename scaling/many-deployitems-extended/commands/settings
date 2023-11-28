@@ -10,5 +10,8 @@ NUM_TOP_LEVEL_INSTS=3
 # number of sub level installation per root installations
 NUM_SUB_INSTS=3
 
-# duration in secods for the job to sleep
+# duration in seconds for the job to sleep
 SLEEP=2
+
+# true is real helm deployment, otherwise helm manifest deployment
+HELM_DEPLOYMENT=true

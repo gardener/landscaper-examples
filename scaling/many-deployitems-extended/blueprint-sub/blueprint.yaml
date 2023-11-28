@@ -35,6 +35,7 @@ deployExecutions:
             name: {{ $releaseName }}
             namespace: {{ $releaseName }}
             createNamespace: true
+            helmDeployment: {{ .imports.values.helmDeployment }}
 
             chart:
               {{ $chartResource := getResource .cd "name" "many-deployitems-extended-chart" }}

@@ -14,6 +14,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+# Prerequisite: you must login with the following command
+# gcloud auth login
+
 set -o errexit
 
 COMPONENT_DIR="$(dirname $0)/.."
