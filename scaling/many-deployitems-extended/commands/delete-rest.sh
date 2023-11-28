@@ -14,8 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-set -o errexit
-
 COMPONENT_DIR="$(dirname $0)/.."
 cd "${COMPONENT_DIR}"
 COMPONENT_DIR="$(pwd)"
@@ -57,4 +55,14 @@ do
     --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
 done
 
+echo "delete k8s resources"
 kubectl delete -f "${TMP_DIR}"
+
+echo "delete namespace"
+for (( i=1; i<=${NUM_TOP_LEVEL_INSTS}; i++ ))
+do
+   for (( j=0; j<${NUM_SUB_INSTS}; j++ ))
+   do
+      kubectl delete ns item-${i}-${j} --kubeconfig "${TARGET_CLUSTER_KUBECONFIG_PATH}" --wait=false
+   done
+done

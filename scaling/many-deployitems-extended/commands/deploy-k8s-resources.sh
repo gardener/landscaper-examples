@@ -66,3 +66,4 @@ do
 done
 
 kubectl apply -f "${TMP_DIR}"
+
