@@ -50,7 +50,6 @@ deployExecutions:
             {{- if .imports.values.sleep | int | lt 0 }}
             readinessChecks:
               disableDefault: false
-      
               custom:
                 - name: CheckJob
                   resourceSelector:
@@ -101,6 +100,20 @@ deployExecutions:
                           - name: sleep-job
                             image: "alpine:3.3"
                             command: ["/bin/sleep","{{ .imports.values.sleep }}"]
+            readinessChecks:
+              disableDefault: false
+              custom:
+                - name: CheckJob
+                  resourceSelector:
+                    - apiVersion: batch/v1
+                      kind: Job
+                      name: {{ $jobname2 }}
+                      namespace: {{ $releaseName }}
+                  requirements:
+                    - jsonPath: .status.succeeded
+                      operator: ==
+                      values:
+                        - value: 1
               {{- end }}
       
       
