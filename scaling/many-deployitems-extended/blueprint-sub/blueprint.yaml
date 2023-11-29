@@ -83,6 +83,7 @@ deployExecutions:
                     namespace: {{ $releaseName }}
                   data:
                     testData: {{ .imports.values.text }}
+              {{- if .imports.values.sleep | int | lt 0 }}
               - policy: manage
                 manifest:
                   apiVersion: batch/v1
@@ -100,5 +101,6 @@ deployExecutions:
                           - name: sleep-job
                             image: "alpine:3.3"
                             command: ["/bin/sleep","{{ .imports.values.sleep }}"]
+              {{- end }}
       
       

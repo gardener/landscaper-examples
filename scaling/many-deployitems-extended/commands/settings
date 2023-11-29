@@ -11,7 +11,7 @@ NUM_TOP_LEVEL_INSTS=3
 NUM_SUB_INSTS=3
 
 # duration in seconds for the job to sleep
-SLEEP=2
+SLEEP=1
 
 # true is real helm deployment, otherwise helm manifest deployment
 HELM_DEPLOYMENT=true
