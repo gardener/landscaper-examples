@@ -20,7 +20,7 @@ HELM=true
 HELM_DEPLOYMENT=true
 
 # number of config maps
-NUM_OF_CM=3
+NUM_OF_CM=2
 
 # text for config maps
 TEXT="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."\

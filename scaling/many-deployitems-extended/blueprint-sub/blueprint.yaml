@@ -48,6 +48,7 @@ deployExecutions:
               sleep: {{ .imports.values.sleep }}
               {{ $jobname := print $releaseName "-" $epoch }}
               jobname: {{ $jobname }}
+              numOfCm: {{ .imports.values.numOfCm }}
       
             {{- if .imports.values.sleep | int | lt 0 }}
             readinessChecks:
@@ -77,15 +78,18 @@ deployExecutions:
             kind: ProviderConfiguration
             updateStrategy: update
             manifests:
+              {{- $text := .imports.values.text }}
+              {{- range $index := .imports.values.numOfCm | int | until }}
               - policy: manage
                 manifest:
                   apiVersion: v1
                   kind: ConfigMap
                   metadata:
-                    name: man-{{ $releaseName }}
+                    name: man-{{ $releaseName }}-{{ $index }}
                     namespace: {{ $releaseName }}
                   data:
-                    testData: {{ .imports.values.text }}
+                    testData: {{ $text }}
+              {{- end }}
               {{- if .imports.values.sleep | int | lt 0 }}
               - policy: manage
                 manifest:

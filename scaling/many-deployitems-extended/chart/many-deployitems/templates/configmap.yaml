@@ -1,7 +1,7 @@
 {{- $releaseName := .Release.Name }}
 {{- $releaseNamespace := .Release.Namespace }}
 {{- $text := .Values.text }}
-{{- range $index := 3 | int | until }}
+{{- range $index := .Values.numOfCm | int | until }}
 ---
 apiVersion: v1
 kind: ConfigMap
