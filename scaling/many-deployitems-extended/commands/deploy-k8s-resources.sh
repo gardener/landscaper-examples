@@ -16,16 +16,12 @@
 
 set -o errexit
 
-
 COMPONENT_DIR="$(dirname $0)/.."
 cd "${COMPONENT_DIR}"
 COMPONENT_DIR="$(pwd)"
 echo compdir ${COMPONENT_DIR}
 
 source ${COMPONENT_DIR}/commands/settings
-echo -e "\n--- settings"
-echo "TARGET_CLUSTER_KUBECONFIG_PATH:   ${TARGET_CLUSTER_KUBECONFIG_PATH}"
-echo "NAMESPACE:                        ${NAMESPACE}"
 
 TMP_DIR=`mktemp -d`
 echo tempdir ${TMP_DIR}
@@ -43,29 +39,46 @@ mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
   --var numOfCm="${NUM_OF_CM}" \
   --output-file="${TMP_DIR}/dataobject-values.yaml"
 
-mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
-  --output-file="${TMP_DIR}/target.yaml"
-
-for (( i=1; i<=${NUM_TOP_LEVEL_INSTS}; i++ ))
+# Counter
+externalLoop=1
+# Iterate over all files in the directory
+for TARGET_CLUSTER_KUBECONFIG_PATH in "$TARGET_CLUSTER_KUBECONFIG_FOLDER"/*
 do
-   echo "This is loop number $i"
+  # Check if it is a file (not a directory)
+  if [ -f "$TARGET_CLUSTER_KUBECONFIG_PATH" ]; then
+    echo "External loop: $externalLoop"
+    echo "Reading file $TARGET_CLUSTER_KUBECONFIG_PATH"
 
-   echo "render releases"
+    mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
+      --var namespace="${NAMESPACE}" \
+      --var externalLoop="${externalLoop}" \
+      --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
+      --output-file="${TMP_DIR}/target-${externalLoop}.yaml"
 
-   mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
-     --var namespace="${NAMESPACE}" \
-     --var num="${i}" \
-     --var numsubinsts="${NUM_SUB_INSTS}" \
-     --output-file="${TMP_DIR}/dataobject-releases-${i}.yaml"
+    for (( internalLoop=1; internalLoop<=${NUM_TOP_LEVEL_INSTS}; internalLoop++ ))
+    do
+       echo "Internal loop $internalLoop"
 
-   echo "render installation"
+       echo "render releases"
 
-   mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-     --var namespace="${NAMESPACE}" \
-     --var num="${i}" \
-     --output-file="${TMP_DIR}/installation-${i}.yaml"
+       mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
+         --var namespace="${NAMESPACE}" \
+         --var externalLoop="${externalLoop}" \
+         --var internalLoop="${internalLoop}" \
+         --var numsubinsts="${NUM_SUB_INSTS}" \
+         --output-file="${TMP_DIR}/dataobject-releases-${externalLoop}-${internalLoop}.yaml"
+
+       echo "render installation"
+
+       mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
+         --var namespace="${NAMESPACE}" \
+         --var externalLoop="${externalLoop}" \
+         --var internalLoop="${internalLoop}" \
+         --output-file="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
+    done
+
+    externalLoop=$((externalLoop+1))
+  fi
 done
 
 kubectl apply -f "${TMP_DIR}"

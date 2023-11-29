@@ -1,5 +1,5 @@
 # path to the kubeconfig of the target cluster used in the target of the resource cluster
-TARGET_CLUSTER_KUBECONFIG_PATH="/Users/${USER}/tmp/kubes/kubeconfig-scaling-many-deployitems-extended.yaml"
+TARGET_CLUSTER_KUBECONFIG_FOLDER="/Users/${USER}/tmp/kubes"
 
 # namespace for the resources in the resource cluster, e.g. the installations, target etc.
 NAMESPACE="cu-achim"

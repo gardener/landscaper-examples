@@ -7,7 +7,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Target
 metadata:
-  name: my-cluster
+  name: my-cluster-${externalLoop}
   namespace: ${namespace}
 spec:
   type: landscaper.gardener.cloud/kubernetes-cluster

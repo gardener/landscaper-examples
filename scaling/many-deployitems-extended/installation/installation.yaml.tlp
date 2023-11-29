@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: scaling-many-deployitems-extended-${num}
+  name: scaling-many-deployitems-extended-${externalLoop}-${internalLoop}
   namespace: ${namespace}
   annotations:
     landscaper.gardener.cloud/operation: reconcile
@@ -21,10 +21,10 @@ spec:
   imports:
     targets:
       - name: cluster
-        target: my-cluster
+        target: my-cluster-${externalLoop}
 
     data:
       - name: values
         dataRef: my-values
       - name: releases
-        dataRef: my-releases-${num}
+        dataRef: my-releases-${externalLoop}-${internalLoop}

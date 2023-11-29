@@ -22,23 +22,36 @@ COMPONENT_DIR="$(pwd)"
 echo compdir ${COMPONENT_DIR}
 
 source ${COMPONENT_DIR}/commands/settings
-echo -e "\n--- settings"
-echo "TARGET_CLUSTER_KUBECONFIG_PATH:   ${TARGET_CLUSTER_KUBECONFIG_PATH}"
-echo "NAMESPACE:                        ${NAMESPACE}"
 
 TMP_DIR=`mktemp -d`
 echo tempdir ${TMP_DIR}
 
-for (( i=1; i<=${NUM_TOP_LEVEL_INSTS}; i++ ))
+# Counter
+externalLoop=1
+# Iterate over all files in the directory
+for TARGET_CLUSTER_KUBECONFIG_PATH in "$TARGET_CLUSTER_KUBECONFIG_FOLDER"/*
 do
-   echo "This is loop number $i"
+  # Check if it is a file (not a directory)
+  if [ -f "$TARGET_CLUSTER_KUBECONFIG_PATH" ]; then
+    echo "External loop: $externalLoop"
+    echo "Reading file $TARGET_CLUSTER_KUBECONFIG_PATH"
 
-   echo "render installation"
+    for (( internalLoop=1; internalLoop<=${NUM_TOP_LEVEL_INSTS}; internalLoop++ ))
+    do
+       echo "Internal loop $internalLoop"
 
-   mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-     --var namespace="${NAMESPACE}" \
-     --var num="${i}" \
-     --output-file="${TMP_DIR}/installation-${i}.yaml"
+       echo "render installation"
+
+       mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
+         --var namespace="${NAMESPACE}" \
+         --var externalLoop="${externalLoop}" \
+         --var internalLoop="${internalLoop}" \
+         --output-file="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
+    done
+
+    externalLoop=$((externalLoop+1))
+  fi
 done
 
+echo "delete k8s installations"
 kubectl delete -f "${TMP_DIR}" --wait=false
