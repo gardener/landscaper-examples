@@ -37,6 +37,7 @@ mako-render "${COMPONENT_DIR}/installation/context.yaml.tlp" \
 mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
   --var namespace="${NAMESPACE}" \
   --var sleep="${SLEEP}" \
+  --var helm="${HELM}" \
   --var helmDeployment="${HELM_DEPLOYMENT}" \
   --var text="${TEXT}" \
   --var numOfCm="${NUM_OF_CM}" \

@@ -6,5 +6,6 @@ metadata:
 data:
   text: ${text}
   sleep: ${sleep}
+  helm: ${helm}
   helmDeployment: ${helmDeployment}
   numOfCm: ${numOfCm}

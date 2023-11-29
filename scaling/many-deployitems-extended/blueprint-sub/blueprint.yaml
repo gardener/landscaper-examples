@@ -23,6 +23,8 @@ deployExecutions:
       {{ $releaseName := .imports.release.name }}
       {{ $epoch := now | unixEpoch }}
       deployItems:
+      {{- if .imports.values.helm }}
+      
         - name: default-deploy-item-helm
           type: landscaper.gardener.cloud/helm
 
@@ -63,7 +65,9 @@ deployExecutions:
                       values:
                         - value: 1
             {{- end }}
-        
+      
+      {{- else }}
+      
         - name: default-deploy-item-manifest
           type: landscaper.gardener.cloud/kubernetes-manifest
           target:
@@ -115,5 +119,5 @@ deployExecutions:
                       values:
                         - value: 1
               {{- end }}
-      
+      {{- end }}
       

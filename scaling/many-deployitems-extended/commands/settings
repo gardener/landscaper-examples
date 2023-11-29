@@ -13,7 +13,10 @@ NUM_SUB_INSTS=3
 # duration in seconds for the job to sleep
 SLEEP=1
 
-# true is real helm deployment, otherwise helm manifest deployment
+# if true a helm deployment is executed otherwise a manifest deployment
+HELM=true
+
+# only relevant if HELM==true; if HELM_DEPLOYMENT is true a real helm deployment is executed, otherwise helm manifest deployment
 HELM_DEPLOYMENT=true
 
 # number of config maps
