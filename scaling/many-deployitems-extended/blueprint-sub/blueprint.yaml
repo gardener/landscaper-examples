@@ -79,8 +79,26 @@ deployExecutions:
                   apiVersion: v1
                   kind: ConfigMap
                   metadata:
-                    name: cm-{{ $releaseName }}
+                    name: man-{{ $releaseName }}
                     namespace: {{ $releaseName }}
                   data:
                     testData: {{ .imports.values.text }}
+              - policy: manage
+                manifest:
+                  apiVersion: batch/v1
+                  kind: Job
+                  metadata:
+                    {{ $jobname2 := print "man-" $releaseName "-" $epoch }}
+                    name: {{ $jobname2 }}
+                    namespace: {{ $releaseName }}
+                  spec:
+                    ttlSecondsAfterFinished: 60
+                    template:
+                      spec:
+                        restartPolicy: Never
+                        containers:
+                          - name: sleep-job
+                            image: "alpine:3.3"
+                            command: ["/bin/sleep","{{ .imports.values.sleep }}"]
+      
       
