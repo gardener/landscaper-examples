@@ -92,7 +92,7 @@ deployExecutions:
                     name: {{ $jobname2 }}
                     namespace: {{ $releaseName }}
                   spec:
-                    ttlSecondsAfterFinished: 60
+                    ttlSecondsAfterFinished: 600
                     template:
                       spec:
                         restartPolicy: Never

@@ -6,7 +6,7 @@ metadata:
   name: {{ .Values.jobname }}
   namespace: {{ .Release.Namespace }}
 spec:
-  ttlSecondsAfterFinished: 60
+  ttlSecondsAfterFinished: 600
   template:
     spec:
       restartPolicy: Never
