@@ -53,7 +53,8 @@ do
       --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
       --output-file="${TMP_DIR}/target-${externalLoop}.yaml"
 
-    for (( internalLoop=1; internalLoop<=${NUM_TOP_LEVEL_INSTS}; internalLoop++ ))
+    sum=$((START_NUMBER + NUM_TOP_LEVEL_INSTS))
+    for (( internalLoop=$START_NUMBER ; internalLoop<$sum; internalLoop++ ))
     do
        echo "Internal loop $internalLoop"
 
@@ -79,4 +80,11 @@ done
 
 echo "delete k8s resources"
 kubectl delete -f "${TMP_DIR}"
+
+echo "delete namespaceregistration"
+outputFile="${TMP_DIR}/namespace-registration.yaml"
+mako-render "${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp" \
+  --var namespace="${NAMESPACE}" \
+  --output-file=${outputFile}
+kubectl delete -f ${outputFile}
 

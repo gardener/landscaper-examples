@@ -16,8 +16,6 @@
 
 set -o errexit
 
-start=$SECONDS
-
 COMPONENT_DIR="$(dirname $0)/.."
 cd "${COMPONENT_DIR}"
 COMPONENT_DIR="$(pwd)"
@@ -25,86 +23,9 @@ echo compdir ${COMPONENT_DIR}
 
 source ${COMPONENT_DIR}/commands/settings
 
-TMP_DIR=`mktemp -d`
-echo tempdir ${TMP_DIR}
-
-outputFile="${TMP_DIR}/namespace-registration.yaml"
-mako-render "${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file=${outputFile}
-kubectl apply -f ${outputFile}
-
-sleep 5
-
-outputFile="${TMP_DIR}/context.yaml"
-mako-render "${COMPONENT_DIR}/installation/context.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file=${outputFile}
-kubectl apply -f ${outputFile}
-
-outputFile="${TMP_DIR}/dataobject-values.yaml"
-mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --var sleep="${SLEEP}" \
-  --var helm="${HELM}" \
-  --var helmDeployment="${HELM_DEPLOYMENT}" \
-  --var text="${TEXT}" \
-  --var numOfCm="${NUM_OF_CM}" \
-  --output-file=${outputFile}
-kubectl apply -f ${outputFile}
-
-# Counter
-externalLoop=1
-# Iterate over all files in the directory
-for TARGET_CLUSTER_KUBECONFIG_PATH in "$TARGET_CLUSTER_KUBECONFIG_FOLDER"/*
-do
-  # Check if it is a file (not a directory)
-  if [ -f "$TARGET_CLUSTER_KUBECONFIG_PATH" ]; then
-    echo "External loop: $externalLoop"
-    echo "Reading file $TARGET_CLUSTER_KUBECONFIG_PATH"
-
-    outputFile="${TMP_DIR}/target-${externalLoop}.yaml"
-    mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
-      --var namespace="${NAMESPACE}" \
-      --var externalLoop="${externalLoop}" \
-      --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
-      --output-file=${outputFile}
-    kubectl apply -f ${outputFile}
-
-    sum=$((START_NUMBER + NUM_TOP_LEVEL_INSTS))
-    for (( internalLoop=$START_NUMBER ; internalLoop<$sum; internalLoop++ ))
-    do
-       echo "Internal loop $internalLoop"
-
-       echo "render releases"
-
-       outputFile="${TMP_DIR}/dataobject-releases-${externalLoop}-${internalLoop}.yaml"
-       mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --var numsubinsts="${NUM_SUB_INSTS}" \
-         --output-file=${outputFile}
-       kubectl apply -f ${outputFile}
-
-       echo "render installation"
-
-       outputFile="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
-       mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --output-file=${outputFile}
-       kubectl apply -f ${outputFile}
-    done
-
-    externalLoop=$((externalLoop+1))
-  fi
-done
-
-echo "start printing"
-
 set +o errexit
+
+start=$SECONDS
 
 while true
 do
@@ -149,13 +70,5 @@ do
     duration=$(( end - start ))
     echo "The script ran for $duration seconds."
 
-    if [ "$numRootInst" -eq "$numRootInstSucc" ]; then
-     echo "All Inst finished"
-     exit
-    fi
-
     sleep 5
 done
-
-
-
