@@ -37,4 +37,8 @@ subinstallationExecutions:
           importDataMappings:
             release:
               {{- $release | toYaml | nindent 8 }}
-        {{- end }}
+          optimization:
+            hasNoSiblingImports: true
+            hasNoSiblingExports: true
+      
+      {{- end }}
