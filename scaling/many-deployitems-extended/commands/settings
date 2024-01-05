@@ -5,7 +5,7 @@ TARGET_CLUSTER_KUBECONFIG_FOLDER="/Users/${USER}/tmp/kubes"
 NAMESPACE="cu-achim-11"
 
 # number of root installations
-NUM_TOP_LEVEL_INSTS=100
+NUM_TOP_LEVEL_INSTS=2
 
 # start number for root installations
 START_NUMBER=1
