@@ -1,0 +1,154 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scaling-many-deployitems-extended-${externalLoop}-${internalLoop}
+  namespace: ${namespace}
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-examples
+
+  #optimization:
+    #hasNoSiblingImports: true
+    #hasNoSiblingExports: true
+
+  blueprint:
+    inline:
+      filesystem:
+        blueprint.yaml: |
+          apiVersion: landscaper.gardener.cloud/v1alpha1
+          kind: Blueprint
+          jsonSchema: "https://json-schema.org/draft/2019-09/schema"
+
+          imports:
+            - name: cluster
+              targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+            - name: releases
+              type: data
+              schema:
+                type: array
+
+            - name: values
+              type: data
+              schema:
+                type: object
+
+          subinstallationExecutions:
+            - name: default
+              type: GoTemplate
+              template: |
+                subinstallations:
+                  {{- range $index, $release := .imports.releases }}
+                  - apiVersion: landscaper.gardener.cloud/v1alpha1
+                    kind: InstallationTemplate
+                    name: subinst-{{ $release.namespace }}-{{ $release.name }}
+                    blueprint:
+                        filesystem:
+                          blueprint.yaml: |
+                            apiVersion: landscaper.gardener.cloud/v1alpha1
+                            kind: Blueprint
+                            jsonSchema: "https://json-schema.org/draft/2019-09/schema"
+
+                            imports:
+                              - name: cluster
+                                targetType: landscaper.gardener.cloud/kubernetes-cluster
+
+                              - name: release
+                                type: data
+                                schema:
+                                  type: object
+
+                              - name: values
+                                type: data
+                                schema:
+                                  type: object
+
+                            deployExecutions:
+                              - name: default
+                                type: GoTemplate
+                                template: |
+                                  {{ "{{" }} $releaseName := .imports.release.name {{ "}}" }}
+                                  {{ $epoch := now | unixEpoch }}
+                                  deployItems:
+                                    - name: default-deploy-item-manifest
+                                      type: landscaper.gardener.cloud/kubernetes-manifest
+                                      target:
+                                        import: cluster
+                                      config:
+                                        apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+                                        kind: ProviderConfiguration
+                                        updateStrategy: update
+                                        manifests:
+                                          {{ "{{" }}- $text := .imports.values.text {{ "}}" }}
+                                          {{ "{{" }}- range $index := .imports.values.numOfCm | int | until {{ "}}" }}
+                                          - policy: manage
+                                            manifest:
+                                              apiVersion: v1
+                                              kind: ConfigMap
+                                              metadata:
+                                                name: man-{{ "{{" }} $releaseName {{ "}}" }}-{{ "{{" }} $index {{ "}}" }}
+                                                namespace: {{ "{{" }} $releaseName {{ "}}" }}
+                                              data:
+                                                testData: {{ "{{" }} $text {{ "}}" }}
+                                          {{ "{{" }}- end {{ "}}" }}
+                                          {{ "{{" }}- if .imports.values.sleep | int | lt 0 {{ "}}" }}
+                                          - policy: manage
+                                            manifest:
+                                              apiVersion: batch/v1
+                                              kind: Job
+                                              metadata:
+                                                {{ "{{" }} $jobname2 := print "man-" $releaseName "-" $epoch {{ "}}" }}
+                                                name: {{ "{{" }} $jobname2 {{ "}}" }}
+                                                namespace: {{ "{{" }} $releaseName {{ "}}" }}
+                                              spec:
+                                                ttlSecondsAfterFinished: 600
+                                                template:
+                                                  spec:
+                                                    restartPolicy: Never
+                                                    containers:
+                                                      - name: sleep-job
+                                                        image: "alpine:3.3"
+                                                        command: ["/bin/sleep","{{ "{{" }} .imports.values.sleep {{ "}}" }}"]
+                                        readinessChecks:
+                                          disableDefault: false
+                                          custom:
+                                            - name: CheckJob
+                                              resourceSelector:
+                                                - apiVersion: batch/v1
+                                                  kind: Job
+                                                  name: {{ "{{" }} $jobname2 {{ "}}" }}
+                                                  namespace: {{ "{{" }} $releaseName {{ "}}" }}
+                                              requirements:
+                                                - jsonPath: .status.succeeded
+                                                  operator: ==
+                                                  values:
+                                                    - value: 1
+                                          {{ "{{" }}- end {{ "}}" }}
+                    imports:
+                      targets:
+                        - target: cluster
+                          name: cluster
+                      data:
+                        - name: values
+                          dataRef: values
+                    importDataMappings:
+                      release:
+                        {{- $release | toYaml | nindent 8 }}
+                    #optimization:
+                      #hasNoSiblingImports: true
+                      #hasNoSiblingExports: true
+
+                {{- end }}
+
+  imports:
+    targets:
+      - name: cluster
+        target: my-cluster-${externalLoop}
+
+    data:
+      - name: values
+        dataRef: my-values
+      - name: releases
+        dataRef: my-releases-${externalLoop}-${internalLoop}

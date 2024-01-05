@@ -50,6 +50,8 @@ mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
   --var helmDeployment="${HELM_DEPLOYMENT}" \
   --var text="${TEXT}" \
   --var numOfCm="${NUM_OF_CM}" \
+  --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
+  --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
   --output-file=${outputFile}
 kubectl apply -f ${outputFile}
 
@@ -94,6 +96,8 @@ do
          --var namespace="${NAMESPACE}" \
          --var externalLoop="${externalLoop}" \
          --var internalLoop="${internalLoop}" \
+         --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
+         --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
          --output-file=${outputFile}
        kubectl apply -f ${outputFile}
     done

@@ -21,6 +21,8 @@ subinstallationExecutions:
     type: GoTemplate
     template: |
       subinstallations:
+        {{- $noSiblingImports := .imports.values.hasNoSiblingImports }}
+        {{- $noSiblingExports := .imports.values.hasNoSiblingExports }}
         {{- range $index, $release := .imports.releases }}
         - apiVersion: landscaper.gardener.cloud/v1alpha1
           kind: InstallationTemplate
@@ -38,7 +40,7 @@ subinstallationExecutions:
             release:
               {{- $release | toYaml | nindent 8 }}
           optimization:
-            hasNoSiblingImports: true
-            hasNoSiblingExports: true
+            hasNoSiblingImports: {{ $noSiblingImports }}
+            hasNoSiblingExports: {{ $noSiblingExports }}
       
       {{- end }}

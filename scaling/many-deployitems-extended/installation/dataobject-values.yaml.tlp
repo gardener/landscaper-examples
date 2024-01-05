@@ -9,3 +9,5 @@ data:
   helm: ${helm}
   helmDeployment: ${helmDeployment}
   numOfCm: ${numOfCm}
+  hasNoSiblingImports: ${hasNoSiblingImports}
+  hasNoSiblingExports: ${hasNoSiblingExports}

@@ -49,6 +49,8 @@ do
          --var namespace="${NAMESPACE}" \
          --var externalLoop="${externalLoop}" \
          --var internalLoop="${internalLoop}" \
+         --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
+         --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
          --output-file="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
     done
 

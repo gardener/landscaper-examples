@@ -2,16 +2,16 @@
 TARGET_CLUSTER_KUBECONFIG_FOLDER="/Users/${USER}/tmp/kubes"
 
 # namespace for the resources in the resource cluster, e.g. the installations, target etc.
-NAMESPACE="cu-achim"
+NAMESPACE="cu-achim-11"
 
 # number of root installations
-NUM_TOP_LEVEL_INSTS=5
+NUM_TOP_LEVEL_INSTS=1
 
 # start number for root installations
 START_NUMBER=1
 
 # number of sub level installation per root installations
-NUM_SUB_INSTS=2
+NUM_SUB_INSTS=1
 
 # duration in seconds for the job to sleep
 SLEEP=0
@@ -28,3 +28,7 @@ NUM_OF_CM=1
 # text for config maps
 TEXT="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua."\
 "At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est."
+
+# set no sibling import/export hints
+HAS_NO_SIBLING_IMPORTS=false
+HAS_NO_SIBLING_EXPORTS=false

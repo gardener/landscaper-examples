@@ -10,8 +10,8 @@ spec:
   context: landscaper-examples
 
   optimization:
-    hasNoSiblingImports: true
-    hasNoSiblingExports: true
+    hasNoSiblingImports: ${hasNoSiblingImports}
+    hasNoSiblingExports: ${hasNoSiblingExports}
 
   componentDescriptor:
     ref:
