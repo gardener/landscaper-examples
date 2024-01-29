@@ -23,10 +23,11 @@ subinstallationExecutions:
       subinstallations:
         {{- $noSiblingImports := .imports.values.hasNoSiblingImports }}
         {{- $noSiblingExports := .imports.values.hasNoSiblingExports }}
+        {{- $subInstPrefix := .imports.values.subInstPrefix }}
         {{- range $index, $release := .imports.releases }}
         - apiVersion: landscaper.gardener.cloud/v1alpha1
           kind: InstallationTemplate
-          name: subinst-{{ $release.namespace }}-{{ $release.name }}
+          name: {{ $subInstPrefix }}-{{ $release.namespace }}-{{ $release.name }}
           blueprint:
             ref: cd://resources/blueprint-sub
           imports:

@@ -2,7 +2,7 @@
 TARGET_CLUSTER_KUBECONFIG_FOLDER="/Users/${USER}/tmp/kubes"
 
 # namespace for the resources in the resource cluster, e.g. the installations, target etc.
-NAMESPACE="cu-achim-11"
+NAMESPACE="cu-achim-21"
 
 # number of root installations
 NUM_TOP_LEVEL_INSTS=2
@@ -11,10 +11,10 @@ NUM_TOP_LEVEL_INSTS=2
 START_NUMBER=1
 
 # number of sub level installation per root installations
-NUM_SUB_INSTS=5
+NUM_SUB_INSTS=2
 
 # duration in seconds for the job to sleep
-SLEEP=15
+SLEEP=1
 
 # if true a helm deployment is executed otherwise a manifest deployment
 HELM=true
@@ -32,3 +32,6 @@ TEXT="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy e
 # set no sibling import/export hints
 HAS_NO_SIBLING_IMPORTS=true
 HAS_NO_SIBLING_EXPORTS=true
+
+# subinsts prefix
+SUB_INST_PREFIX=subinst

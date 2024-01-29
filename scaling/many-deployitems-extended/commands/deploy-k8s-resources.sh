@@ -52,6 +52,7 @@ mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
   --var numOfCm="${NUM_OF_CM}" \
   --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
   --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
+  --var subInstPrefix="${SUB_INST_PREFIX}" \
   --output-file=${outputFile}
 kubectl apply -f ${outputFile}
 

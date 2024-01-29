@@ -11,3 +11,4 @@ data:
   numOfCm: ${numOfCm}
   hasNoSiblingImports: ${hasNoSiblingImports}
   hasNoSiblingExports: ${hasNoSiblingExports}
+  subInstPrefix: ${subInstPrefix}
