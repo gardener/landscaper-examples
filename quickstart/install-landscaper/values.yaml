@@ -1,6 +1,7 @@
 landscaper:
   landscaper:
     verbosity: DEBUG
+    useOCMLib: true
     deployers:
       - container
       - helm
