@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: hello-world
+  name: multiple-items
   namespace: cu-example
   annotations:
     landscaper.gardener.cloud/operation: reconcile

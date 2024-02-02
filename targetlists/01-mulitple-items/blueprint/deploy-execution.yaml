@@ -17,7 +17,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: hello-{{ $idx }}-{{ $target.metadata.name }}
+              name: multiple-items-{{ $idx }}-{{ $target.metadata.name }}
               namespace: cu-example
             data:
               foo: bar
