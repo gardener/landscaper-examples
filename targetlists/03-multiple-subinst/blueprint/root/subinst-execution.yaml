@@ -12,6 +12,7 @@ subinstallations:
       targets:
         - name: cluster
           target: rootclusters[{{ $idx }}]
+          # target: rootclusters[{{ $target.metadata.name }}]  # 2.0.0
 
     importDataMappings:
       instance: instance-{{ $idx }}-{{ $target.metadata.name }}
