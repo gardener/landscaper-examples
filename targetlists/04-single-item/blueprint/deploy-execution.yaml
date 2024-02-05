@@ -1,0 +1,21 @@
+deployItems:
+  - name: di-single-item
+    type: landscaper.gardener.cloud/kubernetes-manifest
+
+    target:
+      import: cluster
+
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: single-item
+              namespace: cu-example
+            data:
+              foo: bar
