@@ -6,10 +6,10 @@ imports:
   - name: clusters
     type: targetList
     targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: colors
+  - name: config
     type: data
     schema:
-      type: array
+      type: object
 
 deployExecutions:
   - name: default

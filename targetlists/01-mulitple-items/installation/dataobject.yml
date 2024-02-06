@@ -1,9 +1,26 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: DataObject
 metadata:
-  name: colors
+  name: config
   namespace: cu-example
 data:
-  - red
-  - green
-  - blue
+  blue-cluster:
+    cpu: 100m
+    memory: 100Mi
+
+  green-cluster:
+    cpu: 120m
+    memory: 120Mi
+
+  yellow-cluster:
+    cpu: 140m
+    memory: 140Mi
+
+  orange-cluster:
+    cpu: 160m
+    memory: 160Mi
+
+  red-cluster:
+    cpu: 180m
+    memory: 180Mi
+

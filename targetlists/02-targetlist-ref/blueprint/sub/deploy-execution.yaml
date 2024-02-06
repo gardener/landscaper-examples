@@ -1,11 +1,11 @@
 deployItems:
-{{ range $idx, $target := .imports.clusters }}
-  - name: di-{{ $idx }}-{{ $target.metadata.name }}
+{{ range $target := .imports.clusters }}
+  - name: di-{{ $target.metadata.name }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
     target:
-      import: clusters
-      index: {{ $idx }}
+      name: {{ $target.metadata.name }}
+      namespace: {{ $target.metadata.namespace }}
 
     config:
       apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
@@ -17,7 +17,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: cm-targetlistref-{{ $idx }}-{{ $target.metadata.name }}
+              name: cm-targetlistref-{{ $target.metadata.name }}
               namespace: cu-example
             data:
               foo: bar

@@ -1,6 +1,7 @@
 deployItems:
-{{ $colors := .imports.colors }}
-{{ range $idx, $target := .imports.clusters }}
+{{ $config := .imports.config }}
+{{ range $target := .imports.clusters }}
+{{ $originalName := getOriginalName $target }}
   - name: di-{{ $target.metadata.name }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
@@ -18,8 +19,8 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: multiple-items-{{ $target.metadata.name }}-{{ index $colors $idx }}
+              name: multiple-items-{{ $originalName }}
               namespace: cu-example
             data:
-              foo: bar
+              {{- index $config $originalName | toYaml | nindent 14 }}
 {{ end }}

@@ -26,5 +26,5 @@ spec:
           - green-cluster
           - blue-cluster
     data:
-      - name: colors
-        dataRef: colors
+      - name: config
+        dataRef: config
