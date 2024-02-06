@@ -1,6 +1,7 @@
 deployItems:
 {{ range $target := .imports.clusters }}
-  - name: di-{{ $target.metadata.name }}
+{{ $originalName := getOriginalName $target }}
+  - name: di-{{ $originalName }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
     target:
@@ -17,7 +18,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: cm-targetlistref-{{ $target.metadata.name }}
+              name: targetlistref-{{ $originalName }}
               namespace: cu-example
             data:
               foo: bar
