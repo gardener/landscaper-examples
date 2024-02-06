@@ -3,13 +3,9 @@ kind: Blueprint
 jsonSchema: "https://json-schema.org/draft/2019-09/schema"
 
 imports:
-  - name: clusters
-    type: targetList
+  - name: cluster
+    type: target
     targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: colors
-    type: data
-    schema:
-      type: array
 
 deployExecutions:
   - name: default

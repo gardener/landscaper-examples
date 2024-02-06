@@ -1,12 +1,9 @@
 deployItems:
-{{ $colors := .imports.colors }}
-{{ range $idx, $target := .imports.clusters }}
-  - name: di-{{ $target.metadata.name }}
+  - name: di-single-subinst
     type: landscaper.gardener.cloud/kubernetes-manifest
 
     target:
-      name: {{ $target.metadata.name }}
-      namespace: {{ $target.metadata.namespace }}
+      import: cluster
 
     config:
       apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
@@ -18,8 +15,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: multiple-items-{{ $target.metadata.name }}-{{ index $colors $idx }}
+              name: single-subinst
               namespace: cu-example
             data:
               foo: bar
-{{ end }}

@@ -1,0 +1,13 @@
+subinstallations:
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: single-subinst-sub
+
+    blueprint:
+      ref: cd://resources/blueprint-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: rootcluster
