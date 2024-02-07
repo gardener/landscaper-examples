@@ -10,3 +10,6 @@ imports:
   targets:
     - name: clusters
       targetListRef: rootclusters
+  data:
+    - name: config
+      dataRef: rootconfig

@@ -1,4 +1,5 @@
 deployItems:
+{{ $config := .imports.config }}
 {{ range $target := .imports.clusters }}
 {{ $originalName := getOriginalName $target }}
   - name: di-{{ $originalName }}
@@ -21,5 +22,5 @@ deployItems:
               name: targetlistref-{{ $originalName }}
               namespace: cu-example
             data:
-              foo: bar
+              {{- index $config $originalName | toYaml | nindent 14 }}
 {{ end }}
