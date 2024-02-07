@@ -6,6 +6,10 @@ imports:
   - name: rootclusters
     type: targetList
     targetType: landscaper.gardener.cloud/kubernetes-cluster
+  - name: rootconfig
+    type: data
+    schema:
+      type: object
 
 subinstallationExecutions:
   - name: subinst-executions

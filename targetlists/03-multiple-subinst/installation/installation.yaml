@@ -25,3 +25,6 @@ spec:
           - red-cluster
           - green-cluster
           - blue-cluster
+    data:
+      - name: rootconfig
+        dataRef: config

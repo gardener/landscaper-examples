@@ -1,9 +1,12 @@
 subinstallations:
-{{ range $idx, $target := .imports.rootclusters }}
+{{ $rootconfig := .imports.rootconfig }}
+{{ range $target := .imports.rootclusters }}
+{{ $originalName := getOriginalName $target }}
+{{ $config := index $rootconfig $originalName }}
   - apiVersion: landscaper.gardener.cloud/v1alpha1
     kind: InstallationTemplate
 
-    name: multiple-subinst-sub-{{ $idx }}-{{ $target.metadata.name }}
+    name: multiple-subinst-sub-{{ $originalName }}
 
     blueprint:
       ref: cd://resources/blueprint-sub
@@ -11,10 +14,10 @@ subinstallations:
     imports:
       targets:
         - name: cluster
-          target: rootclusters[{{ $idx }}]
-          # target: rootclusters[{{ $target.metadata.name }}]  # 2.0.0
+          target: rootclusters[{{ $target.metadata.name }}]
 
     importDataMappings:
-      instance: instance-{{ $idx }}-{{ $target.metadata.name }}
+      config:
+        {{- $config | toYaml | nindent 8 }}
 
 {{ end }}
