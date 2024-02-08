@@ -1,0 +1,39 @@
+subinstallations:
+
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: compose-list-sub-sub-sub-single
+
+    blueprint:
+      ref: cd://resources/blueprint-sub-sub-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: subsubclustersingle
+
+    importDataMappings:
+      color: black
+
+
+{{ range $target := .imports.subsubclusters }}
+{{ $originalName := getOriginalName $target }}
+
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: compose-list-sub-sub-sub-{{ $originalName }}
+
+    blueprint:
+      ref: cd://resources/blueprint-sub-sub-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: subsubclusters[{{ $originalName }}]
+
+    importDataMappings:
+      color: {{ $originalName }}
+
+{{ end }}

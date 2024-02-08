@@ -1,0 +1,17 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+
+name: compose-list-sub-sub
+
+blueprint:
+  ref: cd://resources/blueprint-sub-sub
+
+imports:
+  targets:
+    - name: subsubclustersingle
+      target: subclustersingle
+    - name: subsubclusters
+      targets:
+        - subclustera
+        - subclusterb
+        - subclusterc

@@ -1,0 +1,15 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: InstallationTemplate
+
+name: double-targetlistref-sub-sub
+
+blueprint:
+  ref: cd://resources/blueprint-sub-sub
+
+imports:
+  targets:
+    - name: clusters
+      targetListRef: subclusters
+  data:
+    - name: config
+      dataRef: subconfig

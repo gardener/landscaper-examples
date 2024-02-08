@@ -1,0 +1,23 @@
+subinstallations:
+{{ $subconfig := .imports.subconfig }}
+{{ range $target := .imports.subclusters }}
+{{ $originalName := getOriginalName $target }}
+{{ $config := index $subconfig $originalName }}
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: double-multiple-subinst-sub-sub-{{ $originalName }}
+
+    blueprint:
+      ref: cd://resources/blueprint-sub-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: subclusters[{{ $originalName }}]
+
+    importDataMappings:
+      config:
+        {{- $config | toYaml | nindent 8 }}
+
+{{ end }}

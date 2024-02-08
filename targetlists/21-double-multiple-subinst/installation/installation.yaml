@@ -1,0 +1,30 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: double-multiple-subinst-root
+  namespace: cu-example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-test
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-test/targetlists/double-multiple-subinst
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint-root
+
+  imports:
+    targets:
+      - name: rootclusters
+        targets:
+          - red-cluster
+          - green-cluster
+          - blue-cluster
+    data:
+      - name: rootconfig
+        dataRef: config
