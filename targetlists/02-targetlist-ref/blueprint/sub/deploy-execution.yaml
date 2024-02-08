@@ -5,9 +5,13 @@ deployItems:
   - name: di-{{ $originalName }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
+#    target:
+#      name: {{ $target.metadata.name }}
+#      namespace: {{ $target.metadata.namespace }}
+
     target:
-      name: {{ $target.metadata.name }}
-      namespace: {{ $target.metadata.namespace }}
+      import: clusters
+      originalName: {{ $originalName }}
 
     config:
       apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2

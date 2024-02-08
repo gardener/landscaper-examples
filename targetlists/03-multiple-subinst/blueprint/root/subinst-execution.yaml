@@ -14,7 +14,7 @@ subinstallations:
     imports:
       targets:
         - name: cluster
-          target: rootclusters[{{ $target.metadata.name }}]
+          target: rootclusters[{{ $originalName }}]
 
     importDataMappings:
       config:
