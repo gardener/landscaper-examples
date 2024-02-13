@@ -1,0 +1,41 @@
+subinstallations:
+{{ $rootconfig := .imports.rootconfig }}
+{{ range $itemname, $itemconfig := $rootconfig }}
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: export-to-subinst-exporter-{{ $itemname }}
+
+    blueprint:
+      ref: cd://resources/blueprint-exporter
+
+    imports:
+      targets:
+        - name: clusterIn
+          target: rootcluster
+
+    exports:
+      targets:
+        - name: clusterOut
+          target: {{ $itemname }}
+{{ end }}
+
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: export-to-subinst-importer
+
+    blueprint:
+      ref: cd://resources/blueprint-importer
+
+    imports:
+      targets:
+        - name: clusters
+          targets:
+            {{- range $itemname, $itemconfig := $rootconfig }}
+            - {{ $itemname }}
+            {{- end }}
+      data:
+        - name: config
+          dataRef: rootconfig
+
