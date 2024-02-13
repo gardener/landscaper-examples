@@ -1,0 +1,26 @@
+deployItems:
+{{ $config := .imports.config }}
+{{ range $target := .imports.clusters }}
+{{ $originalName := getOriginalName $target }}
+- name: di-exported-targets-{{ $originalName }}
+  type: landscaper.gardener.cloud/kubernetes-manifest
+
+  target:
+    import: clusters
+    originalName: {{ $originalName }}
+
+  config:
+    apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+    kind: ProviderConfiguration
+    updateStrategy: update
+    manifests:
+      - policy: manage
+        manifest:
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: exported-targets-{{ $originalName }}
+            namespace: cu-example
+          data:
+            {{- index $config $originalName | toYaml | nindent 14 }}
+{{ end }}

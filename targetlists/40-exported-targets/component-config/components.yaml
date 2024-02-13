@@ -1,0 +1,33 @@
+components:
+  - name: github.com/gardener/landscaper-test/targetlists/exported-targets
+    version: 1.0.0
+    provider:
+      name: internal
+    resources:
+      - name: blueprint-root
+        type: landscaper.gardener.cloud/blueprint
+        # the available input types can be found in the help of the command line tool through
+        # ocm add resources --help
+        input:
+          type: dir
+          path: ../blueprint/root
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+      - name: blueprint-exporter
+        type: landscaper.gardener.cloud/blueprint
+        # the available input types can be found in the help of the command line tool through
+        # ocm add resources --help
+        input:
+          type: dir
+          path: ../blueprint/exporter
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+      - name: blueprint-importer
+        type: landscaper.gardener.cloud/blueprint
+        # the available input types can be found in the help of the command line tool through
+        # ocm add resources --help
+        input:
+          type: dir
+          path: ../blueprint/importer
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
