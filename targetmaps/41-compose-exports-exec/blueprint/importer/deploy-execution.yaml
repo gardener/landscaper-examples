@@ -1,13 +1,12 @@
 deployItems:
 {{ $config := .imports.config }}
-{{ range $target := .imports.clusters }}
-{{ $originalName := getOriginalName $target }}
-- name: di-exported-targets-{{ $originalName }}
+{{ range $key, $target := .imports.clusters }}
+- name: di-compose-exports-exec-{{ $key }}
   type: landscaper.gardener.cloud/kubernetes-manifest
 
   target:
     import: clusters
-    originalName: {{ $originalName }}
+    key: {{ $key }}
 
   config:
     apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
@@ -19,8 +18,8 @@ deployItems:
           apiVersion: v1
           kind: ConfigMap
           metadata:
-            name: exported-targets-{{ $originalName }}
+            name: compose-exports-exec-{{ $key }}
             namespace: cu-example
           data:
-            {{- index $config $originalName | toYaml | nindent 14 }}
+            {{- index $config $key | toYaml | nindent 14 }}
 {{ end }}

@@ -4,7 +4,7 @@ jsonSchema: "https://json-schema.org/draft/2019-09/schema"
 
 imports:
   - name: clusters
-    type: targetList
+    type: targetMap
     targetType: landscaper.gardener.cloud/kubernetes-cluster
   - name: config
     type: data

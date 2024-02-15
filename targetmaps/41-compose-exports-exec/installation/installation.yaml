@@ -1,7 +1,7 @@
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
-  name: exported-targets-root
+  name: compose-exports-exec-root
   namespace: cu-example
   annotations:
     landscaper.gardener.cloud/operation: reconcile
@@ -11,7 +11,7 @@ spec:
 
   componentDescriptor:
     ref:
-      componentName: github.com/gardener/landscaper-test/targetlists/exported-targets
+      componentName: github.com/gardener/landscaper-test/targetmaps/compose-exports-exec
       version: 1.0.0
 
   blueprint:
@@ -24,4 +24,4 @@ spec:
         target: my-cluster
     data:
       - name: rootconfig
-        dataRef: config
+        dataRef: colorconfig

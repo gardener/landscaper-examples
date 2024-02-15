@@ -1,10 +1,10 @@
 subinstallations:
 {{ $rootconfig := .imports.rootconfig }}
-{{ range $itemname, $itemconfig := $rootconfig }}
+{{ range $key, $instanceConfig := $rootconfig }}
   - apiVersion: landscaper.gardener.cloud/v1alpha1
     kind: InstallationTemplate
 
-    name: exported-targets-exporter-{{ $itemname }}
+    name: compose-exports-exec-exporter-{{ $key }}
 
     blueprint:
       ref: cd://resources/blueprint-exporter
@@ -17,13 +17,13 @@ subinstallations:
     exports:
       targets:
         - name: clusterOut
-          target: {{ $itemname }}
+          target: cluster-{{ $key }}
 {{ end }}
 
   - apiVersion: landscaper.gardener.cloud/v1alpha1
     kind: InstallationTemplate
 
-    name: exported-targets-importer
+    name: compose-exports-exec-importer
 
     blueprint:
       ref: cd://resources/blueprint-importer
@@ -31,9 +31,9 @@ subinstallations:
     imports:
       targets:
         - name: clusters
-          targets:
-            {{- range $itemname, $itemconfig := $rootconfig }}
-            - {{ $itemname }}
+          targetMap:
+            {{ range $key, $instanceConfig := $rootconfig }}
+              {{ $key }}: cluster-{{ $key }}
             {{- end }}
       data:
         - name: config
