@@ -1,0 +1,24 @@
+deployItems:
+{{ range $key, $target := .imports.subsubclusters }}
+  - name: di-{{ $key }}
+    type: landscaper.gardener.cloud/kubernetes-manifest
+
+    target:
+      import: subsubclusters
+      key: {{ $key }}
+
+    config:
+      apiVersion: manifest.deployer.landscaper.gardener.cloud/v1alpha2
+      kind: ProviderConfiguration
+      updateStrategy: update
+      manifests:
+        - policy: manage
+          manifest:
+            apiVersion: v1
+            kind: ConfigMap
+            metadata:
+              name: compose-map-exec-{{ $key }}
+              namespace: cu-example
+            data:
+              foo: bar
+{{ end }}
