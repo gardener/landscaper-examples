@@ -6,7 +6,7 @@ imports:
   - name: cluster
     type: target
     targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: color
+  - name: instanceName
     type: data
     schema:
       type: string

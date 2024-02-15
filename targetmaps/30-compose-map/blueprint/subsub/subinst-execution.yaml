@@ -14,5 +14,5 @@ subinstallations:
           target: subsubclusters[{{ $key }}]
 
     importDataMappings:
-      color: {{ $key }}
+      instanceName: {{ $key }}
 {{ end }}

@@ -8,9 +8,9 @@ blueprint:
 
 imports:
   targets:
-    - name: subclustera
-      target: rootclustera
-    - name: subclusterb
-      target: rootclusterb
-    - name: subclusterc
-      target: rootclusterc
+    - name: redSubCluster
+      target: redRootCluster
+    - name: blueSubCluster
+      target: blueRootCluster
+    - name: greenSubCluster
+      target: greenRootCluster

@@ -3,13 +3,13 @@ kind: Blueprint
 jsonSchema: "https://json-schema.org/draft/2019-09/schema"
 
 imports:
-  - name: rootclustera
+  - name: redRootCluster
     type: target
     targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: rootclusterb
+  - name: blueRootCluster
     type: target
     targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: rootclusterc
+  - name: greenRootCluster
     type: target
     targetType: landscaper.gardener.cloud/kubernetes-cluster
 

@@ -10,6 +10,6 @@ imports:
   targets:
     - name: subsubclusters
       targetMap:
-        itema: subclustera
-        itemb: subclusterb
-        itemc: subclusterc
+        red: redSubCluster
+        blue: blueSubCluster
+        green: greenSubCluster

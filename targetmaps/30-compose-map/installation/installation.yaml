@@ -20,9 +20,9 @@ spec:
 
   imports:
     targets:
-      - name: rootclustera
+      - name: redRootCluster
         target: red-cluster
-      - name: rootclusterb
+      - name: blueRootCluster
         target: green-cluster
-      - name: rootclusterc
+      - name: greenRootCluster
         target: blue-cluster
