@@ -27,4 +27,4 @@ spec:
           blue: blue-cluster
     data:
       - name: rootconfig
-        dataRef: config
+        dataRef: colorconfig

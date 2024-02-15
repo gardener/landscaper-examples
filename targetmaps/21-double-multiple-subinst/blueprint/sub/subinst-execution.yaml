@@ -16,6 +16,7 @@ subinstallations:
           target: subclusters[{{ $key }}]
 
     importDataMappings:
+      instanceName: {{ $key }}
       config:
         {{- $config | toYaml | nindent 8 }}
 

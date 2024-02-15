@@ -1,0 +1,18 @@
+subinstallations:
+{{ range $key, $target := .imports.subsubclusters }}
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: compose-map-sub-sub-sub-{{ $key }}
+
+    blueprint:
+      ref: cd://resources/blueprint-sub-sub-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: subsubclusters[{{ $key }}]
+
+    importDataMappings:
+      color: {{ $key }}
+{{ end }}

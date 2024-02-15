@@ -1,5 +1,5 @@
 deployItems:
-  - name: di-{{ $instanceName }}
+  - name: di-{{ .imports.instanceName }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
     target:
@@ -15,7 +15,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: multiple-subinst-{{ $instanceName }}
+              name: multiple-subinst-{{ .imports.instanceName }}
               namespace: cu-example
             data:
               {{- .imports.config | toYaml | nindent 14 }}

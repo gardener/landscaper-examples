@@ -1,5 +1,5 @@
 deployItems:
-  - name: di-{{ .imports.instanceName }}
+  - name: di-subsubsub-{{ .imports.color }}
     type: landscaper.gardener.cloud/kubernetes-manifest
 
     target:
@@ -15,7 +15,7 @@ deployItems:
             apiVersion: v1
             kind: ConfigMap
             metadata:
-              name: double-multiple-subinst-{{ .imports.instanceName }}
+              name: compose-map-{{ .imports.color }}
               namespace: cu-example
             data:
-              {{- .imports.config | toYaml | nindent 14 }}
+              foo: bar
