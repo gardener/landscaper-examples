@@ -1,0 +1,29 @@
+subinstallations:
+{{ $configs := .imports.configs }}
+{{ $scheduling := .imports.scheduling }}
+{{ $clusters := .imports.clusters }}
+
+{{ range $instance := .imports.instances }}
+
+  {{ $config := index $configs $instance }}
+  {{ $targetKey := index $scheduling $instance }}
+
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: scheduling-sub-{{ $instance }}
+
+    blueprint:
+      ref: cd://resources/blueprint-sub
+
+    imports:
+      targets:
+        - name: cluster
+          target: clusters[{{ $targetKey }}]
+
+    importDataMappings:
+      instance: {{ $instance }}
+      config:
+        {{- $config | toYaml | nindent 8 }}
+
+{{ end }}

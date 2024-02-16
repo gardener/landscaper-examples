@@ -1,0 +1,35 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: scheduling-root
+  namespace: cu-example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-test
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-test/targetmaps/scheduling
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint-root
+
+  imports:
+    data:
+      - name: instances
+        dataRef: do-instances
+      - name: configs
+        dataRef: do-config
+      - name: scheduling
+        dataRef: do-scheduling
+    targets:
+      - name: clusters
+        targetMap:
+          north: north-cluster
+          east: east-cluster
+          south: south-cluster
+          west: west-cluster
