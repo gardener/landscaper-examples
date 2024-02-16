@@ -1,0 +1,32 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: multiple-config-root
+  namespace: cu-example
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-test
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper-test/targetmaps/multiple-config
+      version: 1.0.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint-root
+
+  imports:
+    targets:
+      - name: rootclusters
+        targetMap:
+          yellow: yellow-cluster
+          red: red-cluster
+          green: green-cluster
+          orange: orange-cluster
+          blue: blue-cluster
+    data:
+      - name: rootconfig
+        dataRef: colorconfig
