@@ -3,10 +3,7 @@ kind: Blueprint
 jsonSchema: "https://json-schema.org/draft/2019-09/schema"
 
 imports:
-  - name: cluster
-    type: target
-    targetType: landscaper.gardener.cloud/kubernetes-cluster
-  - name: instanceName
+  - name: instance
     type: data
     schema:
       type: string
@@ -14,6 +11,9 @@ imports:
     type: data
     schema:
       type: object
+  - name: cluster
+    type: target
+    targetType: landscaper.gardener.cloud/kubernetes-cluster
 
 deployExecutions:
   - name: default

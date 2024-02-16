@@ -1,0 +1,11 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: DataObject
+metadata:
+  name: do-instances
+  namespace: cu-example
+data:
+  - blue
+  - green
+  - yellow
+  - orange
+  - red

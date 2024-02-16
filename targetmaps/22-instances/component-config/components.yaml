@@ -1,5 +1,5 @@
 components:
-  - name: github.com/gardener/landscaper-test/targetmaps/multiple-config
+  - name: github.com/gardener/landscaper-test/targetmaps/instances
     version: 1.0.0
     provider:
       name: internal
