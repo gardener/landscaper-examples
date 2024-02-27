@@ -1,0 +1,34 @@
+apiVersion: landscaper.gardener.cloud/v1alpha1
+kind: Installation
+metadata:
+  name: demo
+  namespace: cu-demo
+  annotations:
+    landscaper.gardener.cloud/operation: reconcile
+
+spec:
+  context: landscaper-test
+
+  componentDescriptor:
+    ref:
+      componentName: github.com/gardener/landscaper/demo-targetmaps
+      version: "1.0.0"
+
+  blueprint:
+    ref:
+      resourceName: blueprint-targetmap-ref
+
+  imports:
+    targets:
+      - name: clusters1
+        targetMap:
+          red: red-cluster
+          blue: blue-cluster
+    data:
+      - name: namespace
+        dataRef: do-namespace
+      - name: configs1
+        dataRef: do-configs
+
+  importDataMappings:
+    referencedBlueprint: blueprint-multiple-subinst
