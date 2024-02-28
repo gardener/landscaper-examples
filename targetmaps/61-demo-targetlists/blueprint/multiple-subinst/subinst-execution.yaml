@@ -1,0 +1,23 @@
+subinstallations:
+{{ range $idx, $config := .imports.configs }}
+  - apiVersion: landscaper.gardener.cloud/v1alpha1
+    kind: InstallationTemplate
+
+    name: single-item-{{ $idx }}
+
+    blueprint:
+      ref: cd://resources/blueprint-single-item
+
+    imports:
+      data:
+        - name: namespace
+          dataRef: namespace
+      targets:
+        - name: cluster
+          target: clusters[{{ $idx }}]
+
+    importDataMappings:
+      key: {{ $idx }}
+      config:
+        {{- $config | toYaml | nindent 8 }}
+{{ end }}

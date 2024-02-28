@@ -1,0 +1,34 @@
+components:
+  - name: github.com/gardener/landscaper/demo-targetlists
+    version: 1.0.0
+    provider:
+      name: internal
+    resources:
+      - name: blueprint-multiple-items
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint/multiple-items
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+      - name: blueprint-multiple-subinst
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint/multiple-subinst
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+      - name: blueprint-single-item
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint/single-item
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+      - name: blueprint-targetlist-ref
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint/targetlist-ref
+          compress: true
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip

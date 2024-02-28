@@ -11,19 +11,18 @@ spec:
 
   componentDescriptor:
     ref:
-      componentName: github.com/gardener/landscaper/demo-targetmaps
+      componentName: github.com/gardener/landscaper/demo-targetlists
       version: "1.0.0"
 
   blueprint:
     ref:
-      resourceName: blueprint-targetmap-ref
+      resourceName: blueprint-targetlist-ref
 
   imports:
     targets:
       - name: clusters1
-        targetMap:
-          red: red-cluster
-          blue: blue-cluster
+        targets:
+          - blue-cluster
     data:
       - name: namespace
         dataRef: do-namespace
