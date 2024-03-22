@@ -8,14 +8,8 @@ deployItems:
       kind: ProviderConfiguration
       name: helm-1-nginx
       namespace: example
-
       chart:
-        helmChartRepo:
-          {{- $chartResource := getResource .cd "name" "nginx-chart" }}
-          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
-          helmChartName:    {{ $chartResource.access.helmChartName }}
-          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
-
+        resourceRef: {{ getResourceKey `cd://resources/nginx-chart` }}
       values:
         image:
           {{- $imageResource := getResource .cd "name" "nginx-image" }}

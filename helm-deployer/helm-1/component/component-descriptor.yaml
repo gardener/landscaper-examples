@@ -1,0 +1,36 @@
+component:
+  componentReferences: []
+  name: github.com/gardener/landscaper-examples/helm-deployer/helm-1
+  provider: internal
+  repositoryContexts:
+  - baseUrl: eu.gcr.io/gardener-project/landscaper/examples
+    type: ociRegistry
+  resources:
+  - access:
+      helmChartName: nginx
+      helmChartRepoUrl: https://charts.bitnami.com/bitnami
+      helmChartVersion: 13.2.33
+      mediaType: application/octet-stream
+      type: helmChartRepository
+    name: nginx-chart
+    relation: external
+    type: helm.io/chart
+    version: 11.0.2
+  - access:
+      imageReference: bitnami/nginx:1.21.6-debian-10-r105
+      type: ociRegistry
+    name: nginx-image
+    relation: external
+    type: ociImage
+    version: 1.21.6-debian-10-r105
+  - access:
+      digest: sha256:da5bc3d9665e790588d6f613583557d393b1f827722f867794fc8e9f1dccc825
+      type: localOciBlob
+    name: blueprint
+    relation: local
+    type: blueprint
+    version: v0.1.0
+  sources: []
+  version: v0.1.0
+meta:
+  schemaVersion: v2

@@ -1,0 +1,26 @@
+components:
+  - name: 'github.com/gardener/landscaper-examples/helm-deployer/helm-1'
+    version: 'v0.1.1'
+    provider:
+      name: internal
+    resources:
+      - name: blueprint
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+          compress: true
+      - name: nginx-chart
+        type: helmChart
+        version: 11.0.2
+        access:
+          type: helm
+          helmRepository: https://charts.bitnami.com/bitnami
+          helmChart: nginx:13.2.33
+      - name: nginx-image
+        type: ociImage
+        version: 1.21.6-debian-10-r105
+        access:
+          type: ociArtifact
+          imageReference: bitnami/nginx:1.21.6-debian-10-r105
