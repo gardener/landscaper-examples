@@ -2,7 +2,7 @@ apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Installation
 metadata:
   name: helm-3
-  namespace: example
+  namespace: cu-example
 
 spec:
   blueprint:
@@ -14,9 +14,6 @@ spec:
   componentDescriptor:
     ref:
       componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-3
-      repositoryContext:
-        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
-        type: ociRegistry
       version: v0.1.0
 
   imports:

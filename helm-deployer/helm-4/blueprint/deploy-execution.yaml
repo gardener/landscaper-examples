@@ -10,8 +10,7 @@ deployItems:
       namespace: {{ .imports.release.namespace }}
 
       chart:
-        {{ $chartResource := getResource .cd "name" "simple-chart" }}
-        ref: {{ $chartResource.access.imageReference }}
+        resourceRef: {{ getResourceKey `cd://resources/simple-chart` }}
 
       values:
         testData: {{ .imports.testDataIn }}

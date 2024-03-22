@@ -1,25 +1,34 @@
 # Examples using the Helm Deployer
 
 
-### Example [helm-1](./helm-1)
+### Example [helm-1](./helm-1): Helm Repository
 
 This example deploys an nginx helm chart.
 The Helm chart is stored in a Helm chart repository (as opposed to an OCI registry).
-Blueprint, chart, and image are declared as resources in the component descriptor.
+The Blueprint is stored as local resource of the component version.
+Blueprint, chart, and image are declared as resources in the component constructor.
+
+The component version was uploaded with the [commands/component.sh](helm-1/commands/component.sh).
+
+Downloaded component descriptor: [component/component-descriptor.yaml](helm-1/component/component-descriptor.yaml).
+
+The Installation requires a Target and Context, which can be created by adjusting the [hack/settings](../hack/settings)
+and running the script [hack/deploy-context-and-target.sh](../hack/deploy-context-and-target.sh).
 
 
-### Example [helm-2](./helm-2): Protected Chart Repository
+### Example [helm-2](./helm-2): Protected Helm Repository
 
-This example deploys an echo server. 
-The Helm chart comes from a protected helm chart repository. The access data are provided in a `Context` custom resource. 
-The Installation references this `Context` resource.
-Blueprint, chart, and image are declared as resources in the component descriptor.
+This example demonstrates how to store the credentials for a protected helm repository in a Context custom resource.
+
+The example cannot be tried out, because the chart does no longer exist.
 
 
 ### Example [helm-3](./helm-3): Digest
 
 This is the same as the previous example helm-2, except that the component descriptor references the container image 
 via digest, rather than tag.
+
+The example cannot be tried out, because the chart does no longer exist.
 
 
 ### Example [helm-4](./helm-4): Helm Chart in an OCI Registry

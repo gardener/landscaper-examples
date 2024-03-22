@@ -4,22 +4,19 @@ metadata:
   annotations:
     landscaper.gardener.cloud/operation: reconcile
   name: helm-2
-  namespace: example
+  namespace: cu-example
 
 spec:
-  blueprint:
-    ref:
-      resourceName: blueprint
-
   context: helm-repo-protected
 
   componentDescriptor:
     ref:
       componentName: github.com/gardener/landscaper-examples/helm-deployer/helm-2
-      repositoryContext:
-        baseUrl: eu.gcr.io/gardener-project/landscaper/examples
-        type: ociRegistry
       version: v0.1.0
+
+  blueprint:
+    ref:
+      resourceName: blueprint
 
   imports:
     targets:

@@ -2,7 +2,7 @@ apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: Context
 metadata:
   name: helm-repo-protected
-  namespace: example
+  namespace: cu-example
 
 repositoryContext:
   baseUrl: eu.gcr.io/gardener-project/landscaper/examples

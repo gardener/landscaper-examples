@@ -1,0 +1,26 @@
+components:
+  - name: 'github.com/gardener/landscaper-examples/helm-deployer/helm-2'
+    version: 'v0.1.0'
+    provider:
+      name: internal
+    resources:
+      - name: blueprint
+        type: landscaper.gardener.cloud/blueprint
+        input:
+          type: dir
+          path: ../blueprint
+          mediaType: application/vnd.gardener.landscaper.blueprint.v1+tar+gzip
+          compress: true
+      - name: echo-server-chart
+        type: helmChart
+        version: 1.0.0
+        access:
+          type: helm
+          helmRepository: https://sap-hub-stable.storage.googleapis.com
+          helmChart: echo-server:1.0.0
+      - name: echo-server-image
+        type: ociImage
+        version: "1.4"
+        access:
+          type: ociRegistry
+          imageReference: gcr.io/google_containers/echoserver:1.4

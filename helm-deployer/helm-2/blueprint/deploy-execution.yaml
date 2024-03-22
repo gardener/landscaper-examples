@@ -10,11 +10,7 @@ deployItems:
       namespace: example
 
       chart:
-        helmChartRepo:
-          {{- $chartResource := getResource .cd "name" "echo-server-chart" }}
-          helmChartRepoUrl: {{ $chartResource.access.helmChartRepoUrl }}
-          helmChartName:    {{ $chartResource.access.helmChartName }}
-          helmChartVersion: {{ $chartResource.access.helmChartVersion }}
+        resourceRef: {{ getResourceKey `cd://resources/echo-server-chart` }}
 
       values:
         image:
