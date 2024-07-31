@@ -14,21 +14,23 @@ source ${COMPONENT_DIR}/commands/settings
 TMP_DIR=`mktemp -d`
 echo tempdir ${TMP_DIR}
 
-mako-render "${COMPONENT_DIR}/installation/context.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file="${TMP_DIR}/context.yaml"
+outputFile="${TMP_DIR}/context.yaml"
+export namespace="${NAMESPACE}"
+inputFile="${COMPONENT_DIR}/installation/context.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 
-mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --var sleep="${SLEEP}" \
-  --var helm="${HELM}" \
-  --var helmDeployment="${HELM_DEPLOYMENT}" \
-  --var text="${TEXT}" \
-  --var numOfCm="${NUM_OF_CM}" \
-  --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
-  --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
-  --var subInstPrefix="${SUB_INST_PREFIX}" \
-  --output-file="${TMP_DIR}/dataobject-values.yaml"
+outputFile="${TMP_DIR}/dataobject-values.yaml"
+export namespace="${NAMESPACE}"
+export sleep="${SLEEP}"
+export helm="${HELM}"
+export helmDeployment="${HELM_DEPLOYMENT}"
+export text="${TEXT}"
+export numOfCm="${NUM_OF_CM}"
+export hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}"
+export hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}"
+export subInstPrefix="${SUB_INST_PREFIX}"
+inputFile="${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 
 # Counter
 externalLoop=1
@@ -40,11 +42,12 @@ do
     echo "External loop: $externalLoop"
     echo "Reading file $TARGET_CLUSTER_KUBECONFIG_PATH"
 
-    mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
-      --var namespace="${NAMESPACE}" \
-      --var externalLoop="${externalLoop}" \
-      --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
-      --output-file="${TMP_DIR}/target-${externalLoop}.yaml"
+    outputFile="${TMP_DIR}/target-${externalLoop}.yaml"
+        export namespace="${NAMESPACE}"
+        export externalLoop="${externalLoop}"
+        export kubeconfig=`sed 's/^/      /' $TARGET_CLUSTER_KUBECONFIG_PATH`
+        inputFile="${COMPONENT_DIR}/installation/target.yaml.tlp"
+        envsubst < ${inputFile} > ${outputFile}
 
     sum=$((START_NUMBER + NUM_TOP_LEVEL_INSTS))
     for (( internalLoop=$START_NUMBER ; internalLoop<$sum; internalLoop++ ))
@@ -53,12 +56,18 @@ do
 
        echo "render releases"
 
-       mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --var numsubinsts="${NUM_SUB_INSTS}" \
-         --output-file="${TMP_DIR}/dataobject-releases-${externalLoop}-${internalLoop}.yaml"
+       outputFile="${TMP_DIR}/dataobject-releases-${externalLoop}-${internalLoop}.yaml"
+       export namespace="${NAMESPACE}"
+       export externalLoop="${externalLoop}"
+       export internalLoop="${internalLoop}"
+       export numsubinsts="${NUM_SUB_INSTS}"
+       inputFile="${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp"
+       envsubst < ${inputFile} > ${outputFile}
+       for (( i=0; i<$numsubinsts; i++ ))
+       do
+         echo "  - name: item-${externalLoop}-${internalLoop}-${i}" >> ${outputFile}
+         echo "    namespace: scaling-${externalLoop}-${internalLoop}-${i}" >> ${outputFile}
+       done
 
        echo "delete namespace"
        for (( j=0; j<${NUM_SUB_INSTS}; j++ ))
@@ -76,8 +85,8 @@ kubectl delete -f "${TMP_DIR}"
 
 echo "delete namespaceregistration"
 outputFile="${TMP_DIR}/namespace-registration.yaml"
-mako-render "${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file=${outputFile}
+export namespace="${NAMESPACE}"
+inputFile="${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 kubectl delete -f ${outputFile}
 

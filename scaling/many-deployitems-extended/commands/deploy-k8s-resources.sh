@@ -19,31 +19,31 @@ TMP_DIR=`mktemp -d`
 echo tempdir ${TMP_DIR}
 
 outputFile="${TMP_DIR}/namespace-registration.yaml"
-mako-render "${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file=${outputFile}
+export namespace="${NAMESPACE}"
+inputFile="${COMPONENT_DIR}/installation/namespaceregistration.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 kubectl apply -f ${outputFile}
 
 sleep 5
 
 outputFile="${TMP_DIR}/context.yaml"
-mako-render "${COMPONENT_DIR}/installation/context.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --output-file=${outputFile}
+export namespace="${NAMESPACE}"
+inputFile="${COMPONENT_DIR}/installation/context.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 kubectl apply -f ${outputFile}
 
 outputFile="${TMP_DIR}/dataobject-values.yaml"
-mako-render "${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp" \
-  --var namespace="${NAMESPACE}" \
-  --var sleep="${SLEEP}" \
-  --var helm="${HELM}" \
-  --var helmDeployment="${HELM_DEPLOYMENT}" \
-  --var text="${TEXT}" \
-  --var numOfCm="${NUM_OF_CM}" \
-  --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
-  --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
-  --var subInstPrefix="${SUB_INST_PREFIX}" \
-  --output-file=${outputFile}
+export namespace="${NAMESPACE}"
+export sleep="${SLEEP}"
+export helm="${HELM}"
+export helmDeployment="${HELM_DEPLOYMENT}"
+export text="${TEXT}"
+export numOfCm="${NUM_OF_CM}"
+export hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}"
+export hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}"
+export subInstPrefix="${SUB_INST_PREFIX}"
+inputFile="${COMPONENT_DIR}/installation/dataobject-values.yaml.tlp"
+envsubst < ${inputFile} > ${outputFile}
 kubectl apply -f ${outputFile}
 
 # Counter
@@ -57,11 +57,11 @@ do
     echo "Reading file $TARGET_CLUSTER_KUBECONFIG_PATH"
 
     outputFile="${TMP_DIR}/target-${externalLoop}.yaml"
-    mako-render "${COMPONENT_DIR}/installation/target.yaml.tlp" \
-      --var namespace="${NAMESPACE}" \
-      --var externalLoop="${externalLoop}" \
-      --var kubeconfig_path="${TARGET_CLUSTER_KUBECONFIG_PATH}" \
-      --output-file=${outputFile}
+    export namespace="${NAMESPACE}"
+    export externalLoop="${externalLoop}"
+    export kubeconfig=`sed 's/^/      /' $TARGET_CLUSTER_KUBECONFIG_PATH`
+    inputFile="${COMPONENT_DIR}/installation/target.yaml.tlp"
+    envsubst < ${inputFile} > ${outputFile}
     kubectl apply -f ${outputFile}
 
     sum=$((START_NUMBER + NUM_TOP_LEVEL_INSTS))
@@ -72,24 +72,29 @@ do
        echo "render releases"
 
        outputFile="${TMP_DIR}/dataobject-releases-${externalLoop}-${internalLoop}.yaml"
-       mako-render "${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --var numsubinsts="${NUM_SUB_INSTS}" \
-         --output-file=${outputFile}
+       export namespace="${NAMESPACE}"
+       export externalLoop="${externalLoop}"
+       export internalLoop="${internalLoop}"
+       export numsubinsts="${NUM_SUB_INSTS}"
+       inputFile="${COMPONENT_DIR}/installation/dataobject-releases.yaml.tlp"
+       envsubst < ${inputFile} > ${outputFile}
+       for (( i=0; i<$numsubinsts; i++ ))
+       do
+         echo "  - name: item-${externalLoop}-${internalLoop}-${i}" >> ${outputFile}
+         echo "    namespace: scaling-${externalLoop}-${internalLoop}-${i}" >> ${outputFile}
+       done
        kubectl apply -f ${outputFile}
 
        echo "render installation"
 
        outputFile="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
-       mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
-         --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
-         --output-file=${outputFile}
+       export namespace="${NAMESPACE}"
+       export externalLoop="${externalLoop}"
+       export internalLoop="${internalLoop}"
+       export hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}"
+       export hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}"
+       inputFile="${COMPONENT_DIR}/installation/installation.yaml.tlp"
+       envsubst < ${inputFile} > ${outputFile}
        kubectl apply -f ${outputFile}
     done
 
