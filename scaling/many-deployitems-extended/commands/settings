@@ -5,16 +5,16 @@ TARGET_CLUSTER_KUBECONFIG_FOLDER="/Users/${USER}/tmp/kubes"
 NAMESPACE="cu-achim-21"
 
 # number of root installations
-NUM_TOP_LEVEL_INSTS=2
+NUM_TOP_LEVEL_INSTS=5
 
 # start number for root installations
 START_NUMBER=1
 
 # number of sub level installation per root installations
-NUM_SUB_INSTS=2
+NUM_SUB_INSTS=5
 
 # duration in seconds for the job to sleep
-SLEEP=1
+SLEEP=0
 
 # if true a helm deployment is executed otherwise a manifest deployment
 HELM=true

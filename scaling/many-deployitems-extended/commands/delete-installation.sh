@@ -35,13 +35,14 @@ do
 
        echo "render installation"
 
-       mako-render "${COMPONENT_DIR}/installation/installation.yaml.tlp" \
-         --var namespace="${NAMESPACE}" \
-         --var externalLoop="${externalLoop}" \
-         --var internalLoop="${internalLoop}" \
-         --var hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}" \
-         --var hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}" \
-         --output-file="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
+       outputFile="${TMP_DIR}/installation-${externalLoop}-${internalLoop}.yaml"
+       export namespace="${NAMESPACE}"
+       export externalLoop="${externalLoop}"
+       export internalLoop="${internalLoop}"
+       export hasNoSiblingImports="${HAS_NO_SIBLING_IMPORTS}"
+       export hasNoSiblingExports="${HAS_NO_SIBLING_EXPORTS}"
+       inputFile="${COMPONENT_DIR}/installation/installation.yaml.tlp"
+       envsubst < ${inputFile} > ${outputFile}
     done
 
     externalLoop=$((externalLoop+1))

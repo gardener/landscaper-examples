@@ -1,15 +1,9 @@
-<%
-  n = int(numsubinsts)
-%>
 apiVersion: landscaper.gardener.cloud/v1alpha1
 kind: DataObject
 metadata:
   name: my-releases-${externalLoop}-${internalLoop}
   namespace: ${namespace}
 data:
-% for i in range(n):
-  - name: item-${externalLoop}-${internalLoop}-${i}
-    namespace: scaling-${externalLoop}-${internalLoop}-${i}
-% endfor
+
 
 
