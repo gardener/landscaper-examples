@@ -5,6 +5,7 @@ metadata:
   namespace: ${namespace}
   annotations:
     landscaper.gardener.cloud/operation: reconcile
+    landscaper.gardener.cloud/cache-helm-charts: "true"
 
 spec:
   context: landscaper-examples
